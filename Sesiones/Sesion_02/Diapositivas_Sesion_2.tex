@@ -1,0 +1,686 @@
+\documentclass[aspectratio=169, 10pt]{beamer}
+
+% --- PAQUETES BÁSICOS ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+% --- NUEVO TEMA FIME UANL ---
+\usetheme[showlogo, nosectionpage]{FIME}
+
+% Estilos TikZ adaptados a los colores institucionales
+\tikzset{
+    block/.style={rectangle, draw=FIMEgreen, fill=FIMElightgray, text width=2.4cm, text centered, rounded corners, minimum height=1.2cm, font=\scriptsize\bfseries, line width=1pt},
+    arrow/.style={thick,->,>=stealth,draw=UANLblue,line width=1.2pt},
+    actor/.style={rectangle, draw=UANLblue, fill=FIMElightgray, text width=2.8cm, text centered, rounded corners, minimum height=1cm, font=\small\bfseries, line width=1pt}
+}
+
+% --- METADATOS ---
+\title[Herramientas Multicriterio - Sesión 2]{Herramientas Multicriterio para Toma de Decisiones}
+\subtitle{Sesión 2: Teoría de la Utilidad Multiatributo (MAUT) e Incertidumbre}
+\author[Leonardo G. Hernández]{Dr. Leonardo Gabriel Hernández Landa}
+\author[Leonardo G. Hernández]{Dr. Leonardo Gabriel Hernández Landa}
+\institute[FIME - UANL]{
+    Doctorado en Logística y Cadena de Suministro\\
+    Facultad de Ingeniería Mecánica y Eléctrica (FIME)\\
+    Universidad Autónoma de Nuevo León (UANL)
+}
+\date{Tetramestre de Otoño}
+
+% --- INICIO DEL DOCUMENTO ---
+\begin{document}
+
+% Slide 1: Portada
+\begin{frame}[plain]
+    \titlepage
+\end{frame}
+
+% Slide 2: Objetivos de la Sesión
+\begin{frame}{Objetivos de la Sesión}
+    \begin{block}{Al finalizar esta sesión, el estudiante de doctorado será capaz de:}
+        \begin{itemize}
+            \item \textbf{Analizar críticamente} los axiomas de la Utilidad Esperada y sus límites descriptivos (Paradoja de Allais).
+            \item \textbf{Verificar matemáticamente} los supuestos de independencia preferencial y de utilidad en problemas de decisión.
+            \item \textbf{Construir} funciones de valor aditivas y funciones de utilidad multiplicativas (modelo de Keeney-Raiffa).
+            \item \textbf{Elicitar} perfiles de riesgo organizacionales y aplicarlos a problemas reales de selección de proveedores bajo incertidumbre.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% Slide 3: Agenda de la Sesión
+\begin{frame}{Agenda de la Sesión (3 Horas)}
+    \begin{columns}[T]
+        \begin{column}{0.31\textwidth}
+            \begin{block}{Bloque 1 (90 min)}
+                \textbf{Teoría y Axiomas}
+                \begin{itemize}
+                    \scriptsize
+                    \item Utilidad de VNM
+                    \item Actitud ante el riesgo
+                    \item Equivalente de certeza
+                    \item Modelos MAUT
+                    \item Independencia preferencial
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.31\textwidth}
+            \begin{exampleblock}{Bloque 2 (45 min)}
+                \textbf{Debate de Literatura}
+                \begin{itemize}
+                    \scriptsize
+                    \item Dyer (2005)
+                    \item Keeney \& Raiffa (1993)
+                    \item Supuestos de aditividad
+                    \item Compensación en logística
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+        
+        \begin{column}{0.31\textwidth}
+            \begin{alertblock}{Bloque 3 (45 min)}
+                \textbf{Taller Aplicado}
+                \begin{itemize}
+                    \scriptsize
+                    \item Selección de proveedores
+                    \item Utilidades costo-retraso
+                    \item Ecuación Keeney-Raiffa
+                    \item Resolución de la constante $k$
+                \end{itemize}
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 4: Introducción a la Escuela Americana (MAUT)
+\begin{frame}{Introducción a la Escuela Americana (MAUT)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{El Enfoque de Atributos y Utilidad}
+                \begin{itemize}
+                    \item Desarrollado principalmente por \textbf{Ralph L. Keeney} y \textbf{Howard Raiffa} en los años 70.
+                    \item \textbf{Compensabilidad:} Asume que un desempeño deficiente en un criterio puede ser equilibrado con un excelente desempeño en otro.
+                    \item \textbf{Axiomático:} Se fundamenta en reglas matemáticas lógicas y estrictas que describen a un decisor racional ideal.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Concepto Central}
+                MAUT descompone el problema en funciones de utilidad univariadas $u_i(x_i)$ para cada criterio y luego las agrega en una única función de utilidad global:
+                \begin{equation*}
+                    U(x_1, \dots, x_n) = F(u_1(x_1), \dots, u_n(x_n))
+                \end{equation*}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 5: Sección 1
+\section{Bloque 1: Fundamentos de la Utilidad Esperada}
+\begingroup
+\setbeamercolor{background canvas}{bg=FIMEgreen}
+\begin{frame}[plain]
+    \vfill
+    \hspace{0.08\paperwidth}%
+    {\color{UANLgold}\rule{4cm}{2pt}}\\[8pt]%
+    \hspace{0.08\paperwidth}%
+    {\color{FIMEwhite}\LARGE\rmfamily\bfseries Bloque 1: Fundamentos de la Utilidad Esperada}\\[6pt]
+    \hspace{0.08\paperwidth}%
+    {\color{FIMEwhite!85}\large\sffamily Axiomas de VNM, funciones de utilidad y modelado de actitud ante el riesgo}
+    \vfill
+\end{frame}
+\endgroup
+
+% Slide 6: Axiomas de la Utilidad Esperada (VNM) - Parte 1
+\begin{frame}{Axiomas de la Utilidad Esperada (VNM) - Parte 1}
+    \begin{block}{Teoría de Von Neumann-Morgenstern (1944)}
+        Para que un decisor actúe de manera racional maximizando el valor esperado de una función de utilidad $U$, sus preferencias sobre loterías probabilísticas deben satisfacer cuatro axiomas:
+    \end{block}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{1. Completitud e Indiferencia}
+                El decisor siempre puede comparar loterías:
+                \begin{equation*}
+                    L_1 \succ L_2, \quad L_2 \succ L_1, \quad \text{o} \quad L_1 \sim L_2
+                \end{equation*}
+            \end{exampleblock}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{2. Transitividad}
+                Consistencia en el ordenamiento:
+                \begin{equation*}
+                    \text{Si } L_1 \succ L_2 \text{ y } L_2 \succ L_3 \implies L_1 \succ L_3
+                \end{equation*}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 7: Axiomas de la Utilidad Esperada (VNM) - Parte 2
+\begin{frame}{Axiomas de la Utilidad Esperada (VNM) - Parte 2}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{3. Continuidad}
+                Si el decisor prefiere $L_1 \succ L_2 \succ L_3$, existe una probabilidad $p \in [0, 1]$ tal que es indiferente entre recibir $L_2$ de forma segura y jugar una lotería que da $L_1$ con probabilidad $p$ y $L_3$ con $(1-p)$:
+                \begin{equation*}
+                    L_2 \sim [p L_1, (1-p) L_3]
+                \end{equation*}
+            \end{exampleblock}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{4. Independencia (Sustitución)}
+                El orden de preferencias entre $L_1$ y $L_2$ no se altera si se mezclan en la misma proporción con una tercera lotería $L_3$:
+                \begin{equation*}
+                    L_1 \succ L_2 \iff [p L_1, (1-p) L_3] \succ [p L_2, (1-p) L_3]
+                \end{equation*}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 8: La Paradoja de Allais
+\begin{frame}{La Paradoja de Allais (Límites Descriptivos)}
+    \begin{alertblock}{La violación experimental del axioma de independencia (Maurice Allais, 1953)}
+        Se presenta a decisores dos pares de decisiones:
+    \end{alertblock}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Decisión 1 (Efecto Certeza)}
+                \scriptsize
+                \begin{itemize}
+                    \item \textbf{Alternativa A:} \$1 millón seguro ($p=1.0$). [Mayoría elige A]
+                    \item \textbf{Alternativa B:} \$5 millones ($p=0.10$), \$1 millón ($p=0.89$), \$0 ($p=0.01$).
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Decisión 2 (Probabilidad Baja)}
+                \scriptsize
+                \begin{itemize}
+                    \item \textbf{Alternativa C:} \$1 millón ($p=0.11$), \$0 ($p=0.89$).
+                    \item \textbf{Alternativa D:} \$5 millones ($p=0.10$), \$0 ($p=0.90$). [Mayoría elige D]
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+    \vskip 5pt
+    \centering \footnotesize \textbf{Inconsistencia matemática:} Si $A \succ B \implies C \succ D$ bajo el supuesto de utilidad lineal en probabilidades. Esto motivó la creación de modelos de utilidad más flexibles.
+\end{frame}
+
+% Slide 9: Funciones de Valor vs. Funciones de Utilidad
+\begin{frame}{Funciones de Valor vs. Funciones de Utilidad}
+    \begin{table}
+        \centering
+        \scriptsize
+        \begin{tabular}{lll}
+            \toprule
+            \textbf{Característica} & \textbf{Función de Valor $v(x)$} & \textbf{Función de Utilidad $u(x)$} \\
+            \midrule
+            \textbf{Entorno de Decisión} & Certidumbre absoluta & Riesgo e Incertidumbre (con probabilidades) \\
+            \textbf{Propósito} & Medir la atracción relativa entre estados & Incorporar la actitud ante el riesgo del decisor \\
+            \textbf{Construcción} & Curvas de indiferencia simples & Loterías de referencia y equivalentes de certeza \\
+            \textbf{Flexibilidad} & No admite loterías & Permite evaluar escenarios estocásticos \\
+            \textbf{Ejemplo Logístico} & Costo conocido de flete en ruta alternativa & Costo variable de flete sujeto a recargo por combustible \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+% Slide 10: Actitud ante el Riesgo
+\begin{frame}{Actitud ante el Riesgo y Curvatura}
+    La forma matemática de la función de utilidad univariada $u(x)$ determina el perfil de riesgo del decisor:
+    \begin{columns}[T]
+        \begin{column}{0.31\textwidth}
+            \begin{block}{Aversión al Riesgo}
+                \scriptsize
+                \begin{itemize}
+                    \item \textbf{Matemática:} Función cóncava ($u''(x) < 0$).
+                    \item \textbf{Psicología:} Prefiere recibir un valor seguro al valor esperado de una lotería riesgosa.
+                    \item \textbf{Uso en Logística:} Políticas de inventario conservadoras.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.31\textwidth}
+            \begin{exampleblock}{Neutralidad al Riesgo}
+                \scriptsize
+                \begin{itemize}
+                    \item \textbf{Matemática:} Función lineal ($u''(x) = 0$).
+                    \item \textbf{Psicología:} Le es indiferente un valor seguro frente a una lotería con el mismo valor esperado.
+                    \item Evaluaciones puramente financieras simétricas.
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+        
+        \begin{column}{0.31\textwidth}
+            \begin{alertblock}{Propensión al Riesgo}
+                \scriptsize
+                \begin{itemize}
+                    \item \textbf{Matemática:} Función convexa ($u''(x) > 0$).
+                    \item \textbf{Psicología:} Prefiere jugar la lotería que recibir el valor promedio seguro.
+                    \item Ocurre en decisiones especulativas bajo presión competitiva extrema.
+                \end{itemize}
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 11: Medición del Riesgo: Coeficiente de Arrow-Pratt
+\begin{frame}{Medición del Riesgo: Coeficiente de Arrow-Pratt}
+    \begin{block}{¿Por qué la segunda derivada $u''(x)$ sola no es suficiente?}
+        La segunda derivada cambia si multiplicamos la función por una constante arbitraria. Necesitamos una medida normalizada e insensible a transformaciones lineales:
+    \end{block}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Aversión Absoluta al Riesgo ($R_a(x)$)}
+                \begin{equation*}
+                    R_a(x) = -\frac{u''(x)}{u'(x)}
+                \end{equation*}
+                \scriptsize
+                \begin{itemize}
+                    \item Propuesto por Kenneth Arrow (1965) y John Pratt (1964).
+                    \item Mide la tasa de cambio local de la utilidad marginal.
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Función Exponencial de Utilidad}
+                \begin{equation*}
+                    u(x) = 1 - e^{-c x} \implies R_a(x) = c
+                \end{equation*}
+                \scriptsize
+                \begin{itemize}
+                    \item Aversión absoluta constante (CARA).
+                    \item El parámetro $c > 0$ representa cuantitativamente la aversión.
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 12: Elicitación: Equivalente de Certeza
+\begin{frame}{Elicitación del Equivalente de Certeza ($CE$)}
+    El \textbf{Equivalente de Certeza ($CE$)} es la cantidad segura que proporciona al decisor la misma utilidad que participar en una lotería riesgosa.
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Definición Matemática}
+                \begin{equation*}
+                    u(CE) = E[u(x)] = p \cdot u(x_{\text{mejor}}) + (1-p) \cdot u(x_{\text{peor}})
+                \end{equation*}
+                \begin{itemize}
+                    \item **Prima de Riesgo ($RP$):** Es el costo subjetivo del riesgo:
+                    \begin{equation*}
+                        RP = E[x] - CE
+                    \end{equation*}
+                    \item Si el decisor tiene aversión al riesgo: $RP > 0 \implies CE < E[x]$.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Cuestionario de Equivalencia}
+                \scriptsize
+                ¿Qué retraso seguro en fletes prefieres en lugar de una opción con 50\% de probabilidad de 0 días de retraso y 50\% de probabilidad de 10 días de retraso?
+                \begin{itemize}
+                    \item Valor Esperado: $E[x] = 5$ días.
+                    \item Un decisor adverso al riesgo contestará, por ejemplo: \textbf{6.5 días} ($CE > E[x]$ para el caso de costos/penalidades).
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 13: Sección 2
+\section{Bloque 2: Estructura Multiatributo (MAUT)}
+\begingroup
+\setbeamercolor{background canvas}{bg=FIMEgreen}
+\begin{frame}[plain]
+    \vfill
+    \hspace{0.08\paperwidth}%
+    {\color{UANLgold}\rule{4cm}{2pt}}\\[8pt]%
+    \hspace{0.08\paperwidth}%
+    {\color{FIMEwhite}\LARGE\rmfamily\bfseries Bloque 2: Estructura Multiatributo (MAUT)}\\[6pt]
+    \hspace{0.08\paperwidth}%
+    {\color{FIMEwhite!85}\large\sffamily Independencia preferencial, agregación aditiva y multiplicativa}
+    \vfill
+\end{frame}
+\endgroup
+
+% Slide 14: El Supuesto de Independencia Preferencial
+\begin{frame}{El Supuesto de Independencia Preferencial}
+    Para poder utilizar un modelo de valor multiatributo, se debe verificar la independencia de preferencias entre criterios.
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Definición de Keeney \& Raiffa}
+                Un conjunto de atributos $Y$ es preferencialmente independiente de un conjunto $Z$ si el orden de preferencia de alternativas que solo varían en $Y$ no cambia independientemente de cuáles sean los valores fijos del conjunto complementario $Z$.
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{alertblock}{Ejemplo de Violación en Logística}
+                Consideremos los atributos:
+                \begin{itemize}
+                    \item $C_1$: Tipo de unidad de transporte.
+                    \item $C_2$: Tipo de combustible.
+                \end{itemize}
+                Si el combustible es diésel ($Z_{\text{fijo}}$), el decisor prefiere tractocamión grande ($Y_1$). Pero si el combustible es eléctrico ($Z_{\text{fijo}}'$), prefiere unidades pequeñas de reparto urbano ($Y_2$).  
+                \vskip 3pt
+                \textbf{Resultado:} No hay independencia preferencial; no se puede usar suma aditiva simple.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 15: Función de Valor Aditiva
+\begin{frame}{Función de Valor Aditiva}
+    Si existe independencia preferencial mutua para todos los criterios evaluados, se puede construir una función de valor aditiva global:
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Ecuación de Agregación}
+                \begin{equation*}
+                    v(x_1, \dots, x_n) = \sum_{i=1}^n w_i v_i(x_i)
+                \end{equation*}
+                Donde:
+                \begin{itemize}
+                    \item $v_i(x_i)$ es la función de valor univariada escalada a $[0, 1]$.
+                    \item $w_i$ es el peso del criterio $C_i$ (pesos de compensación).
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Características Metodológicas}
+                \begin{itemize}
+                    \item Los pesos $w_i$ no representan ``importancia intrínseca'', sino tasas de compensación (\emph{trade-offs}) entre los rangos específicos de los atributos.
+                    \item Si el rango de un atributo cambia (ej. de \$1,000-\$2,000 a \$1,000-\$10,000), el peso $w_i$ **debe** recalcularse obligatoriamente.
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 16: El Supuesto de Independencia de Utilidad
+\begin{frame}{El Supuesto de Independencia de Utilidad}
+    Para entornos stocásticos (bajo riesgo), requerimos un supuesto más restrictivo que la independencia preferencial simple:
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Independencia de Utilidad}
+                El atributo $X_1$ es independiente de utilidad del atributo $X_2$ si las preferencias sobre loterías probabilísticas que solo varían en $X_1$ no dependen del valor fijo que tome $X_2$.
+                \begin{itemize}
+                    \item Si se cumple la independencia de utilidad mutua entre todos los pares, la función de utilidad global tiene una forma simplificada especial.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Implicación Axiomática}
+                Permite estructurar la función de utilidad global utilizando formas funcionales aditivas o multiplicativas, facilitando el análisis matemático de problemas complejos con incertidumbre.
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 17: Función de Utilidad Multiplicativa
+\begin{frame}{Función de Utilidad Multiplicativa (Keeney-Raiffa)}
+    Si se cumple la independencia de utilidad mutua, la función de utilidad global $U(x)$ puede formularse bajo la estructura multiplicativa clásica de Keeney-Raiffa (1976):
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Ecuación Multiplicativa}
+                \begin{equation*}
+                    1 + k U(x) = \prod_{i=1}^n [1 + k k_i u_i(x_i)]
+                \end{equation*}
+                O de forma equivalente:
+                \begin{equation*}
+                    U(x) = \sum_{i=1}^n k_i u_i(x_i) + k \sum_{i < j} k_i k_j u_i(x_i) u_j(x_j) + \dots
+                \end{equation*}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Componentes de la Ecuación}
+                \begin{itemize}
+                    \item $u_i(x_i)$ son las utilidades univariadas $[0, 1]$.
+                    \item $k_i$ son las constantes de escala individuales.
+                    \item $k$ es la constante de interacción global del sistema.
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 18: Determinación del Parámetro Global $k$
+\begin{frame}{Determinación del Parámetro Global $k$}
+    La constante global $k$ se calcula evaluando la ecuación de Keeney-Raiffa en el mejor escenario posible de todos los atributos ($U(x^*)=1$ y $u_i(x_i^*)=1$):
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{exampleblock}{Ecuación de Solución}
+                \begin{equation*}
+                    1 + k = \prod_{i=1}^n (1 + k k_i)
+                \end{equation*}
+                \scriptsize
+                \begin{itemize}
+                    \item Es una ecuación polinomial no lineal.
+                    \item Si $\sum k_i > 1 \implies -1 < k < 0$ (Sinergia/Complemento).
+                    \item Si $\sum k_i < 1 \implies k > 0$ (Sustituibilidad/Redundancia).
+                    \item Si $\sum k_i = 1 \implies k = 0$ (Modelo Aditivo).
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Interpretación del Signo de $k$}
+                \scriptsize
+                \begin{itemize}
+                    \item **$k < 0$ (Complementariedad):** El decisor penaliza fuertemente el desequilibrio entre atributos (ej. quiere un desempeño balanceado).
+                    \item **$k > 0$ (Sustituibilidad):** El desempeño alto de un atributo amortigua el bajo desempeño de otros de forma no lineal.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 19: Sección 3
+\section{Bloque 3: Aplicaciones en Logística e Incertidumbre}
+\begingroup
+\setbeamercolor{background canvas}{bg=FIMEgreen}
+\begin{frame}[plain]
+    \vfill
+    \hspace{0.08\paperwidth}%
+    {\color{UANLgold}\rule{4cm}{2pt}}\\[8pt]%
+    \hspace{0.08\paperwidth}%
+    {\color{FIMEwhite}\LARGE\rmfamily\bfseries Bloque 3: Aplicaciones en Logística e Incertidumbre}\\[6pt]
+    \hspace{0.08\paperwidth}%
+    {\color{FIMEwhite!85}\large\sffamily Caso práctico paso a paso de modelado de proveedores y cálculo de utilidad}
+    \vfill
+\end{frame}
+\endgroup
+
+% Slide 20: Caso Práctico: Selección de Proveedor Bajo Riesgo
+\begin{frame}{Caso Práctico: Selección de Proveedor Bajo Riesgo}
+    \begin{block}{Definición de Criterios y Rangos}
+        Evaluar proveedores bajo condiciones de volatilidad económica y retrasos estocásticos de transporte:
+    \end{block}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Criterio 1: Costo unitario ($X_1$)}
+                \begin{itemize}
+                    \item Rango: \$10,000 USD (mejor) a \$20,000 USD (peor).
+                    \item Perfil: **Neutralidad al riesgo** (lineal).
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Criterio 2: Tasa de Retraso ($X_2$)}
+                \begin{itemize}
+                    \item Rango: 0\% (mejor) a 15\% de entregas tardías (peor).
+                    \item Perfil: **Aversión al riesgo** ($c = 0.15$).
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 21: Taller Paso 1: Funciones Univariadas de Utilidad
+\begin{frame}{Taller Paso 1: Funciones Univariadas de Utilidad}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Costo ($u_1(x_1)$): Lineal}
+                \scriptsize
+                Como es de costo (minimizar), escalamos para que \$10,000 dé utilidad 1 y \$20,000 dé utilidad 0:
+                \begin{equation*}
+                    u_1(x_1) = \frac{20000 - x_1}{20000 - 10000}
+                \end{equation*}
+                Ejemplo: para un costo de \$12,000 USD:
+                \begin{equation*}
+                    u_1(12000) = \frac{8000}{10000} = 0.80
+                \end{equation*}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Retraso ($u_2(x_2)$): Cóncava ($c=0.15$)}
+                \scriptsize
+                Elicitación exponencial para aversión al riesgo (minimizar porcentaje de retraso $x_2$):
+                \begin{equation*}
+                    u_2(x_2) = \frac{e^{-0.15 \cdot x_2} - e^{-0.15 \cdot 15}}{1 - e^{-0.15 \cdot 15}}
+                \end{equation*}
+                Ejemplo: para un retraso del 8\%:
+                \begin{equation*}
+                    u_2(8) = \frac{e^{-1.20} - e^{-2.25}}{1 - e^{-2.25}} \approx \frac{0.301 - 0.105}{1 - 0.105} \approx 0.219
+                \end{equation*}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 22: Taller Paso 2: Elicitación de Constantes de Escala
+\begin{frame}{Taller Paso 2: Elicitación de Constantes de Escala}
+    \begin{block}{Elicitación de $k_1$ y $k_2$}
+        Hacemos preguntas de equivalencia de lotería al director de compras para determinar $k_1$ y $k_2$:
+    \end{block}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Resultados Elicitados}
+                \scriptsize
+                \begin{itemize}
+                    \item $k_1 = 0.60$ (para costo unitario).
+                    \item $k_2 = 0.50$ (para confiabilidad de entrega).
+                \end{itemize}
+                \vskip 5pt
+                **Análisis de Suma:**
+                \begin{equation*}
+                    \sum k_i = 0.60 + 0.50 = 1.10 > 1.0
+                \end{equation*}
+                Como la suma es mayor a 1, la constante global $k$ debe ser estrictamente negativa: $-1 < k < 0$.
+            \end{exampleblock}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Cálculo del Parámetro Global $k$}
+                \scriptsize
+                Sustituyendo en la ecuación multiplicativa de Keeney-Raiffa:
+                \begin{align*}
+                    1 + k &= (1 + 0.60 k)(1 + 0.50 k) \\
+                    1 + k &= 1 + 1.10 k + 0.30 k^2 \\
+                    0.30 k^2 + 0.10 k &= 0
+                \end{align*}
+                Descartando la raíz trivial $k=0$, resolvemos:
+                \begin{equation*}
+                    k = -\frac{0.10}{0.30} \approx -0.333
+                \end{equation*}
+                El valor $k = -0.333$ confirma complementariedad y balance.
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 23: Taller Paso 3: Evaluación y Selección Final
+\begin{frame}{Taller Paso 3: Evaluación y Selección Final}
+    \begin{block}{Evaluemos al Proveedor A ($x_1 = \$12,000$ USD, $x_2 = 8\%$ de retraso):}
+        \small
+        Usamos las utilidades univariadas calculadas: $u_1 = 0.80$, $u_2 = 0.219$. Las constantes son $k_1=0.60, k_2=0.50$ y $k=-0.333$:
+    \end{block}
+    \begin{exampleblock}{Cálculo de la Utilidad Global $U(A)$}
+        \begin{align*}
+            U(A) &= k_1 u_1 + k_2 u_2 + k k_1 k_2 u_1 u_2 \\
+            U(A) &= (0.60 \cdot 0.80) + (0.50 \cdot 0.219) + (-0.333 \cdot 0.60 \cdot 0.50 \cdot 0.80 \cdot 0.219) \\
+            U(A) &= 0.480 + 0.1095 - (0.10 \cdot 0.1752) \\
+            U(A) &= 0.5895 - 0.0175 \approx \mathbf{0.572}
+        \end{align*}
+    \end{exampleblock}
+    \centering \footnotesize
+    Este valor final $0.572$ incorpora tanto las preferencias relativas de los criterios como la actitud organizacional hacia la variabilidad del transporte.
+\end{frame}
+
+% Slide 24: Limitaciones de MAUT y Críticas Metodológicas
+\begin{frame}{Limitaciones de MAUT y Críticas Metodológicas}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Críticas a los Supuestos}
+                \scriptsize
+                \begin{itemize}
+                    \item \textbf{Costo de Elicitación:} Exige mucho tiempo de interacción con el tomador de decisiones para responder preguntas abstractas de loterías.
+                    \item \textbf{Supuesto Compensatorio:} Asume que siempre es posible compensar una deficiencia crítica si se equilibra con otro atributo (crítica de la escuela francesa).
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{alertblock}{La Alternativa del Outranking}
+                \scriptsize
+                \begin{itemize}
+                    \item En la Sesión 4 revisaremos métodos no compensatorios (ELECTRE/PROMETHEE).
+                    \item Estos no agregan en un valor único escalar, sino que evalúan relaciones pareadas directas aceptando el veto y la incomparabilidad.
+                \end{itemize}
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 25: Resumen, Próxima Sesión y Tarea
+\begin{frame}{Resumen, Próxima Sesión y Tarea}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Tareas Prácticas}
+                \begin{itemize}
+                    \item Completar el análisis de los proveedores B y C basándose en las ecuaciones del taller práctico de hoy.
+                    \item Confirmar el ranking de alternativas y justificar la decisión.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Próxima Clase: Sesión 3}
+                Estudio crítico de \textbf{AHP} (Saaty) y su alternativa moderna \textbf{Best-Worst Method (BWM)} (Rezaei).
+                \begin{itemize}
+                    \scriptsize
+                    \item \textbf{Lecturas en carpeta \texttt{literatura/}:}
+                        \begin{itemize}
+                            \tiny
+                            \item \textbf{Artículo:} Rezaei (2015). \emph{BWM} (\texttt{articulos/S03\_Rezaei\_2015...})
+                            \item \textbf{Artículo Debate:} Dyer (1990). \emph{Remarks on the AHP} (institucional).
+                        \end{itemize}
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 26: Agradecimiento y Contacto
+\thankframe{¡Muchas gracias!}{Preguntas y discusión \\ \url{https://www.fime.uanl.mx}}
+
+% Slide 27: Cierre institucional (FIME - UANL)
+\closingframe
+
+\end{document}
