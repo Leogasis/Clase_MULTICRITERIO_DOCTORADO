@@ -2,3 +2,13 @@
 ~$*.docx
 __pycache__/
 *.pyc
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.fls
+*.fdb_latexmk
+
