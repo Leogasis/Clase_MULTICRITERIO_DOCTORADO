@@ -1,0 +1,195 @@
+\documentclass[11pt, letterpaper]{article}
+
+% --- PAQUETES BÁSICOS ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+% --- COLORES INSTITUCIONALES (FIME - UANL) ---
+\definecolor{UANLblue}{HTML}{003A70}
+\definecolor{UANLgold}{HTML}{FFC72C}
+\definecolor{FIMEgreen}{HTML}{006A4D}
+\definecolor{FIMElightgray}{HTML}{F4F4F4}
+
+% --- CONFIGURACIÓN DE PÁGINA ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\color{FIMEgreen}\bfseries FIME -- UANL}
+\lhead{\bfseries Doctorado en Logística y Cadena de Suministro}
+\rfoot{Página \thepage}
+\lfoot{\bfseries Herramientas Multicriterio para Toma de Decisiones}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE\bfseries\color{UANLblue} Ejemplo Práctico Resuelto: Modelo MAUT Multiplicativo} \\[0.3cm]
+    {\large\bfseries\color{FIMEgreen} Sesión 2: Toma de Decisiones bajo Incertidumbre y Teoría de la Utilidad} \\[0.2cm]
+    \rule{\linewidth}{1.5pt}
+\end{center}
+
+\section{Introducción y Planteamiento del Problema}
+
+En la toma de decisiones complejas en logística, la optimización mono-objetivo basada únicamente en costos resulta insuficiente cuando existen riesgos catastróficos u objetivos ambientales en conflicto. La **Teoría de la Utilidad Multiatributo (MAUT)** ofrece un marco matemático riguroso para incorporar la actitud ante el riesgo del decisor en la evaluación de alternativas.
+
+\subsection{El Escenario Logístico}
+Una corporación multinacional debe seleccionar un sitio para un nuevo \textbf{Centro de Distribución (CD) de última milla} en el área metropolitana de Monterrey. Se consideran dos criterios principales para evaluar los sitios candidatos:
+\begin{enumerate}
+    \item \textbf{Costo Anual de Operación ($X_1$):} Medido en miles de dólares (USD/año). El rango de desempeño factible es de \textbf{\$100,000 USD/año} (mejor escenario, $x_1^*$) a \textbf{\$200,000 USD/año} (peor escenario, $x_1^0$).
+    \item \textbf{Probabilidad Anual de Disrupción ($X_2$):} Probabilidad de que el CD sufra inundaciones o bloqueos viales debido a eventos climáticos extremos. El rango factible es de \textbf{0\%} (mejor escenario, $x_2^*$) a \textbf{25\%} (peor escenario, $x_2^0$).
+\end{enumerate}
+
+El analista de decisiones determina, tras entrevistar al Director de Operaciones, los siguientes perfiles de riesgo y preferencias organizacionales:
+\begin{itemize}
+    \item \textbf{Actitud ante el Costo ($X_1$):} La organización muestra un comportamiento \textbf{neutral al riesgo} en el rango financiero evaluado.
+    \item \textbf{Actitud ante el Riesgo de Disrupción ($X_2$):} La organización muestra una alta \textbf{aversión al riesgo} ante interrupciones del servicio, modelada con un coeficiente de aversión absoluta constante de $c = 0.10$.
+\end{itemize}
+
+---
+
+\section{Paso 1: Construcción de Funciones de Utilidad Univariadas}
+
+Dado que ambos criterios son de minimización (costo y probabilidad de retraso/daño), debemos construir funciones de utilidad escaladas donde el mejor valor del rango tenga una utilidad de 1.0 y el peor valor tenga una utilidad de 0.0.
+
+\subsection{Función de Utilidad para Costo: $u_1(x_1)$ (Lineal)}
+Dado que la actitud ante el costo es neutral al riesgo, la función de utilidad es lineal y se define mediante interpolación lineal inversa:
+\begin{equation}
+    u_1(x_1) = \frac{x_1^0 - x_1}{x_1^0 - x_1^*} = \frac{200 - x_1}{200 - 100} = \frac{200 - x_1}{100}
+\end{equation}
+Para cualquier costo $x_1 \in [100, 200]$ (en miles de USD).
+
+\subsection{Función de Utilidad para Disrupción: $u_2(x_2)$ (Exponencial Cóncava)}
+La aversión al riesgo se modela utilizando una estructura exponencial con $c = 0.10$. Para un criterio de costo/penalización a minimizar, la función toma la forma:
+\begin{equation}
+    u_2(x_2) = \frac{e^{-c \cdot x_2} - e^{-c \cdot x_2^0}}{1 - e^{-c \cdot x_2^0}}
+\end{equation}
+Sustituyendo los valores de nuestro rango ($x_2 \in [0, 25]$) y el coeficiente $c = 0.10$:
+\begin{equation}
+    u_2(x_2) = \frac{e^{-0.10 \cdot x_2} - e^{-0.10 \cdot 25}}{1 - e^{-0.10 \cdot 25}} = \frac{e^{-0.10 \cdot x_2} - e^{-2.5}}{1 - e^{-2.5}}
+\end{equation}
+Sabiendo que $e^{-2.5} \approx 0.0821$:
+\begin{equation}
+    u_2(x_2) \approx \frac{e^{-0.10 \cdot x_2} - 0.0821}{0.9179}
+\end{equation}
+
+---
+
+\section{Paso 2: Elicitación de Constantes de Escala e Interacción}
+
+El analista realiza dos entrevistas estructuradas de comparación pareada (loterías de equivalencia de probabilidad) con el Director para determinar el peso de los criterios:
+
+\subsection{Elicitación de $k_1$ y $k_2$}
+\begin{enumerate}
+    \item \textbf{Determinación de $k_1$ (Peso de Costo):} El Director es indiferente entre:
+    \begin{itemize}
+        \item Recibir una opción segura con el mejor Costo (\$100k USD) pero con la peor probabilidad de disrupción (25\%).
+        \item Jugar una lotería que da el mejor escenario global (\$100k USD, 0\% disrupción) con probabilidad $p = 0.55$ o el peor escenario global (\$200k USD, 25\% disrupción) con probabilidad $0.45$.
+    \end{itemize}
+    Por definición de MAUT, la utilidad de la opción segura equivale al peso de su atributo mejorado:
+    \begin{equation}
+        k_1 = 0.55
+    \end{equation}
+
+    \item \textbf{Determinación de $k_2$ (Peso de Disrupción):} El Director es indiferente entre:
+    \begin{itemize}
+        \item Recibir una opción segura con el peor Costo (\$200k USD) pero la mejor confiabilidad (0\% disrupción).
+        \item Jugar una lotería que da el mejor escenario global con probabilidad $p = 0.65$.
+    \end{itemize}
+    De igual manera, esto define el peso de la disrupción:
+    \begin{equation}
+        k_2 = 0.65
+    \end{equation}
+\end{enumerate}
+
+\subsection{Cálculo de la Constante de Interacción Global $k$}
+Sumamos las constantes de escala individuales:
+\begin{equation}
+    \sum_{i=1}^2 k_i = 0.55 + 0.65 = 1.20
+\end{equation}
+Dado que $\sum k_i > 1$, el modelo es estrictamente multiplicativo y la constante global de interacción $k$ debe ser menor a cero (indicando complementariedad entre criterios). Resolvemos la ecuación de Keeney-Raiffa:
+\begin{align}
+    1 + k &= (1 + k \cdot k_1)(1 + k \cdot k_2) \nonumber \\
+    1 + k &= (1 + 0.55 k)(1 + 0.65 k) \nonumber \\
+    1 + k &= 1 + 1.20 k + 0.3575 k^2 \nonumber \\
+    0.3575 k^2 + 0.20 k &= 0
+\end{align}
+Descartando la solución trivial $k = 0$, resolvemos para $k$:
+\begin{equation}
+    k = -\frac{0.20}{0.3575} \approx -0.5594
+\end{equation}
+El valor de $k = -0.5594$ confirma que la organización penaliza fuertemente a las alternativas que descuidan por completo uno de los criterios.
+
+---
+
+\section{Paso 3: Evaluación y Ranking de Sitios Candidatos}
+
+Se evalúan dos alternativas de localización para el nuevo Centro de Distribución:
+\begin{itemize}
+    \item \textbf{Sitio A (Económico pero vulnerable):} Costo anual de \$120,000 USD ($x_1 = 120$), probabilidad de disrupción de 12\% ($x_2 = 12$).
+    \item \textbf{Sitio B (Costoso pero resiliente):} Costo anual de \$160,000 USD ($x_1 = 160$), probabilidad de disrupción de 3\% ($x_2 = 3$).
+\end{itemize}
+
+\subsection{Cálculo de Utilidades Univariadas}
+\begin{itemize}
+    \item \textbf{Para el Sitio A:}
+    \begin{equation}
+        u_1(120) = \frac{200 - 120}{100} = 0.8000
+    \end{equation}
+    \begin{equation}
+        u_2(12) = \frac{e^{-0.10 \cdot 12} - 0.0821}{0.9179} = \frac{e^{-1.2} - 0.0821}{0.9179} \approx \frac{0.3012 - 0.0821}{0.9179} \approx 0.2387
+    \end{equation}
+
+    \item \textbf{Para el Sitio B:}
+    \begin{equation}
+        u_1(160) = \frac{200 - 160}{100} = 0.4000
+    \end{equation}
+    \begin{equation}
+        u_2(3) = \frac{e^{-0.10 \cdot 3} - 0.0821}{0.9179} = \frac{e^{-0.3} - 0.0821}{0.9179} \approx \frac{0.7408 - 0.0821}{0.9179} \approx 0.7176
+    \end{equation}
+\end{itemize}
+
+\subsection{Cálculo de la Utilidad Global $U(X)$}
+La ecuación multiplicativa para dos criterios es:
+\begin{equation}
+    U(x_1, x_2) = k_1 u_1(x_1) + k_2 u_2(x_2) + k \cdot k_1 k_2 u_1(x_1) u_2(x_2)
+\end{equation}
+
+\begin{enumerate}
+    \item \textbf{Utilidad del Sitio A ($U(A)$):}
+    \begin{align}
+        U(A) &= (0.55 \cdot 0.8000) + (0.65 \cdot 0.2387) + (-0.5594 \cdot 0.55 \cdot 0.65 \cdot 0.8000 \cdot 0.2387) \nonumber \\
+        U(A) &= 0.4400 + 0.1552 - (0.2000 \cdot 0.1910) \nonumber \\
+        U(A) &= 0.5952 - 0.0382 = \mathbf{0.5570}
+    \end{align}
+
+    \item \textbf{Utilidad del Sitio B ($U(B)$):}
+    \begin{align}
+        U(B) &= (0.55 \cdot 0.4000) + (0.65 \cdot 0.7176) + (-0.5594 \cdot 0.55 \cdot 0.65 \cdot 0.4000 \cdot 0.7176) \nonumber \\
+        U(B) &= 0.2200 + 0.4664 - (0.2000 \cdot 0.2870) \nonumber \\
+        U(B) &= 0.6864 - 0.0574 = \mathbf{0.6290}
+    \end{align}
+\end{enumerate}
+
+---
+
+\section{Interpretación y Decisión Final}
+
+\begin{center}
+    \bfseries\color{FIMEgreen} Resultado del Modelo:
+\end{center}
+Puesto que $U(B) = 0.6290 > U(A) = 0.5570$, la recomendación analítica es seleccionar el \textbf{Sitio B}.
+
+\subsection{Puntos de Reflexión Académica para el Estudiante de Doctorado}
+\begin{itemize}
+    \item \textbf{Efecto de la actitud ante el riesgo:} Aunque el Sitio A tiene una ventaja sustancial en costos (\$40k USD de ahorro anual), el Sitio B es elegido debido a la fuerte aversión al riesgo ante interrupciones de la cadena de suministro ($c=0.10$). Si el Director de Operaciones hubiera sido neutral al riesgo ante desastres climáticos (curva lineal para $X_2$), el Sitio A habría resultado ganador.
+    \item \textbf{Efecto de la complementariedad ($k < 0$):} La constante de interacción negativa reduce la utilidad general de alternativas desbalanceadas (como Sitio A, que tiene un desempeño excelente en costos pero pésimo en disrupción). Esto evita que los directivos seleccionen proyectos que pongan en peligro crítico la operación de la empresa, modelando adecuadamente el comportamiento corporativo.
+\end{itemize}
+
+\end{document}
