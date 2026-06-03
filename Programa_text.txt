@@ -1,0 +1,412 @@
+UNIVERSIDAD AUTÓNOMA DE NUEVO LEÓN
+Facultad de Ingeniería Mecánica y Eléctrica
+Doctorado en Logística
+PROGRAMA ANALÍTICO
+Herramientas Multicriterio para Toma de Decisiones
+Nivel: Doctorado  |  Modalidad: Presencial  |  Tetramestral
+15 sesiones  ×  3 horas  =  45 horas totales
+Área: Investigación de Operaciones y Logística
+I. Datos Generales de la Materia
+Campo
+Descripción
+Nombre de la materia
+Herramientas Multicriterio para Toma de Decisiones
+Programa
+Doctorado en Logística
+Unidad académica
+FIME – Universidad Autónoma de Nuevo León (UANL)
+Duración
+Tetramestral | 15 sesiones × 3 horas = 45 horas
+Créditos
+6 créditos (sujeto a tabla de créditos institucional)
+Prerrequisitos
+Estadística avanzada, Investigación de Operaciones, Seminario de investigación I
+Idioma
+Español (lectura obligatoria en inglés)
+II. Descripción del Curso
+Este curso de nivel doctoral profundiza en los fundamentos teóricos, matemáticos y metodológicos de los métodos de toma de decisiones multicriterio (MCDM/MADM), con énfasis en su aplicación rigurosa en problemas complejos de logística y cadena de suministro. A diferencia del nivel de especialidad, el enfoque doctoral integra la dimensión investigativa: el estudiante no solo aprende a aplicar métodos, sino a cuestionarlos, extenderlos y contribuir al avance del conocimiento científico.
+A lo largo del tetramestre, el estudiante desarrollará un protocolo de investigación original que culmina en un artículo o anteproyecto de tesis, con potencial de publicación en revistas internacionales indexadas.
+III. Competencias a Desarrollar
+Competencias Genéricas del Doctorado
+Capacidad de generación, aplicación y divulgación del conocimiento científico.
+Pensamiento crítico, analítico y reflexivo ante problemas de investigación.
+Comunicación científica oral y escrita en contextos de alto impacto.
+Competencias Específicas de la Materia
+Dominar los fundamentos axiomáticos y matemáticos de los principales métodos MCDM.
+Seleccionar, justificar y aplicar métodos MCDM apropiados para problemas de logística complejos.
+Extender o adaptar métodos existentes incorporando incertidumbre (lógica difusa, conjuntos grises, rough sets).
+Diseñar estudios de caso con validez científica, análisis de sensibilidad y robustez.
+Articular los resultados de investigación bajo los estándares de publicación en revistas Q1/Q2.
+IV. Contenido Temático por Sesión
+Nota de actualización bibliográfica: las lecturas marcadas como "Archivo disponible" se encuentran organizadas en la carpeta literatura; las marcadas como "Biblioteca UANL / pendiente" deben conseguirse por acceso institucional o pueden mantenerse como lectura recomendada.
+Cada sesión combina exposición teórica (~90 min), discusión de artículos científicos (~45 min) y actividad aplicada (~45 min).
+Sesión 1: Fundamentos epistemológicos de la toma de decisiones multicriterio
+Lectura previa
+[Capítulo]  Figueira, J., Greco, S., & Ehrgott, M. (2016). An overview of MCDM concepts and approaches. En Multiple Criteria Decision Analysis (2a ed., cap. 1, pp. 1–33). Springer. [Archivo disponible: literatura/libros/S01_Figueira_Greco_Ehrgott_2016_Multiple_Criteria_Decision_Analysis_2nd_ed.pdf]
+[Artículo]  Mardani, A., et al. (2015). Multiple criteria decision-making techniques and their applications – a survey. Economic Research, 28(1), 516–571. [Archivo disponible: literatura/articulos/S01_Mardani_et_al_2015_Multiple_criteria_decision_making_techniques_and_their_applications_survey.pdf]
+Guía de lectura: Identifica al menos 3 debates epistemológicos en la literatura revisada. ¿Cómo se diferencia la ontología del MCDM respecto a la optimización clásica?
+Temas de sesión
+• Paradigmas en la investigación de operaciones y ciencias de la decisión
+• Revisión crítica de la literatura: state-of-the-art y análisis bibliométrico
+• Diferencias entre MCDM y MADM: taxonomía actualizada
+• Problemáticas en logística susceptibles de modelación multicriterio
+Actividad
+Mapeo bibliométrico con VOSviewer sobre una temática de logística elegida por el estudiante
+Sesión 2: Teoría de la utilidad multiatributo (MAUT) y decisiones bajo incertidumbre
+Lectura previa
+[Capítulo]  Keeney, R. L., & Raiffa, H. (1993). Decisions with Multiple Objectives (cap. 3 y 5). Cambridge University Press. [Biblioteca UANL / pendiente de archivo local]
+[Capítulo]  Dyer, J. S. (2005). MAUT – Multiattribute utility theory. En Multiple Criteria Decision Analysis (pp. 265–292). Springer. [Archivo disponible: literatura/libros/S02_Dyer_2005_in_Figueira_Greco_Ehrgott_2005_Multiple_Criteria_Decision_Analysis_1st_ed.pdf]
+Guía de lectura: Analiza los supuestos de independencia preferencial. ¿En qué situaciones logísticas reales podrían violarse estos supuestos?
+Temas de sesión
+• Axiomas de la teoría de la utilidad esperada
+• Funciones de valor y utilidad multiatributo: independencia preferencial
+• Elicitación de preferencias y curvas de indiferencia
+• Modelos de decisión bajo riesgo vs. incertidumbre en cadenas de suministro
+Actividad
+Modelado de una función de utilidad para selección de proveedor bajo incertidumbre
+Sesión 3: AHP/ANP: revisión crítica y extensiones avanzadas
+Lectura previa
+[Artículo debate]  Dyer, J. S. (1990). Remarks on the analytic hierarchy process. Management Science, 36(3), 249–258. [Biblioteca UANL / pendiente de archivo local]
+[Artículo]  Rezaei, J. (2015). Best-worst multi-criteria decision-making method. Omega, 53, 49–57. [Archivo disponible: literatura/articulos/S03_Rezaei_2015_Best_worst_multi_criteria_decision_making_method.pdf]
+[Lectura complementaria]  Saaty, T. L. (1990). An exposition of the AHP in reply to the paper "Remarks on the analytic hierarchy process". Management Science, 36(3), 259–268. [Biblioteca UANL / pendiente de archivo local]
+Guía de lectura: Lee el artículo de Dyer (1990) y la respuesta de Saaty en el mismo volumen. ¿Cuál es tu postura respecto al debate? ¿Qué resuelve BWM que AHP no resuelve?
+Temas de sesión
+• Revisión crítica del AHP: inconsistencias y debates en la literatura
+• ANP: modelado de dependencias e interdependencias en redes logísticas
+• Best-Worst Method (BWM): fundamentos y comparativa con AHP
+• Full Consistency Method (FUCOM): ventajas y aplicaciones recientes
+Actividad
+Comparativa aplicada: AHP vs. BWM vs. FUCOM en un caso de evaluación de proveedores 3PL
+Entregable
+E1 — Diagnóstico MCDM de un problema real
+Sesión 4: Métodos de superación: ELECTRE y PROMETHEE — extensiones
+Lectura previa
+[Artículo clásico]  Brans, J. P., & Vincke, P. (1985). A preference ranking organisation method. Management Science, 31(6), 647–656. [Archivo disponible: literatura/articulos/S04_Brans_Vincke_1985_Preference_Ranking_Organisation_Method_PROMETHEE.pdf]
+[Lectura alternativa OA]  Wang, Z., & Rangaiah, G. P. (2025). Multi-Criteria Decision-Making: Outranking-Type Methods. [Archivo disponible: literatura/articulos/S04_Wang_Rangaiah_2025_Outranking_Type_Methods_ELECTRE_PROMETHEE.pdf]
+Guía de lectura: Usando la revisión de Govindan & Jepsen, identifica las variantes de ELECTRE más utilizadas en logística y cadena de suministro. ¿Qué vacíos de investigación señalan los autores?
+Temas de sesión
+• Revisión ELECTRE III, IV y TRI: manejo de criterios con umbrales
+• PROMETHEE II y GAIA: visualización y análisis de sensibilidad
+• PROMETHEE-GDSS para decisiones grupales en logística
+• Comparativa teórica: compensación vs. no-compensación
+Actividad
+Aplicación PROMETHEE+GAIA con análisis de robustez en selección de modo de transporte
+Sesión 5: TOPSIS, VIKOR y variantes: teoría y análisis de sensibilidad
+Lectura previa
+[Lectura alternativa OA]  A comparative case study of the VIKOR and TOPSIS rankings similarity. Procedia Computer Science (2020). [Archivo disponible: literatura/articulos/S05_Comparative_Case_Study_VIKOR_TOPSIS_Rankings_Similarity_2020.pdf]
+[Lectura complementaria OA]  Comparative analyses of multi-criteria methods in supplier selection problem. Procedia Computer Science, 207 (2022), 4593–4602. [Archivo disponible: literatura/articulos/S05_Comparative_Analyses_MCDM_Methods_Supplier_Selection_2022.pdf]
+Guía de lectura: Identifica al menos 5 aplicaciones de TOPSIS en logística del survey de Behzadian et al. ¿Qué criterios son más frecuentes? ¿Qué extensiones han ganado más tracción?
+Temas de sesión
+• Fundamentos matemáticos de TOPSIS y VIKOR: puntos ideales y anti-ideales
+• Extensiones: Interval TOPSIS, TOPSIS difuso
+• Análisis de sensibilidad: variación de pesos y estabilidad del ranking
+• Comparativa de rankings: índice de correlación de Spearman y Kendall
+Actividad
+Análisis de sensibilidad con simulación Monte Carlo aplicado a evaluación de rutas logísticas
+Sesión 6: Lógica difusa y conjuntos difusos en MCDM
+Lectura previa
+[Artículo fundacional]  Zadeh, L. A. (1965). Fuzzy sets. Information and Control, 8(3), 338–353. [Archivo disponible: literatura/articulos/S06_Zadeh_1965_Fuzzy_sets.pdf]
+[Lectura alternativa OA]  Tronnebati, I., El Yadari, M., & Jawab, F. (2022). A Review of Green Supplier Evaluation and Selection Issues Using MCDM, MP and AI Models. Sustainability, 14(24), 16714. [Archivo disponible: literatura/articulos/S06_Tronnebati_El_Yadari_Jawab_2022_Green_Supplier_Evaluation_Selection_Review.pdf]
+Guía de lectura: ¿Por qué la lógica difusa es especialmente relevante para la evaluación de proveedores? Identifica al menos tres formas distintas en que los autores modelan la incertidumbre en el artículo de Govindan et al.
+Temas de sesión
+• Números difusos triangulares y trapezoidales: operaciones y defuzzificación
+• Fuzzy AHP, Fuzzy TOPSIS, Fuzzy VIKOR: metodologías comparadas
+• Hesitant Fuzzy Sets y Intuitionistic Fuzzy Sets: estado del arte
+• Aplicaciones en evaluación de riesgo en cadena de suministro
+Actividad
+Implementación de Fuzzy TOPSIS en Python/Excel para evaluación de centros de distribución
+Entregable
+E2 — Mini systematic review (15–20 papers)
+Sesión 7: MCDM bajo incertidumbre: teoría de conjuntos aproximados y números grises
+Lectura previa
+[Lectura alternativa OA]  Wei, G. W., Wang, H. J., Lin, R., & Zhao, X. F. (2011). Grey relational analysis method for intuitionistic fuzzy multiple attribute decision making with preference information on alternatives. International Journal of Computational Intelligence Systems, 4(2), 164–173. [Archivo disponible: literatura/articulos/S07_Wei_Wang_Lin_Zhao_2011_GRA_Intuitionistic_Fuzzy_MADM_Preference_Info.pdf]
+[Artículo]  Pawlak, Z. (1982). Rough sets. International Journal of Computer & Information Sciences, 11(5), 341–356. [Archivo disponible: literatura/articulos/S07_Pawlak_1982_Rough_sets.pdf]
+Guía de lectura: Compara el GRA con el análisis de correlación clásico. ¿En qué escenarios de logística tiene ventaja el enfoque de números grises frente a los métodos probabilísticos?
+Temas de sesión
+• Grey Relational Analysis (GRA): fundamentos y extensiones
+• Rough Set Theory aplicada a MCDM: reducción de atributos
+• D-numbers y evidential reasoning para decisiones con información incompleta
+• Casos de uso: gestión de inventarios y planificación de demanda incierta
+Actividad
+Aplicación de GRA en análisis de factores de riesgo en supply chain disruption
+Sesión 8: Métodos de ponderación objetiva y determinación de pesos
+Lectura previa
+[Artículo]  Diakoulaki, D., Mavrotas, G., & Papayannakis, L. (1995). Determining objective weights in multiple criteria problems: the CRITIC method. Computers & Operations Research, 22(7), 763–770. [Biblioteca UANL / pendiente de archivo local]
+[Artículo]  Keshavarz-Ghorabaee, M., et al. (2021). Determination of Objective Weights Using a New Method Based on the Removal Effects of Criteria (MEREC). Symmetry, 13(4), 525. [Archivo disponible: literatura/articulos/S08_Keshavarz_Ghorabaee_et_al_2021_Determination_of_Objective_Weights_Using_MEREC.pdf]
+Guía de lectura: ¿Qué diferencias filosóficas existen entre determinar pesos de forma subjetiva vs. objetiva? ¿Qué implicaciones tiene esta elección para la aceptación de resultados por parte de los tomadores de decisión?
+Temas de sesión
+• CRITIC, Entropy, MEREC: fundamentos matemáticos
+• LOPCOW y CILOS: métodos emergentes
+• Integración de pesos subjetivos y objetivos: IDOCRIW
+• Impacto de los pesos en el ranking final: análisis empírico
+Actividad
+Estudio comparativo de métodos de ponderación en un dataset de logística real
+Sesión 9: Métodos de nueva generación: MARCOS, EDAS, CODAS, CoCoSo
+Lectura previa
+[Lectura alternativa OA]  Wang, C.-N., Nguyen, T. T. T., Dang, T.-T., & Nguyen, N.-A.-T. (2022). A Hybrid OPA and Fuzzy MARCOS Methodology for Sustainable Supplier Selection with Technology 4.0 Evaluation. Processes, 10(11), 2351. [Archivo disponible: literatura/articulos/S09_Wang_Nguyen_Dang_Nguyen_2022_OPA_Fuzzy_MARCOS_Sustainable_Supplier_I40.pdf]
+[Artículo]  Keshavarz Ghorabaee, M., et al. (2015). Multi-criteria inventory classification using a new method of evaluation based on distance from average solution (EDAS). Informatica, 26(3), 435–451. [Archivo disponible: literatura/articulos/S09_Keshavarz_Ghorabaee_et_al_2015_EDAS_Evaluation_based_on_Distance_from_Average_Solution.pdf]
+Guía de lectura: Traza el árbol genealógico de estos métodos: ¿de qué métodos anteriores heredan ideas? ¿Qué problema específico intentan resolver cada uno? Prepara una tabla comparativa de sus ventajas.
+Temas de sesión
+• MARCOS (Measurement of Alternatives and Ranking according to COmpromise Solution)
+• EDAS (Evaluation based on Distance from Average Solution)
+• CODAS (COmbinative Distance-based ASsessment)
+• CoCoSo (Combined Compromise Solution): integración y comparativas
+Actividad
+Aplicación en selección de operador logístico con al menos dos métodos de nueva generación
+Entregable
+E3 — Caso de estudio aplicado con datos reales
+Sesión 10: Decisión multicriterio grupal (GDMCDM) y consenso
+Lectura previa
+[Lectura alternativa OA]  Soft consensus cost models for group decision making and economic interpretations. European Journal of Operational Research, 277(3), 964–980. [Archivo disponible: literatura/articulos/S10_Soft_Consensus_Cost_Models_Group_Decision_Making_2019.pdf]
+[Artículo]  Palomares, I., Martinez, L., & Herrera, F. (2014). A consensus model to detect and manage noncooperative behaviors in large-scale group decision making. IEEE Transactions on Fuzzy Systems, 22(3), 516–530. [IEEE Xplore / pendiente de archivo local]
+Guía de lectura: Identifica en los artículos al menos dos tipos de comportamiento no-cooperativo en decisiones grupales. ¿Cómo podrían manifestarse estos comportamientos en un comité de licitación logística real?
+Temas de sesión
+• Agregación de preferencias individuales: OWA, operadores de media geométrica
+• Modelos de consenso y gestión del disenso
+• Métodos Delphi integrados con MCDM en logística
+• Aplicaciones en comités de decisión para licitaciones y sourcing estratégico
+Actividad
+Simulación de proceso de decisión grupal con juego de roles y herramienta de consenso
+Sesión 11: Integración MCDM con optimización y modelos híbridos
+Lectura previa
+[Artículo]  Deb, K., et al. (2002). A fast and elitist multiobjective genetic algorithm: NSGA-II. IEEE Transactions on Evolutionary Computation, 6(2), 182–197. [Archivo disponible: literatura/articulos/S11_Deb_et_al_2002_A_fast_and_elitist_multiobjective_genetic_algorithm_NSGA_II.pdf]
+[Lectura alternativa OA]  Awasthi, A., Chauhan, S. S., & Goyal, S. K. (2012). A hybrid approach integrating Affinity Diagram, AHP and fuzzy TOPSIS for sustainable city logistics planning. Applied Mathematical Modelling, 36(2), 573–584. [Archivo disponible: literatura/articulos/S11_AHP_Fuzzy_TOPSIS_Sustainable_City_Logistics_Planning_2012.pdf]
+Guía de lectura: En el artículo de Tavana & Hatami-Marbini: ¿por qué se combinaron AHP y TOPSIS en lugar de usar solo uno? ¿Qué aportó cada método al modelo final? Reflexiona sobre cuándo tiene sentido hibridar métodos.
+Temas de sesión
+• MCDM + programación matemática: modelos bi-objetivo y Pareto
+• MCDM + simulación: Discrete Event Simulation para evaluación de alternativas
+• Algoritmos evolutivos multiobjetivo: NSGA-II, MOEA/D
+• Frameworks híbridos en diseño de redes logísticas
+Actividad
+Revisión crítica de paper híbrido MCDM-optimización con propuesta de extensión
+Sesión 12: MCDM con datos masivos, machine learning e inteligencia artificial
+Lectura previa
+[Artículo]  Doumpos, M., & Figueira, J. R. (2019). Learning approaches to criteria weights in MCDM: a literature review. Omega, 84, 176–194. [Biblioteca UANL / pendiente de archivo local]
+[Artículo]  Arrieta, A. B., et al. (2020). Explainable Artificial Intelligence (XAI): Concepts, taxonomies, opportunities and challenges toward responsible AI. Information Fusion, 58, 82–115. [Archivo disponible: literatura/articulos/S12_Arrieta_et_al_2020_Explainable_Artificial_Intelligence_XAI.pdf]
+Guía de lectura: ¿Cómo cambia el papel del experto humano cuando los pesos de los criterios se aprenden automáticamente? ¿Qué implicaciones éticas y prácticas tiene esto en decisiones logísticas de alto impacto?
+Temas de sesión
+• Data-driven MCDM: aprendizaje de preferencias con ML
+• Clustering y clasificación para reducción de alternativas
+• Explainable AI (XAI) y toma de decisiones transparente
+• Aplicaciones: predicción de disrupciones y decisiones en tiempo real
+Actividad
+Revisión sistemática de literatura MCDM + AI en logística (últimos 5 años)
+Entregable
+E4 — Borrador completo del artículo científico
+Sesión 13: Sostenibilidad, logística verde y MCDM
+Lectura previa
+[Lectura alternativa OA]  Banaeian, N., Mobli, H., Nielsen, I. E., & Omid, M. (2017). Green Supplier Evaluation and Selection in Apparel Manufacturing Using a Fuzzy Multi-Criteria Decision-Making Approach. Sustainability, 9(4), 650. [Archivo disponible: literatura/articulos/S13_Green_Supplier_Evaluation_Selection_Apparel_Fuzzy_MCDM_2017.pdf]
+[Lectura alternativa OA]  Zhou, X., & Xu, Z. (2018). An Integrated Sustainable Supplier Selection Approach Based on Hybrid Information Aggregation. Sustainability, 10(7), 2543. [Archivo disponible: literatura/articulos/S13_Zhou_Xu_2018_Integrated_Sustainable_Supplier_Selection_Hybrid_Info_Aggregation.pdf]
+Guía de lectura: ¿Cómo operacionalizan los autores el concepto de 'triple bottom line' como criterios MCDM? ¿Qué tensiones identificas entre los criterios económicos y ambientales en los casos estudiados?
+Temas de sesión
+• Triple bottom line: indicadores económicos, ambientales y sociales en MCDM
+• Green Supplier Selection: revisión de la literatura y mejores prácticas
+• Life Cycle Assessment (LCA) integrado con MCDM
+• Objetivos de Desarrollo Sostenible (ODS) como criterios de evaluación
+Actividad
+Diseño de marco MCDM para evaluación de sostenibilidad en un caso de logística inversa
+Sesión 14: Validación, robustez y replicabilidad en investigación MCDM
+Lectura previa
+[Artículo metodológico]  Saltelli, A., et al. (2019). Why so many published sensitivity analyses are false: A systematic review of sensitivity analysis practices. Environmental Modelling & Software, 114, 29–39. [Archivo disponible: literatura/articulos/S14_Saltelli_et_al_2019_Why_so_many_published_sensitivity_analyses_are_false.pdf]
+[Artículo]  Cinelli, M., et al. (2022). Proper and improper uses of MCDA methods in energy systems analysis. Decision Support Systems, 163, 113848. [Archivo disponible: literatura/articulos/S14_Cinelli_et_al_2022_Proper_and_improper_uses_of_MCDA_methods_in_energy_systems_analysis.pdf]
+Guía de lectura: Según Saltelli et al., ¿cuáles son los errores más frecuentes en análisis de sensibilidad? Aplica este checklist crítico a uno de tus avances previos del protocolo de investigación.
+Temas de sesión
+• Análisis de sensibilidad avanzado: Monte Carlo, coeficiente de variación de Delphi
+• Validación cruzada de rankings: índices de concordancia
+• Reproducibilidad de resultados: datos abiertos y código abierto
+• Checklist de calidad para publicación en revistas de alto impacto (JEL, EJOR, Omega)
+Actividad
+Revisión por pares del protocolo de investigación de un compañero con formato referee
+Sesión 15: Presentaciones finales y retroalimentación académica
+Lectura previa
+[Guía]  Sharma, D. K., et al. (2021). How to write a good research paper: a guide for MCDM researchers. Journal of Decision Systems, 30(2–3), 1–15. [Taylor & Francis / pendiente de archivo local]
+[Recurso]  Guía de autores de European Journal of Operational Research (EJOR). [Enlace guardado: literatura/guias/S15_European_Journal_of_Operational_Research_guide_for_authors.url.txt]
+[Recurso]  Guía de autores de Computers & Industrial Engineering. [Enlace guardado: literatura/guias/S15_Computers_Industrial_Engineering_guide_for_authors.url.txt]
+Guía de lectura: Revisa la guía de autores de EJOR. ¿Tu protocolo actual cumple con los lineamientos de estructura, extensión y estilo? Identifica tres mejoras concretas antes de la presentación.
+Temas de sesión
+• Presentación de proyectos finales (formato congreso: 15 min + 5 min preguntas)
+• Retroalimentación estructurada: rúbrica de evaluación académica
+• Discusión: agenda de investigación futura en MCDM y logística
+• Cierre: publicación, difusión y extensión de los proyectos
+Actividad
+Defensa del proyecto de investigación ante panel evaluador
+Entregable
+E5 — Presentación ejecutiva + plan de sometimiento
+V. Sistema de Evaluación: Pipeline hacia Publicación
+Las cinco evidencias del curso no son ejercicios académicos — son los componentes reales de un artículo científico. Cada entregable construye sobre el anterior: al terminar el tetramestre, el grupo tiene un manuscrito listo para someter a una revista indexada (Q1/Q2) y cada alumno tiene en su haber un producto tangible que puede llevar a su empresa, su consultoría o su trayectoria investigadora.
+Evidencia
+Peso
+Entrega
+Componente del artículo
+E1 — Diagnóstico MCDM de problema real
+10%
+Sesión 3
+Introducción + motivación
+E2 — Mini systematic review (PRISMA)
+15%
+Sesión 6
+Literature Review
+E3 — Caso de estudio aplicado (datos reales)
+30%
+Sesión 9
+Metodología + Resultados
+E4 — Borrador de artículo científico completo
+30%
+Sesión 12
+Manuscrito completo
+E5 — Presentación ejecutiva + plan de sometimiento
+15%
+Sesión 15
+Artículo sometido
+TOTAL
+100%
+1 artículo indexado co-autorado
+Descripción Detallada de Cada Evidencia
+E1  |  Diagnóstico MCDM de un problema real
+¿Qué es?
+Cada alumno documenta un problema de decisión real de su empresa o industria: mapeo de actores, criterios en conflicto, alternativas y datos disponibles. No es un ejercicio — es el punto de partida del artículo. Formato estilo 'problem statement' de paper.
+Formato de entrega
+Ficha técnica (2 pp.) + matriz de decisión preliminar en Excel
+Valor para el alumno
+Sección de Introducción y motivación del artículo final
+E2  |  Mini systematic review (15–20 papers)
+¿Qué es?
+Revisión sistemática focalizada en MCDM + su industria, siguiendo protocolo PRISMA simplificado. El objetivo no es resumir papers sino detectar el gap que el caso del alumno puede llenar — la oportunidad de publicación concreta.
+Formato de entrega
+Tabla PRISMA + narrativa de 3 pp. en formato 'Literature Review'
+Valor para el alumno
+Sección 2 del artículo (Literature Review) lista para integrar
+E3  |  Caso de estudio aplicado con datos reales
+¿Qué es?
+Aplicación de 2+ métodos MCDM al problema de E1 con datos reales (anonimizados si es necesario) o estructurados con expertos de la empresa. Incluye análisis de sensibilidad. Este entregable ES el corazón del artículo.
+Formato de entrega
+Reporte técnico 8–10 pp. (estructura IMRyD) + código Python/Excel reproducible
+Valor para el alumno
+Secciones de Metodología y Resultados del artículo
+E4  |  Borrador completo del artículo científico
+¿Qué es?
+Integración de E1+E2+E3 en manuscrito completo: Abstract, Introducción, Marco teórico, Metodología, Resultados, Discusión, Conclusiones. Se elige revista objetivo (EJOR, Omega, Computers & Industrial Engineering, Applied Soft Computing) y se adapta el formato de la guía de autores.
+Formato de entrega
+Manuscrito completo en formato de la revista objetivo (8,000–10,000 palabras)
+Valor para el alumno
+Artículo en borrador listo para revisión interna antes de sometimiento
+E5  |  Presentación ejecutiva + plan de sometimiento
+¿Qué es?
+Defensa en formato paper session de congreso (15 min + 5 preguntas). Entrega adicional: hoja de ruta de publicación con revista objetivo, alternativa, timeline de revisiones y estrategia de respuesta al editor.
+Formato de entrega
+Presentación (15 min) + Hoja de ruta de publicación (1 p.)
+Valor para el alumno
+Artículo listo para someter + estrategia de publicación documentada
+Escala de Calificación
+Calificación
+Rango
+Calificación
+Rango
+Excelente
+90–100
+Suficiente
+70–79
+Muy Bien
+80–89
+Insuficiente
+< 70
+VI. Metodología de Enseñanza-Aprendizaje
+El curso emplea una pedagogía activa orientada a la producción científica:
+Exposición magistral con discusión socrática de fundamentos teóricos
+Flipped classroom: lectura previa de artículos científicos asignados
+Aprendizaje basado en problemas (ABP) con casos reales de logística
+Revisión por pares: los estudiantes evalúan avances de sus compañeros con criterios académicos
+Talleres de software: Python (scikit-criteria, pyDecision), Excel avanzado, VOSviewer
+Seminario de investigación integrado: cada actividad alimenta el protocolo final
+Se espera que el estudiante dedique al menos 4 horas de trabajo autónomo por sesión (lectura, programación, redacción).
+VII. Bibliografía y Recursos
+Bibliografía Obligatoria
+Hwang, C. L., & Yoon, K. (1981). Multiple Attribute Decision Making. Springer.
+Saaty, T. L. (1980). The Analytic Hierarchy Process. McGraw-Hill.
+Figueira, J., Greco, S., & Ehrgott, M. (Eds.) (2016). Multiple Criteria Decision Analysis: State of the Art Surveys (2nd ed.). Springer.
+Zavadskas, E. K., et al. (2019). Decision Making Methods and Applications. MDPI.
+Stević, Ž., et al. (2020). Sustainable supplier selection in healthcare industries using a new MCDM method: Measurement of Alternatives and Ranking according to COmpromise Solution (MARCOS). Computers & Industrial Engineering, 140.
+Rezaei, J. (2015). Best-worst multi-criteria decision-making method. Omega, 53, 49–57.
+Bibliografía Complementaria
+Keshavarz Ghorabaee, M., et al. (2015). Multi-criteria inventory classification using a new method of evaluation based on distance from average solution (EDAS). Informatica, 26(3), 435–451.
+Mardani, A., et al. (2020). A systematic review and meta-analysis of SWARA and WASPAS methods. Applied Soft Computing, 96.
+Çalı, S., & Balaman, Ş. Y. (2019). A novel outranking based multi criteria group decision making methodology integrating ELECTRE and VIKOR under intuitionistic fuzzy environment. Expert Systems with Applications, 119, 36–50.
+Revista recomendada: European Journal of Operational Research (EJOR), Omega, Expert Systems with Applications, Computers & Industrial Engineering.
+Bases de Datos y Recursos Digitales
+Web of Science / Scopus: búsqueda bibliométrica de MCDM en logística
+Google Scholar + Publish or Perish: análisis de impacto
+ScienceDirect y SpringerLink: acceso a artículos del área
+Repositorio PyPI: librerías pyDecision, scikit-criteria para implementación en Python
+Software recomendado: DecisionLab (PROMETHEE/GAIA), Super Decisions (ANP), Python/Jupyter
+VIII. Cronograma Tentativo del Tetramestre
+Ses.
+Tema Principal
+Actividad
+Entregable
+1
+Fundamentos epistemológicos de la toma de decisiones multicriterio
+Mapeo bibliométrico con VOSviewer sobre una temática de logística elegida por …
+—
+2
+Teoría de la utilidad multiatributo (MAUT) y decisiones bajo incertidumbre
+Modelado de una función de utilidad para selección de proveedor bajo incertidu…
+—
+3
+AHP/ANP: revisión crítica y extensiones avanzadas
+Comparativa aplicada: AHP vs. BWM vs. FUCOM en un caso de evaluación de provee…
+E1 — Diagnóstico MCDM de un problema real
+4
+Métodos de superación: ELECTRE y PROMETHEE — extensiones
+Aplicación PROMETHEE+GAIA con análisis de robustez en selección de modo de tra…
+—
+5
+TOPSIS, VIKOR y variantes: teoría y análisis de sensibilidad
+Análisis de sensibilidad con simulación Monte Carlo aplicado a evaluación de r…
+—
+6
+Lógica difusa y conjuntos difusos en MCDM
+Implementación de Fuzzy TOPSIS en Python/Excel para evaluación de centros de d…
+E2 — Mini systematic review (15–20 papers)
+7
+MCDM bajo incertidumbre: teoría de conjuntos aproximados y números grises
+Aplicación de GRA en análisis de factores de riesgo en supply chain disruption
+—
+8
+Métodos de ponderación objetiva y determinación de pesos
+Estudio comparativo de métodos de ponderación en un dataset de logística real
+—
+9
+Métodos de nueva generación: MARCOS, EDAS, CODAS, CoCoSo
+Aplicación en selección de operador logístico con al menos dos métodos de nuev…
+E3 — Caso de estudio aplicado con datos reales
+10
+Decisión multicriterio grupal (GDMCDM) y consenso
+Simulación de proceso de decisión grupal con juego de roles y herramienta de c…
+—
+11
+Integración MCDM con optimización y modelos híbridos
+Revisión crítica de paper híbrido MCDM-optimización con propuesta de extensión
+—
+12
+MCDM con datos masivos, machine learning e inteligencia artificial
+Revisión sistemática de literatura MCDM + AI en logística (últimos 5 años)
+E4 — Borrador completo del artículo científico
+13
+Sostenibilidad, logística verde y MCDM
+Diseño de marco MCDM para evaluación de sostenibilidad en un caso de logística…
+—
+14
+Validación, robustez y replicabilidad en investigación MCDM
+Revisión por pares del protocolo de investigación de un compañero con formato …
+—
+15
+Presentaciones finales y retroalimentación académica
+Defensa del proyecto de investigación ante panel evaluador
+E5 — Presentación ejecutiva + plan de sometimiento
+IX. Consideraciones Éticas y Académicas
+Toda la producción escrita deberá ser original; el uso de IA generativa debe declararse explícitamente.
+Los datos utilizados en los casos de estudio deben citarse adecuadamente o anonimizarse si son confidenciales.
+Las revisiones por pares se realizarán bajo principios de confidencialidad y respeto académico.
+El protocolo de investigación puede convertirse en el capítulo metodológico de la tesis doctoral.
+FIME – UANL  |  Doctorado en Logística  |  Herramientas Multicriterio para Toma de Decisiones
+Programa sujeto a ajustes según avance del grupo y líneas de investigación activas.

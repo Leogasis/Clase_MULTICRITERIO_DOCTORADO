@@ -1,0 +1,4 @@
+\babel@toc {spanish}{}\relax 
+\beamer@sectionintoc {1}{Bloque 1: Fundamentos Teóricos y Taxonomía MCDM}{6}{0}{1}
+\beamer@sectionintoc {2}{Bloque 2: Discusión de Literatura de Referencia}{26}{0}{2}
+\beamer@sectionintoc {3}{Bloque 3: Introducción a la Actividad Práctica}{30}{0}{3}

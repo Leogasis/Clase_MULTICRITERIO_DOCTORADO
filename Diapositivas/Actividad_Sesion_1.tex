@@ -1,0 +1,235 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- PAQUETES BÁSICOS ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=2.2cm, right=2.2cm, headheight=24pt}
+\addtolength{\topmargin}{-12pt}
+
+% --- COLORES INSTITUCIONALES (FIME/UANL) ---
+\usepackage{xcolor}
+\definecolor{FIMEgreen}{HTML}{005C42}
+\definecolor{UANLblue}{HTML}{002F6C}
+\definecolor{UANLgold}{HTML}{FFC72C}
+\definecolor{FIMEblack}{HTML}{0F172A}
+\definecolor{FIMElightgray}{HTML}{F8FAFC}
+\definecolor{FIMEdarkgray}{HTML}{475569}
+
+% --- TIPOGRAFÍA (Palatino / Open Sans) ---
+\usepackage{palatino}
+\usepackage[default]{opensans}
+
+% --- DISEÑO DE CAJAS Y ELEMENTOS ---
+\usepackage[most]{tcolorbox}
+\newtcolorbox{brandbox}[1]{%
+  colback=FIMElightgray,
+  colframe=FIMEgreen,
+  coltitle=white,
+  fonttitle=\bfseries\sffamily,
+  title=#1,
+  boxrule=1.5pt,
+  arc=4pt,
+  top=8pt,
+  bottom=8pt,
+  left=10pt,
+  right=10pt
+}
+
+\newtcolorbox{alertbox}[1]{%
+  colback=FIMElightgray,
+  colframe=UANLblue,
+  coltitle=white,
+  fonttitle=\bfseries\sffamily,
+  title=#1,
+  boxrule=1.5pt,
+  arc=4pt,
+  top=8pt,
+  bottom=8pt,
+  left=10pt,
+  right=10pt
+}
+
+% --- ENCABEZADOS Y PIE DE PÁGINA ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{FIMEgreen}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\sffamily\bfseries\color{FIMEgreen}FIME -- UANL}
+\fancyhead[R]{\sffamily\color{UANLblue}Doctorado en Logística y Cadena de Suministro}
+\fancyfoot[C]{\sffamily\color{FIMEdarkgray}\thepage}
+
+% --- SECCIONES Y ENLACES ---
+\usepackage{titlesec}
+\titleformat{\section}{\color{UANLblue}\normalfont\Large\bfseries\sffamily}{\thesection}{1em}{}
+\titleformat{\subsection}{\color{FIMEgreen}\normalfont\large\bfseries\sffamily}{\thesubsection}{1em}{}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=FIMEgreen,
+    urlcolor=UANLblue
+}
+
+% --- DATOS DEL DOCUMENTO ---
+\title{%
+  \sffamily\bfseries\color{UANLblue}%
+  Actividad Práctica 1: El Dilema del Decisor\\
+  \large Estructuración y Resolución de Problemas de Decisión Multicriterio (MCDM)
+}
+\author{%
+  \sffamily\bfseries\color{FIMEdarkgray}%
+  Dr. Leonardo Gabriel Hernández Landa\\
+  \small MCDM -- Herramientas Multicriterio para Toma de Decisiones\\
+  \small\color{FIMEgreen}Facultad de Ingeniería Mecánica y Eléctrica (FIME)
+}
+\date{\sffamily Tetramestre de Otoño}
+
+% --- INICIO DEL DOCUMENTO ---
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{brandbox}{Contexto Epistemológico}
+  De acuerdo con la teoría de Herbert Simon, las decisiones reales en ingeniería, logística y gestión de operaciones ocurren bajo \textbf{Racionalidad Acotada}: los tomadores de decisiones enfrentan información imperfecta, limitaciones cognitivas y de tiempo. Los problemas del mundo real poseen múltiples criterios en conflicto y unidades heterogéneas que no se pueden comparar directamente (\textbf{inconmensurabilidad}).
+  
+  Esta actividad tiene como objetivo que estructures de manera formal un problema de decisión utilizando la notación matemática de los modelos de Decisión Multicriterio Multi-Atributo (MADM). Aplicarás un proceso de normalización matemática para resolver la inconmensurabilidad y realizarás un análisis inicial para comprender el impacto de las preferencias subjetivas en los resultados.
+\end{brandbox}
+
+\section{Casos Prácticos Seleccionables}
+Selecciona \textbf{uno} de los siguientes tres casos prácticos para el desarrollo de tu actividad:
+
+\subsection*{Opción A: Selección de Operador Logístico 3PL para E-commerce}
+Una empresa regiomontana de comercio electrónico necesita subcontratar la distribución de última milla y entregas consolidadas desde su CEDIS en Apodaca hacia el norte de México. Debe evaluar cuatro alternativas de operadores de transporte:
+\begin{itemize}
+  \item \textbf{$A_1$ (Transportista Consolidado Nacional):} Gran infraestructura, tarifas fijas bajas, pero nula flexibilidad para envíos urgentes.
+  \item \textbf{$A_2$ (Proveedor Regional Especializado):} Costo moderado-alto, excelente conocimiento local y tiempos de tránsito rápidos.
+  \item \textbf{$A_3$ (Startup Logística Tecnológica):} Alta visibilidad por API, tarifas dinámicas elevadas, capacidad de respuesta inmediata.
+  \item \textbf{$A_4$ (Transportista Tradicional de Carga General):} Muy bajo costo, pero carece de rastreo digital y tiene alta variabilidad en entregas.
+\end{itemize}
+
+\subsection*{Opción B: Ubicación de un Micro-Hub Urbano de Última Milla}
+Una cadena de supermercados en el Área Metropolitana de Monterrey (AMM) busca abrir un almacén satélite (micro-hub) para surtir pedidos a domicilio en menos de 2 horas. Debe evaluar cuatro ubicaciones posibles:
+\begin{itemize}
+  \item \textbf{$A_1$ (Monterrey Centro):} Densidad de demanda muy alta, congestión vehicular severa, costo de arrendamiento elevado.
+  \item \textbf{$A_2$ (San Nicolás de los Garza):} Acceso equilibrado, zona industrial con tarifas de renta medias, congestión moderada.
+  \item \textbf{$A_3$ (Santa Catarina):} Cercanía a avenidas rápidas de acceso al AMM, costo de renta bajo, alejado del centro de gravedad de clientes.
+  \item \textbf{$A_4$ (San Pedro Garza García):} Clientes de alto poder adquisitivo, restricciones severas para tráfico pesado, costo de renta sumamente alto.
+\end{itemize}
+
+\subsection*{Opción C: Selección de Sistema de Gestión de Almacenes (WMS)}
+Una distribuidora de autopartes en Nuevo León requiere digitalizar su inventario y rutas de picking para reducir el índice de errores de surtido. Evalúa cuatro opciones tecnológicas de software:
+\begin{itemize}
+  \item \textbf{$A_1$ (WMS Enterprise Tier-1 - ej. SAP/Oracle WMS):} Alta robustez, costo de licencia millonario, implementación lenta (meses).
+  \item \textbf{$A_2$ (WMS en la Nube SaaS):} Rápida adopción por suscripción mensual, menor personalización, actualizaciones automáticas.
+  \item \textbf{$A_3$ (Desarrollo In-House a Medida):} Diseñado exactamente a los procesos actuales de la empresa, alta dependencia de programadores internos.
+  \item \textbf{$A_4$ (WMS de Nicho Especializado en Autopartes):} Costo moderado, experiencia pre-configurada en la industria, soporte localizado limitado.
+\end{itemize}
+
+\newpage
+
+\section{Estructuración Matemática del Modelo}
+Para el caso seleccionado, trabajarás con la siguiente notación formal:
+\begin{itemize}
+  \item Conjunto de Alternativas: $A = \{A_1, A_2, A_3, A_4\}$ (con $m = 4$).
+  \item Conjunto de Criterios: $C = \{C_1, C_2, C_3, C_4, C_5\}$ (con $n = 5$).
+  \item Direcciones de Optimización: $d_j \in \{\text{Maximizar}, \text{Minimizar}\}$, para cada criterio $C_j$ ($j = 1, \dots, n$).
+  \item Vector de Pesos Subjetivos: $W = [w_1, w_2, w_3, w_4, w_5]^T$, tal que $\sum_{j=1}^5 w_j = 1$ y $w_j \ge 0$.
+  \item Matriz de Decisión (Desempeño): $X_{4 \times 5} = (x_{ij})$, donde $x_{ij}$ representa la evaluación de la alternativa $A_i$ bajo el criterio $C_j$.
+\end{itemize}
+
+\section{Guía de Desarrollo Paso a Paso}
+
+\subsection{Paso 1: Configuración de Criterios y Datos de Entrada}
+Define los 5 criterios de tu caso elegido. Utiliza los siguientes parámetros propuestos para construir la matriz original $X_{4 \times 5}$. Estima valores realistas dentro de los rangos indicados para cada alternativa:
+
+\begin{enumerate}
+  \item \textbf{Para la Opción A (Operador 3PL):}
+    \begin{itemize}
+      \item $C_1$: Costo de flete por envío (Minimizar, cuantitativo, en MXN. Rango sugerido: \$10,000 -- \$25,000).
+      \item $C_2$: Tiempo de tránsito promedio (Minimizar, cuantitativo, en horas. Rango sugerido: 12 -- 36 horas).
+      \item $C_3$: Nivel de cumplimiento / OTIF (Maximizar, cuantitativo, en \%. Rango sugerido: 80\% -- 99\%).
+      \item $C_4$: Visibilidad y rastreo (Maximizar, cualitativo, escala Likert 1--5: 1=Muy Básico, 5=Tiempo Real Completo).
+      \item $C_5$: Flexibilidad ante urgencias (Maximizar, cualitativo, escala Likert 1--5: 1=Rígido, 5=Totalmente flexible).
+    \end{itemize}
+    
+  \item \textbf{Para la Opción B (Micro-Hub Urbano):}
+    \begin{itemize}
+      \item $C_1$: Renta mensual del inmueble (Minimizar, cuantitativo, en USD. Rango sugerido: \$2,000 -- \$8,000).
+      \item $C_2$: Tiempo medio de entrega al cliente (Minimizar, cuantitativo, en minutos. Rango sugerido: 25 -- 90 min).
+      \item $C_3$: Congestión y tráfico de acceso (Minimizar, cualitativo, escala Likert 1--5: 1=Fluido, 5=Tránsito severo).
+      \item $C_4$: Disponibilidad de mano de obra (Maximizar, cualitativo, escala Likert 1--5: 1=Escasa, 5=Abundante).
+      \item $C_5$: Seguridad y prevención de robos (Maximizar, cualitativo, escala Likert 1--5: 1=Inseguro, 5=Muy Seguro).
+    \end{itemize}
+
+  \item \textbf{Para la Opción C (Sistema WMS):}
+    \begin{itemize}
+      \item $C_1$: Costo Total de Propiedad (TCO) a 3 años (Minimizar, cuantitativo, en miles de MXN. Rango: \$500 -- \$3,000).
+      \item $C_2$: Tiempo de implementación (Minimizar, cuantitativo, en semanas. Rango sugerido: 4 -- 24 semanas).
+      \item $C_3$: Facilidad de integración con el ERP (Maximizar, cualitativo, escala Likert 1--5: 1=Muy Complejo, 5=Plug-and-play).
+      \item $C_4$: Capacidad de soporte técnico y SLA (Maximizar, cualitativo, escala Likert 1--5: 1=Limitado, 5=Soporte 24/7).
+      \item $C_5$: Escalabilidad funcional (Maximizar, cualitativo, escala Likert 1--5: 1=Baja/Rígido, 5=Alta modularidad).
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Paso 2: Construcción de la Matriz de Decisión Original (X)}
+Dibuja y completa la tabla con los valores numéricos y cualitativos que asignaste a cada alternativa:
+\begin{table}[h!]
+  \centering
+  \scriptsize
+  \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    \textbf{Alternativa / Criterio} & \textbf{$C_1$ ($d_1$: Min)} & \textbf{$C_2$ ($d_2$: Min)} & \textbf{$C_3$ ($d_3$: Max)} & \textbf{$C_4$ ($d_4$: Max)} & \textbf{$C_5$ ($d_5$: Max)} \\ \hline
+    $A_1$ & $x_{11} = $ & $x_{12} = $ & $x_{13} = $ & $x_{14} = $ & $x_{15} = $ \\ \hline
+    $A_2$ & $x_{21} = $ & $x_{22} = $ & $x_{23} = $ & $x_{24} = $ & $x_{25} = $ \\ \hline
+    $A_3$ & $x_{31} = $ & $x_{32} = $ & $x_{33} = $ & $x_{34} = $ & $x_{35} = $ \\ \hline
+    $A_4$ & $x_{41} = $ & $x_{42} = $ & $x_{43} = $ & $x_{44} = $ & $x_{45} = $ \\ \hline
+  \end{tabular}
+  \caption{Matriz de Decisión Original $X_{4 \times 5}$ en unidades nativas.}
+\end{table}
+
+\newpage
+
+\subsection{Paso 3: Normalización de Desempeños (R)}
+Dado que los datos de entrada poseen diferentes escalas y direcciones, se deben transformar a valores adimensionales dentro de un rango uniforme $[0, 1]$. Utiliza el método de \textbf{Normalización Lineal Max-Min} para construir la matriz normalizada $R_{4 \times 5} = (r_{ij})$:
+
+\begin{equation}
+  \text{Para criterios de Beneficio (Max): } r_{ij} = \frac{x_{ij} - \min_{k} x_{kj}}{\max_{k} x_{kj} - \min_{k} x_{kj}}
+\end{equation}
+\begin{equation}
+  \text{Para criterios de Costo (Min): } r_{ij} = \frac{\max_{k} x_{kj} - x_{ij}}{\max_{k} x_{kj} - \min_{k} x_{kj}}
+\end{equation}
+
+\textit{Nota: Si el denominador da cero, asigna $r_{ij} = 1.0$. Muestra el procedimiento de cálculo para al menos dos celdas distintas (una de costo y otra de beneficio).}
+
+\subsection{Paso 4: Ponderación y Cálculo de Puntuaciones Globales (Si)}
+Para evaluar el desempeño general de las alternativas, aplica el método de la \textbf{Suma Ponderada (WMS)}:
+\begin{enumerate}
+  \item Define un vector de pesos subjetivo inicial que sume 1 (ej. $w_j = 0.20$ para dar igual peso a todos, o ajusta las prioridades de acuerdo con la visión estratégica que tendrías como tomador de decisiones).
+  \item Calcula la puntuación total de cada alternativa mediante la ecuación:
+    \begin{equation}
+      S_i = \sum_{j=1}^5 w_j r_{ij} \quad \text{para cada } i = 1, 2, 3, 4
+    \end{equation}
+  \item Genera el ranking de alternativas ordenando las puntuaciones $S_i$ de mayor a menor.
+\end{enumerate}
+
+\section{Preguntas de Reflexión Académica}
+Con base en los cálculos manuales y la matriz estructurada, responde formalmente:
+
+\begin{enumerate}
+  \item \textbf{La paradoja de la inconmensurabilidad:} Explica el impacto matemático de omitir el Paso 3 (Normalización). Si intentaras calcular la suma ponderada utilizando las unidades originales de los criterios (ej. sumar MXN directos con porcentajes y escalas de 1 a 5), ¿qué criterio dominaría completamente el ranking final? Justifica conceptualmente el rol de la normalización.
+  \item \textbf{Sensibilidad a las preferencias del decisor:} Modifica tu vector de pesos original. Si cambias el peso del criterio más restrictivo de costo ($C_1$) al 80\% ($w_1 = 0.80$, repartiendo el 20\% restante de manera equitativa entre los demás criterios), ¿cuál es el nuevo ranking de alternativas? ¿Cómo demuestra este cambio que los modelos MCDM no buscan una "verdad absoluta" sino apoyar la decisión constructivista?
+  \item \textbf{Límites del Paradigma de Optimización Clásica:} Explica por qué este problema de decisión estructurado no puede modelarse ni resolverse mediante programación matemática lineal clásica de un solo objetivo sin perder información valiosa para la organización.
+\end{enumerate}
+
+\begin{alertbox}{Formato de Entrega y Enlace con Casos Prácticos}
+  El informe final debe entregarse en PDF e incluir: la elección del caso práctico, la matriz original con los valores estimados, los cálculos detallados de la normalización, la matriz normalizada $R$, las puntuaciones $S_i$ resultantes y la discusión de las 3 preguntas de reflexión.
+  
+  \textbf{Importante:} La matriz de decisión original y normalizada que desarrolles aquí servirá como base de datos directa para el \textbf{Caso Práctico 1 (CP1)} del curso, donde utilizarás AHP y BWM para estimar pesos consistentes de forma formal.
+\end{alertbox}
+
+\end{document}

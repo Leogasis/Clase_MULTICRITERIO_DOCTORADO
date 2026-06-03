@@ -1,0 +1,794 @@
+\documentclass[aspectratio=169, 10pt]{beamer}
+
+% --- PAQUETES BÁSICOS ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+% --- NUEVO TEMA FIME UANL ---
+\usetheme[showlogo, nosectionpage]{FIME}
+
+% Estilos TikZ adaptados a los colores institucionales
+\tikzset{
+    block/.style={rectangle, draw=FIMEgreen, fill=FIMElightgray, text width=2.4cm, text centered, rounded corners, minimum height=1.2cm, font=\scriptsize\bfseries, line width=1pt},
+    arrow/.style={thick,->,>=stealth,draw=UANLblue,line width=1.2pt},
+    actor/.style={rectangle, draw=UANLblue, fill=FIMElightgray, text width=2.8cm, text centered, rounded corners, minimum height=1cm, font=\small\bfseries, line width=1pt}
+}
+
+% --- METADATOS ---
+\title[Herramientas Multicriterio - Sesión 1]{Herramientas Multicriterio para Toma de Decisiones}
+\subtitle{Sesión 1: Fundamentos Epistemológicos de la Disciplina}
+\author[Leonardo G. Hernández]{Dr. Leonardo Gabriel Hernández Landa}
+\institute[FIME - UANL]{
+    Doctorado en Logística y Cadena de Suministro\\
+    Facultad de Ingeniería Mecánica y Eléctrica (FIME)\\
+    Universidad Autónoma de Nuevo León (UANL)
+}
+\date{Tetramestre de Otoño}
+
+% --- INICIO DEL DOCUMENTO ---
+\begin{document}
+
+% Slide 1: Portada
+\begin{frame}[plain]
+    \titlepage
+\end{frame}
+
+% Slide 2: Objetivos de la Sesión
+\begin{frame}{Objetivos de la Sesión}
+    \begin{block}{Al finalizar esta sesión, el estudiante de doctorado será capaz de:}
+        \begin{itemize}
+            \item \textbf{Contrastar} el paradigma de la optimización clásica (mono-objetivo, realista) frente al de la ayuda a la decisión multicriterio (MCDM, constructivista).
+            \item \textbf{Clasificar} y estructurar problemas de decisión bajo la taxonomía de MCDM, MADM y MODM.
+            \item \textbf{Analizar la literatura científica} para identificar tendencias metodológicas y aplicaciones reales de MCDM en logística.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% Slide 3: Agenda de la Sesión
+\begin{frame}{Agenda de la Sesión (3 Horas)}
+    \begin{columns}[T]
+        \begin{column}{0.31\textwidth}
+            \begin{block}{Bloque 1 (90 min)}
+                \textbf{Teoría y Fundamentos}
+                \begin{itemize}
+                    \scriptsize
+                    \item Paradigmas en I.O.
+                    \item Racionalidad acotada (Simon)
+                    \item Racionalidad procedimental
+                    \item Taxonomía MCDM
+                    \item Casos logísticos reales
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.31\textwidth}
+            \begin{exampleblock}{Bloque 2 (45 min)}
+                \textbf{Debate de Literatura}
+                \begin{itemize}
+                    \scriptsize
+                    \item Figueira et al. (2016)
+                    \item Mardani et al. (2015)
+                    \item Debate socrático
+                    \item Ontología del MCDM
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+        
+        \begin{column}{0.31\textwidth}
+            \begin{alertblock}{Bloque 3 (45 min)}
+                \textbf{Actividad Práctica}
+                \begin{itemize}
+                    \scriptsize
+                    \item Estructuración de problemas
+                    \item Criterios y alternativas
+                    \item El dilema del decisor
+                    \item Inconmensurabilidad
+                \end{itemize}
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 4: Estructura del Curso (Casos Prácticos + PIA)
+\begin{frame}{Estructura del Curso: Casos Prácticos y PIA}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Flujo de Trabajo del Curso}
+                Las actividades de evaluación se estructuran en 4 \textbf{Casos Prácticos} de modelación algorítmica y un \textbf{Producto Integrador de Aprendizaje (PIA)} de investigación aplicada.
+                \begin{itemize}
+                    \item Los casos metodológicos sirven como base práctica.
+                    \item A partir de la \textbf{Sesión 8} se inicia formalmente el PIA, integrando las metodologías en un artículo científico final.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[node distance=0.15cm and 0.5cm]
+                    \node [block, fill=UANLblue!10, text width=2.6cm] (cp1) {CP1: Ponderación (Ses. 5)};
+                    \node [block, fill=UANLblue!10, text width=2.6cm, below = of cp1] (cp2) {CP2: Distancia (Ses. 8)};
+                    \node [block, fill=UANLblue!10, text width=2.6cm, below = of cp2] (cp3) {CP3: Superación (Ses. 10)};
+                    \node [block, fill=UANLblue!10, text width=2.6cm, below = of cp3] (cp4) {CP4: Incertidumbre (Ses. 13)};
+                    \node [block, fill=FIMEgreen!10, text width=2.6cm, below = of cp4] (pia) {PIA: Artículo y Defensa (Ses. 15)};
+                    \draw [arrow] (cp1) -- (cp2);
+                    \draw [arrow] (cp2) -- (cp3);
+                    \draw [arrow] (cp3) -- (cp4);
+                    \draw [arrow] (cp4) -- (pia);
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 5: Sistema de Evaluación
+\begin{frame}{Sistema de Evaluación: Casos Prácticos + PIA}
+    \begin{table}
+        \centering
+        \scriptsize
+        \begin{tabular}{lccl}
+            \toprule
+            \textbf{Entregable de Evaluación} & \textbf{Peso} & \textbf{Entrega} & \textbf{Alcance / Métodos Aplicados} \\
+            \midrule
+            CP1 -- Ponderación de Criterios & 15\% & Sesión 5 & AHP vs. BWM (Comparación y consistencia) \\
+            CP2 -- Jerarquización por Distancias & 20\% & Sesión 8 & TOPSIS vs. VIKOR vs. EDAS (Geometría) \\
+            CP3 -- Relaciones de Superación & 20\% & Sesión 10 & ELECTRE I y PROMETHEE II (Vetos y flujos) \\
+            CP4 -- Lógica Difusa e Incertidumbre & 15\% & Sesión 13 & Fuzzy TOPSIS o GRA (Modelado de vaguedad) \\
+            PIA -- Producto Integrador de Aprendizaje & 30\% & Sesión 15 & Artículo Científico Completo + Defensa Oral \\
+            \bottomrule
+        \end{tabular}
+        \caption{Distribución porcentual y alcance del sistema de evaluación del curso.}
+    \end{table}
+\end{frame}
+
+% Slide 6: Sección 1
+\section{Bloque 1: Fundamentos Teóricos y Taxonomía MCDM}
+\begingroup
+\setbeamercolor{background canvas}{bg=FIMEgreen}
+\begin{frame}[plain]
+    \vfill
+    \hspace{0.08\paperwidth}%
+    {\color{UANLgold}\rule{4cm}{2pt}}\\[8pt]%
+    \hspace{0.08\paperwidth}%
+    {\color{FIMEwhite}\LARGE\rmfamily\bfseries Bloque 1: Fundamentos Teóricos y Taxonomía MCDM}\\[6pt]
+    \hspace{0.08\paperwidth}%
+    {\color{FIMEwhite!85}\large\sffamily Epistemología de la decisión, racionalidad y componentes de los modelos}
+    \vfill
+\end{frame}
+\endgroup
+
+% Slide 7: Investigación de Operaciones Clásica
+\begin{frame}{La Investigación de Operaciones Clásica}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{El Paradigma de Optimización}
+                \begin{itemize}
+                    \item \textbf{Criterio Único:} Representa el sistema mediante una única función objetivo (ej. minimizar costos).
+                    \item \textbf{Ontología Realista:} Supone la existencia de un óptimo matemático objetivo "verdadero".
+                    \item \textbf{Rol del Decisor:} Es pasivo; proporciona parámetros y restricciones fijos y acepta la solución arrojada por el algoritmo.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Modelo Estándar}
+                \begin{equation*}
+                    \text{Minimizar } Z = f(x)
+                \end{equation*}
+                \begin{equation*}
+                    \text{Sujeto a: } g_i(x) \le 0, \quad i = 1, \dots, m
+                \end{equation*}
+                \vskip 5pt
+                Toda la complejidad multidimensional de la realidad se condensa en un único indicador escalar ($Z$).
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 8: Límites de la Optimización Mono-objetivo
+\begin{frame}{Límites de la Optimización Mono-objetivo}
+    \begin{alertblock}{La Complejidad Multidimensional del Mundo Real}
+        \begin{itemize}
+            \item \textbf{Objetivos en Conflicto:} Las metas corporativas suelen oponerse (ej. aumentar nivel de servicio frente a reducir inventario).
+            \item \textbf{Inconmensurabilidad:} Imposibilidad práctica y ética de reducir todas las variables a un valor monetario común (ej. ¿cuánto dinero vale la huella ecológica o la seguridad social?).
+            \item \textbf{Variables Cualitativas:} Atributos clave como la "flexibilidad de entrega" o "reputación del proveedor" no son fácilmente reducibles a ecuaciones deterministas lineales.
+        \end{itemize}
+    \end{alertblock}
+\end{frame}
+
+% Slide 9: Herbert Simon y Racionalidad Acotada
+\begin{frame}{Herbert Simon y la Racionalidad Acotada}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Restricciones Cognitivas y de Entorno}
+                Herbert Simon (Premio Nobel 1978) demostró que el ser humano decide bajo condiciones alejadas del óptimo ideal clásico:
+                \begin{itemize}
+                    \item Capacidad cognitiva de procesamiento de información limitada.
+                    \item Recursos de tiempo y presupuesto acotados.
+                    \item Información incompleta o inexacta.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{La Búsqueda de lo Satisfactorio}
+                {\itshape ``Los seres humanos no buscan soluciones óptimas; buscan soluciones satisfactorias, que superen sus niveles mínimos de aspiración.''}
+                \vskip 5pt
+                El MCDM surge para formalizar y estructurar la búsqueda de estas soluciones satisfactorias.
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 10: Racionalidad Sustantiva vs. Procedimental
+\begin{frame}{Racionalidad Sustantiva vs. Racionalidad Procedimental}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Racionalidad Sustantiva}
+                \begin{itemize}
+                    \item \textbf{Foco:} El resultado de la decisión.
+                    \item Supone consistencia interna perfecta y conocimiento de todas las opciones.
+                    \item Se evalúa el éxito basándose únicamente en el valor matemático de la solución seleccionada.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Racionalidad Procedimental}
+                \begin{itemize}
+                    \item \textbf{Foco:} El proceso de la toma de decisión.
+                    \item Admite límites cognitivos.
+                    \item Se evalúa basándose en la solidez, transparencia, rigor y lógica de la metodología empleada.
+                    \item La decisión es legítima porque el proceso de evaluación fue riguroso.
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 11: Tres Enfoques Epistemológicos de la Decisión
+\begin{frame}{Tres Enfoques Epistemológicos de la Decisión}
+    \begin{columns}[T]
+        \begin{column}{0.31\textwidth}
+            \begin{block}{Normativo}
+                \scriptsize
+                \textbf{Axiomático y Teórico}\\
+                ¿Cómo \textbf{debería} decidir un decisor idealizado racional bajo consistencia matemática perfecta?\\
+                Ejemplo: Teoría de la utilidad esperada clásica.
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.31\textwidth}
+            \begin{alertblock}{Descriptivo}
+                \scriptsize
+                \textbf{Empírico y Psicológico}\\
+                ¿Cómo deciden \textbf{realmente} las personas en el mundo real?\\
+                Estudia los sesgos cognitivos, atajos heurísticos e inconsistencias en la práctica.
+            \end{alertblock}
+        \end{column}
+        
+        \begin{column}{0.31\textwidth}
+            \begin{exampleblock}{Prescriptivo}
+                \scriptsize
+                \textbf{Constructivista y Práctico}\\
+                ¿Cómo podemos \textbf{ayudar} a decisores reales a estructurar y resolver problemas complejos?\\
+                Base de la ingeniería de la decisión y MCDM.
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 12: El Paradigma de Ayuda a la Decisión (Decision Aid)
+\begin{frame}{El Paradigma de la Ayuda a la Decisión (Decision Aid)}
+    \begin{block}{La Filosofía Constructivista (Bernard Roy)}
+        \begin{itemize}
+            \item La decisión óptima no preexiste en el mundo físico esperando ser descubierta.
+            \item El objetivo del analista no es encontrar la ``verdad'', sino construir un modelo interactivo que ayude al decisor a estructurar sus preferencias y tomar una postura justificada.
+            \item Se fomenta el \textbf{proceso de aprendizaje} mutuo entre analista y decisor.
+            \item Permite incorporar y formalizar juicios de valor subjetivos legítimos.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% Slide 13: El Rol del Analista y del Decisor
+\begin{frame}{El Rol del Analista y del Decisor (DM)}
+    \begin{center}
+        \begin{tikzpicture}[node distance=2.5cm, auto]
+            \node [actor, fill=UANLblue!10] (analista) {Analista MCDM};
+            \node [actor, fill=FIMEgreen!10, right of=analista, node distance=6cm] (dm) {Decisor (DM)};
+            \node [actor, fill=UANLblue!10, below of=analista, node distance=2.2cm, xshift=3cm] (modelo) {Modelo de Decisión};
+            
+            \draw [<->, arrow, draw=UANLblue] (analista) -- (dm) node[midway, above, font=\scriptsize] {Estructuración};
+            \draw [arrow] (analista) -- (modelo) node[midway, left, font=\tiny] {Modelado};
+            \draw [arrow] (dm) -- (modelo) node[midway, right, font=\tiny] {Preferencias};
+            
+            \node [actor, fill=UANLgold!20, below of=modelo, node distance=1.6cm] (decision) {Decisión Robusta};
+            \draw [arrow] (modelo) -- (decision);
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Slide 14: Definición y Taxonomía MCDM
+\begin{frame}{Definición y Taxonomía MCDM}
+    \begin{block}{¿Qué es MCDM?}
+        \small\textbf{MCDM} (\emph{Multi-Criteria Decision Making}) es el término sombrilla que abarca todas las metodologías diseñadas para modelar problemas de decisión con múltiples criterios.
+    \end{block}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{MADM (\emph{Multi-Attribute})}
+                \scriptsize
+                \begin{itemize}
+                    \item Alternativas discretas, explícitas y finitas.
+                    \item Enfoque en evaluación, ordenamiento y selección.
+                    \item Ejemplo: Seleccionar entre 5 transportistas.
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{block}{MODM (\emph{Multi-Objective})}
+                \scriptsize
+                \begin{itemize}
+                    \item Alternativas continuas e infinitas.
+                    \item Definido por restricciones matemáticas.
+                    \item Enfoque en generar fronteras de Pareto.
+                    \item Ejemplo: Optimizar rutas continuas.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 15: Clasificación: MCDM vs. MADM vs. MODM
+\begin{frame}{MCDM vs. MADM vs. MODM}
+    \begin{table}
+        \centering
+        \scriptsize
+        \begin{tabular}{lll}
+            \toprule
+            \textbf{Característica} & \textbf{MADM (Multi-Attribute)} & \textbf{MODM (Multi-Objective)} \\
+            \midrule
+            Alternativas & Discretas, explícitas e identificadas de antemano & Continuas, implícitas e infinitas \\
+            Criterios & Atributos cualitativos o cuantitativos & Funciones objetivo continuas \\
+            Juicios del Decisor & Pesos de importancia e indiferencias & Reglas de trade-offs en la frontera \\
+            Ejemplo Logístico & Selección de un operador logístico (3PL) & Diseño óptimo de capacidad de red \\
+            Métodos Comunes & AHP, TOPSIS, ELECTRE, PROMETHEE & Programación Meta, Algoritmos Evolutivos \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+% Slide 16: Componentes Clave en Modelos MADM
+\begin{frame}{Componentes de un Modelo MADM}
+    \begin{block}{Las Alternativas ($A_i$)}
+        El conjunto finito y explícito de opciones mutuamente excluyentes a evaluar:
+        \begin{equation*}
+            A = \{A_1, A_2, \dots, A_m\}
+        \end{equation*}
+    \end{block}
+    \begin{block}{Los Criterios ($C_j$)}
+        Dimensiones bajo las cuales se miden las alternativas: $C = \{C_1, C_2, \dots, C_n\}$. Un conjunto de criterios robusto según Keeney debe ser:
+        \begin{itemize}
+            \item \textbf{Exhaustivo:} Cubre todos los aspectos relevantes.
+            \item \textbf{Coherente:} Relacionado directamente con el fin principal.
+            \item \textbf{No redundante:} Evita el doble conteo de dimensiones relacionadas.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% Slide 17: La Matriz de Decisión
+\begin{frame}{La Matriz de Decisión ($X$)}
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            \begin{block}{Matriz de Desempeño $X_{m \times n}$}
+                \scriptsize
+                \begin{equation*}
+                    X = 
+                    \begin{pmatrix}
+                        x_{11} & x_{12} & \dots & x_{1n} \\
+                        x_{21} & x_{22} & \dots & x_{2n} \\
+                        \vdots & \vdots & \ddots & \vdots \\
+                        x_{m1} & x_{m2} & \dots & x_{mn}
+                    \end{pmatrix}
+                \end{equation*}
+                Donde $x_{ij}$ representa la evaluación de la alternativa $A_i$ frente al criterio $C_j$.
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.52\textwidth}
+            \begin{exampleblock}{Necesidad de Normalización}
+                Los valores $x_{ij}$ tienen diferentes unidades de medida (USD, días, porcentajes). Se requiere normalizar para proyectarlos a escalas homogéneas adimensionales en el rango $[0,1]$:
+                \begin{itemize}
+                    \item Normalización Lineal (Max-Min)
+                    \item Normalización Vectorial
+                    \item Normalización Sumatoria
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 17B: Procedimiento de Construcción
+\begin{frame}{Procedimiento de Construcción de la Matriz de Decisión}
+    \begin{enumerate}
+        \small
+        \item \textbf{Definir las Alternativas ($A_i$):} Identificar el conjunto finito de opciones viables a evaluar, $A = \{A_1, A_2, \dots, A_m\}$.
+        \item \textbf{Seleccionar los Criterios ($C_j$):} Establecer las dimensiones de evaluación independientes y en conflicto, $C = \{C_1, C_2, \dots, C_n\}$.
+        \item \textbf{Establecer la Direccionalidad ($d_j$):} Determinar para cada criterio si el objetivo es maximizar (Beneficio) o minimizar (Costo).
+        \item \textbf{Definir las Escalas de Medición:}
+            \begin{itemize}
+                \scriptsize
+                \item \textit{Cuantitativas:} Unidades nativas (MXN, km, horas, \%).
+                \item \textit{Cualitativas:} Escalas ordinales o de intervalo definidas (ej. Likert 1--5 o 1--9).
+            \end{itemize}
+        \item \textbf{Recolectar los Datos ($x_{ij}$):} Evaluar cada alternativa frente a cada criterio para constituir la matriz original $X_{m \times n}$.
+    \end{enumerate}
+\end{frame}
+
+% Slide 17C: Métodos de Normalización (Fórmulas)
+\begin{frame}{Métodos de Normalización en MADM}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Normalización Lineal Max-Min (Escala $[0,1]$)}
+                \scriptsize
+                Utilizada para transformar datos a un rango $[0, 1]$ absoluto:
+                \begin{itemize}
+                    \item \textbf{Maximizar (Beneficio):}
+                        \begin{equation*}
+                            r_{ij} = \frac{x_{ij} - \min_k x_{kj}}{\max_k x_{kj} - \min_k x_{kj}}
+                        \end{equation*}
+                    \item \textbf{Minimizar (Costo):}
+                        \begin{equation*}
+                            r_{ij} = \frac{\max_k x_{kj} - x_{ij}}{\max_k x_{kj} - \min_k x_{kj}}
+                        \end{equation*}
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Otros Métodos Comunes}
+                \scriptsize
+                \begin{itemize}
+                    \item \textbf{Normalización Lineal Simple (Ratio):}
+                        \begin{equation*}
+                            r_{ij}^{\text{max}} = \frac{x_{ij}}{\max_k x_{kj}} \quad (\text{Max})
+                        \end{equation*}
+                        \begin{equation*}
+                            r_{ij}^{\text{min}} = \frac{\min_k x_{kj}}{x_{ij}} \quad (\text{Min})
+                        \end{equation*}
+                    \item \textbf{Normalización Vectorial (TOPSIS):}
+                        \begin{equation*}
+                            r_{ij} = \frac{x_{ij}}{\sqrt{\sum_{k=1}^m x_{kj}^2}}
+                        \end{equation*}
+                    \item \textbf{Normalización Sumatoria:}
+                        \begin{equation*}
+                            r_{ij} = \frac{x_{ij}}{\sum_{k=1}^m x_{kj}}
+                        \end{equation*}
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 17D: Método de Suma Ponderada (SAW)
+\begin{frame}{Método de Suma Ponderada (Simple Additive Weighting - SAW)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Definición y Ecuación}
+                Es el método MCDM más intuitivo y utilizado. Calcula una puntuación global $S_i$ para cada alternativa como la suma de sus desempeños normalizados ponderados por su importancia:
+                \begin{equation*}
+                    S_i = \sum_{j=1}^n w_j r_{ij} \quad \text{para cada } i = 1, \dots, m
+                \end{equation*}
+                Donde $r_{ij}$ es el valor normalizado y $w_j$ es el peso del criterio $C_j$.
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Propiedades de la Suma Ponderada}
+                \scriptsize
+                \begin{itemize}
+                    \item \textbf{Compensabilidad:} Un desempeño bajo en un criterio puede ser totalmente compensado por un alto desempeño en otro (si $w_j$ lo permite).
+                    \item \textbf{Criterio de Decisión:} La mejor alternativa ($A^*$) es aquella con la máxima puntuación:
+                        \begin{equation*}
+                            A^* = \arg\max_i S_i
+                        \end{equation*}
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 18: Pesos e Inconmensurabilidad
+\begin{frame}{Pesos de los Criterios e Inconmensurabilidad}
+    \begin{block}{Pesos de Importancia ($w_j$)}
+        \small Representan la importancia relativa asignada a cada criterio:
+        \begin{equation*}
+            \sum_{j=1}^n w_j = 1, \quad w_j \ge 0
+        \end{equation*}
+        \scriptsize
+        \begin{itemize}
+            \item \textbf{Pesos Subjetivos:} Por juicios de expertos (ej. AHP, BWM).
+            \item \textbf{Pesos Objetivos:} Por variabilidad de datos (ej. Entropía, CRITIC).
+        \end{itemize}
+    \end{block}
+    \begin{alertblock}{Inconmensurabilidad Fuerte}
+        \small Dada la naturaleza conflictiva de criterios (costo vs. ecología), los métodos de outranking evitan la compensación y usan relaciones de superación.
+    \end{alertblock}
+\end{frame}
+
+% Slide 19: MCDM en Logística y Supply Chain
+\begin{frame}{MCDM en Logística y Supply Chain}
+    \begin{exampleblock}{¿Por qué la logística es inherentemente multicriterio?}
+        La logística involucra a departamentos con prioridades contrapuestas y la necesidad de integrar regulaciones ambientales y sociales globales.
+    \end{exampleblock}
+    \begin{columns}[T]
+        \begin{column}{0.31\textwidth}
+            \begin{block}{Sourcing}
+                \scriptsize
+                \textbf{Selección de Proveedores}\\
+                Balances entre costo, plazo de entrega (lead time), nivel de cumplimiento y huella de carbono.
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.31\textwidth}
+            \begin{block}{Localización}
+                \scriptsize
+                \textbf{Redes Logísticas}\\
+                Selección de sitios para CEDIS evaluando costo del suelo, cercanía a mercados y riesgos naturales.
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.31\textwidth}
+            \begin{block}{Ruteo y Modos}
+                \scriptsize
+                \textbf{Distribución Verde}\\
+                Selección de modos de transporte basándose en costos operativos, tiempos y emisiones.
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 20: Caso 1: Selección de Proveedores Sostenibles
+\begin{frame}{Caso 1: Sourcing y Selección de Proveedores Sostenibles}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Contexto del Problema}
+                Evaluar a 4 proveedores logísticos de empaque. El objetivo es equilibrar la eficiencia económica con las metas corporativas de logística verde.
+                \begin{itemize}
+                    \item \textbf{Hibridación típica:} Fuzzy AHP (para pesos) + Fuzzy TOPSIS (para el ranking).
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Criterios Clave}
+                \begin{itemize}
+                    \item \textbf{Económico:} Costo unitario, términos de pago.
+                    \item \textbf{Ambiental:} Huella de carbono, tasa de reciclabilidad de insumos.
+                    \item \textbf{Operativo:} Plazo de entrega (Lead time), tasa de entregas completas (OTIF).
+                    \item \textbf{Social:} Certificaciones éticas.
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 21: Caso 2: Localización Multicriterio de CD
+\begin{frame}{Caso 2: Localización Multicriterio de Centros de Distribución}
+    \begin{block}{Localización de un CD en FIME - UANL}
+        La ubicación óptima no se limita a la minimización de distancias (foco tradicional de la Investigación de Operaciones). Requiere evaluar múltiples factores operativos, geográficos e institucionales.
+    \end{block}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Factores Cuantitativos}
+                \begin{itemize}
+                    \item Costos de adquisición o renta del terreno.
+                    \item Distancia euclidiana media a la red vial principal.
+                    \item Impuestos locales e incentivos fiscales.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Factores Cualitativos}
+                \begin{itemize}
+                    \item Disponibilidad y calidad de mano de obra local.
+                    \item Vulnerabilidad ante inundaciones u otros desastres naturales.
+                    \item Nivel de seguridad en la zona industrial.
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 22: Caso 3: Selección de Modos de Transporte
+\begin{frame}{Caso 3: Selección de Modos de Transporte}
+    \begin{alertblock}{Balances entre Carretera, Ferrocarril y Transporte Intermodal}
+        En la distribución transfronteriza, la elección no es solo coste-tiempo. Las regulaciones de emisiones y la variabilidad de fronteras añaden complejidad.
+    \end{alertblock}
+    \begin{table}
+        \centering
+        \scriptsize
+        \begin{tabular}{llll}
+            \toprule
+            \textbf{Criterio} & \textbf{Carretero (FTL)} & \textbf{Ferroviario} & \textbf{Intermodal} \\
+            \midrule
+            Costo Unitario & Alto & Bajo & Moderado \\
+            Lead Time & Rápido (Bajo) & Lento (Alto) & Moderado \\
+            Confiabilidad & Alta & Baja & Moderada \\
+            Huella de $CO_2$ & Muy Alta & Muy Baja & Baja \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+% Slide 23: Sección 2
+\section{Bloque 2: Discusión de Literatura de Referencia}
+\begingroup
+\setbeamercolor{background canvas}{bg=FIMEgreen}
+\begin{frame}[plain]
+    \vfill
+    \hspace{0.08\paperwidth}%
+    {\color{UANLgold}\rule{4cm}{2pt}}\\[8pt]%
+    \hspace{0.08\paperwidth}%
+    {\color{FIMEwhite}\LARGE\rmfamily\bfseries Bloque 2: Discusión de Literatura de Referencia}\\[6pt]
+    \hspace{0.08\paperwidth}%
+    {\color{FIMEwhite!85}\large\sffamily Análisis crítico de Figueira et al. (2016) y Mardani et al. (2015)}
+    \vfill
+\end{frame}
+\endgroup
+
+% Slide 24: Figueira et al. (2016) - Capítulo 1
+\begin{frame}{Análisis Crítico: Figueira, Greco \& Ehrgott (2016)}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Tres Grandes Familias de Métodos}
+                \begin{itemize}
+                    \item \textbf{Escuela Americana (MAUT/MAVT):} Funciones de utilidad agregadas. Compensación total admisible. Rigor axiomático.
+                    \item \textbf{Escuela Europea (Outranking):} Relaciones de superación (ELECTRE, PROMETHEE). Acepta incomparabilidad, veto y no-compensación.
+                    \item \textbf{Programación Multiobjetivo:} Métodos interactivos donde el decisor guía al optimizador continuamente.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Aporte Epistemológico}
+                \begin{itemize}
+                    \item El MCDM es un cambio ontológico en la teoría de la decisión.
+                    \item Énfasis en la modelación flexible y el apoyo al decisor más que en dictar una solución única e inalterable.
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 25: Mardani et al. (2015) - Survey de Aplicaciones
+\begin{frame}{Análisis Crítico: Mardani et al. (2015)}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Resultados del Mapeo de Literatura}
+                \begin{itemize}
+                    \item Analiza 895 artículos publicados entre 1980 y 2015.
+                    \item El \textbf{AHP clásico (Saaty)} y \textbf{TOPSIS} dominan de manera abrumadora (concentran más del 50\% de aplicaciones).
+                    \item Tendencia notable hacia la propuesta de modelos híbridos.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{alertblock}{Diagnóstico Crítico Doctoral}
+                \begin{itemize}
+                    \item Gran parte de la literatura consiste en aplicaciones directas de métodos establecidos sin mayor innovación.
+                    \item Un aporte a nivel doctoral debe centrarse en proponer nuevas hibridaciones, metodologías de sensibilidad robustas o incorporar incertidumbre avanzada.
+                \end{itemize}
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 26: Preguntas Detonantes para Debate Socrático
+\begin{frame}{Preguntas Detonantes para Debate}
+    \begin{block}{Discusión guiada por el Docente}
+        \begin{enumerate}
+            \item Si la optimización mono-objetivo es más simple, ¿por qué forzar MCDM? ¿Es la inconmensurabilidad una limitación matemática o una propiedad del problema real?
+            \item En problemas de logística que involucren seguridad vial o impacto ambiental, ¿es justificable la compensación (usar MAUT) o se debe obligar al no-compensatorio (Outranking)?
+            \item Pese a las críticas severas al método AHP por la inversión de rangos (\emph{rank reversal}), ¿por qué sigue dominando en publicaciones de logística?
+        \end{enumerate}
+    \end{block}
+\end{frame}
+
+% Slide 27: Sección 3
+\section{Bloque 3: Introducción a la Actividad Práctica}
+\begingroup
+\setbeamercolor{background canvas}{bg=FIMEgreen}
+\begin{frame}[plain]
+    \vfill
+    \hspace{0.08\paperwidth}%
+    {\color{UANLgold}\rule{4cm}{2pt}}\\[8pt]%
+    \hspace{0.08\paperwidth}%
+    {\color{FIMEwhite}\LARGE\rmfamily\bfseries Bloque 3: Introducción a la Actividad Práctica}\\[6pt]
+    \hspace{0.08\paperwidth}%
+    {\color{FIMEwhite!85}\large\sffamily Formulación del Dilema del Decisor y Estructuración de Problemas}
+    \vfill
+\end{frame}
+\endgroup
+
+% Slide 28: Actividad Práctica 1: El Dilema del Decisor
+\begin{frame}{Actividad Práctica 1: El Dilema del Decisor}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Objetivo de la Actividad}
+                \small
+                Experimentar intuitivamente los retos clave de la toma de decisiones multicriterio antes de aprender algoritmos:
+                \begin{itemize}
+                    \item Identificar alternativas de decisión.
+                    \item Definir criterios en conflicto.
+                    \item Llenar una matriz de decisión en unidades originales (kilómetros, pesos, etc.).
+                    \item Identificar el problema de la inconmensurabilidad y los pesos subjetivos.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Instrucciones de Entrega}
+                \small
+                \begin{itemize}
+                    \item Elegir \textbf{una de las tres opciones reales} en la guía:
+                        \begin{enumerate}
+                            \scriptsize
+                            \item Opción A: Operador Logístico 3PL.
+                            \item Opción B: Micro-Hub Urbano de Última Milla.
+                            \item Opción C: Sistema WMS para Almacén.
+                        \end{enumerate}
+                    \item Estructurar matemáticamente la matriz ($X_{4 \times 5}$), aplicar la normalización lineal Max-Min ($R$) y calcular la suma ponderada ($S_i$).
+                    \item Resolver las 3 preguntas de reflexión del documento anexo.
+                    \item Entregable: Reporte en PDF (ver guía de la actividad).
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 29: Resumen, Siguiente Sesión y Tarea
+\begin{frame}{Resumen, Siguiente Sesión y Tarea}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Actividad Práctica}
+                \begin{itemize}
+                    \item Desarrollar de manera individual la \textbf{Actividad Práctica 1: El Dilema del Decisor}.
+                    \item Esta matriz será el insumo de entrada para los métodos de las Sesiones 3 y 4.
+                    \item Realizar las lecturas previas asignadas para la Sesión 2.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Próxima Clase: Sesión 2}
+                Estudio de la \textbf{Teoría de la Utilidad Multi-Atributo (MAUT)} y decisiones bajo incertidumbre en cadenas de suministro.
+                \begin{itemize}
+                    \scriptsize
+                    \item \textbf{Lecturas en carpeta \texttt{literatura/}:}
+                        \begin{itemize}
+                            \tiny
+                            \item \textbf{Capítulo:} Dyer (2005). \emph{MAUT} (\texttt{libros/S02\_Dyer\_2005...})
+                            \item \textbf{Artículo:} Rezaei (2015). \emph{BWM} (\texttt{articulos/S03\_Rezaei\_2015...})
+                        \end{itemize}
+                    \item \textbf{Pregunta guía:} Identificar escenarios de violación del supuesto de independencia preferencial.
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 33: Agradecimiento y Contacto
+\thankframe{¡Muchas gracias!}{Preguntas y discusión \\ \url{https://www.fime.uanl.mx}}
+
+% Slide 34: Cierre institucional (FIME - UANL)
+\closingframe
+
+\end{document}
