@@ -139,7 +139,7 @@
 
 % Slide 6: Los Cuatro Axiomas de Saaty
 \begin{frame}{Cimiento Axiomático del AHP}
-    La validez matemática del AHP descansa sobre cuatro axiomas estrictos (Saaty, 1986):
+    La validez matemática del AHP descansa sobre cuatro axiomas\footnote{\textbf{Axioma:} Principio o regla básica que se asume como verdadera sin demostración para servir de punto de partida.} estrictos (Saaty, 1986):
     \begin{enumerate}
         \item \textbf{Reciprocidad:} Si el criterio $i$ es $x$ veces más importante que el criterio $j$, entonces el criterio $j$ es $1/x$ veces más importante que el criterio $i$ ($a_{ji} = 1/a_{ij}$).
         \item \textbf{Homogeneidad:} Los elementos que se comparan deben pertenecer a la misma escala de magnitud (es decir, no se debe comparar elementos infinitamente mayores con otros infinitamente pequeños).
@@ -189,12 +189,12 @@
 \end{frame}
 
 % Slide 9: Vector de Prioridades y el Autovector Principal
-\begin{frame}{Elicitación del Vector de Prioridades}
+\begin{frame}{Elicitación\footnote{\textbf{Elicitación (de prioridades):} Proceso sistemático para extraer y formalizar conocimientos o juicios subjetivos de un experto.} del Vector de Prioridades}
     Si el decisor fuera perfectamente consistente, se cumpliría que $a_{ij} = w_i / w_j$, lo que implica que:
     $$a_{ij} \frac{w_j}{w_i} = 1 \implies \sum_{j=1}^n a_{ij} w_j = n w_i \implies \mathbf{A}\mathbf{w} = n\mathbf{w}$$
     Dado que el ser humano comete imprecisiones, los juicios tienen ruido. Saaty demostró que para una matriz recíproca positiva general:
     $$\mathbf{A}\mathbf{w} = \lambda_{\max}\mathbf{w}$$
-    \begin{block}{Método del Autovector Principal (Principal Eigenvector Method)}
+    \begin{block}{Método del Autovector\footnote{\textbf{Autovector (Eigenvector):} Vector especial que no cambia de dirección bajo una transformación. En AHP, representa el peso relativo estable de los criterios.} Principal (Principal Eigenvector Method)}
         \begin{itemize}
             \item Se calcula el vector propio $\mathbf{w}$ correspondiente al autovalor máximo $\lambda_{\max}$ de la matriz $\mathbf{A}$.
             \item Teorema de Perron-Frobenius garantiza que existe un único autovector positivo para una matriz positiva irreductible.
@@ -298,7 +298,7 @@
                 \begin{itemize}
                     \item Menor carga cognitiva.
                     \item Juicios significativamente más consistentes.
-                    \item Formulación matemática lineal y convexa que garantiza una solución única global.
+                    \item Formulación matemática lineal y convexa\footnote{\textbf{Convexidad:} Propiedad matemática que asegura que cualquier óptimo local es el óptimo global (el mejor absoluto), facilitando su resolución.} que garantiza una solución única global.
                 \end{itemize}
             \end{exampleblock}
         \end{column}
@@ -320,7 +320,7 @@
 \end{frame}
 
 % Slide 15: Formulación Matemática Minimax de BWM
-\begin{frame}{Formulación del Modelo Minimax No Lineal}
+\begin{frame}{Formulación del Modelo Minimax\footnote{\textbf{Minimax:} Enfoque de optimización que busca minimizar la máxima desviación o peor error en un sistema de ecuaciones.} No Lineal}
     El objetivo es determinar los pesos óptimos $(w_1^*, w_2^*, \dots, w_n^*)$ que minimicen la desviación absoluta máxima de las razones de pesos respecto a las comparaciones del decisor:
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -387,7 +387,7 @@
             \textbf{Dimensión} & \textbf{Analytic Hierarchy Process (AHP)} & \textbf{Best-Worst Method (BWM)} \\
             \midrule
             \textbf{Complejidad} & Alta: $n(n-1)/2$ comparaciones & Baja: $2n-3$ comparaciones \\
-            \textbf{Consistencia} & Propensa a errores de transitividad & Robusta debido a consistencia lógica \\
+            \textbf{Consistencia} & Propensa a errores de transitividad\footnote{\textbf{Transitividad:} Principio de consistencia lógica: si se prefiere A a B y B a C, lógicamente se debe preferir A a C. Los decisores humanos suelen violarlo por fatiga o confusión.} & Robusta debido a consistencia lógica \\
             \textbf{Optimización} & No requiere (Autovectores) & Requiere resolver un PPL minimax \\
             \textbf{Juicios de Entrada} & Matriz completa $n \times n$ & Dos vectores estructurados (1 $\times n$ y $n \times 1$) \\
             \textbf{Carga Cognitiva} & Exponencial con el tamaño del problema & Lineal con el tamaño del problema \\

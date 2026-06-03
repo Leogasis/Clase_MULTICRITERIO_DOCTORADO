@@ -106,7 +106,7 @@ Para validar los resultados, debemos comprobar si el decisor ha sido razonableme
         \end{pmatrix} \begin{pmatrix} 0.2672 \\ 0.4958 \\ 0.1544 \\ 0.0826 \end{pmatrix} \approx \begin{pmatrix} 1.0717 \\ 1.9890 \\ 0.6185 \\ 0.3315 \end{pmatrix}
     \end{equation*}
     
-    \item \textbf{Elicitación de la estimación local de $\lambda_{\max}$:}
+    \item \textbf{Elicitación\footnote{\textbf{Elicitación:} El acto de recopilar o extraer opiniones, juicios o preferencias de expertos de manera formal y estructurada.} de la estimación local de $\lambda_{\max}$:}
     Dividimos cada componente de $\mathbf{A}\mathbf{w}$ por la componente correspondiente del vector de pesos $\mathbf{w}$ y promediamos:
     \begin{align*}
         \lambda_{1} &= 1.0717 / 0.2672 \approx 4.0109 \\
@@ -229,13 +229,13 @@ Con una inconsistencia óptima de $\xi^{L*} = 0$ (Razón de Consistencia $CR = 0
 
 \subsection{Conclusiones para Investigación Doctoral}
 \begin{itemize}
-    \item \textbf{Convergencia:} Ambos métodos convergen a la misma estructura de preferencias: \textbf{Confiabilidad ($C_2$) $\gg$ Costo ($C_1$) $>$ Visibilidad ($C_3$) $>$ Sustentabilidad ($C_4$)}. Las discrepancias numéricas menores a 1.7\% se deben a la aproximación geométrica del autovector en AHP.
+    \item \textbf{Convergencia:} Ambos métodos convergen a la misma estructura de preferencias: \textbf{Confiabilidad ($C_2$) $\gg$ Costo ($C_1$) $>$ Visibilidad ($C_3$) $>$ Sustentabilidad ($C_4$)}. Las discrepancias numéricas menores a 1.7\% se deben a la aproximación geométrica del autovector\footnote{\textbf{Autovector (Eigenvector):} Vector característico que en álgebra lineal no cambia su dirección bajo una transformación lineal (representada por una matriz). En AHP, representa el peso o la prioridad estable de los criterios.} en AHP.
     \item \textbf{Eficiencia:} BWM reduce significativamente las preguntas redundantes. Para un problema de 8 criterios logísticos en comités reales:
           \begin{itemize}
               \item AHP requiere $\frac{8(7)}{2} = 28$ comparaciones pareadas.
               \item BWM requiere $2(8) - 3 = 13$ comparaciones pareadas (ahorro del 53.6\%).
           \end{itemize}
-    \item \textbf{Consistencia Matemática:} En BWM la formulación de optimización linealizada evita inconsistencias severas al forzar un minimax que ajusta globalmente las prioridades relativas, mientras que en AHP el decisor debe ajustar valores de forma iterativa y empírica si $CR \ge 10\%$.
+    \item \textbf{Consistencia Matemática:} En BWM la formulación de optimización linealizada evita inconsistencias severas al forzar un minimax\footnote{\textbf{Minimax:} Criterio de decisión u optimización matemática que busca minimizar la máxima desviación o peor error posible en un sistema de restricciones.} que ajusta globalmente las prioridades relativas, mientras que en AHP el decisor debe ajustar valores de forma iterativa y empírica si $CR \ge 10\%$.
 \end{itemize}
 
 \end{document}
