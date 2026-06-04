@@ -37,6 +37,15 @@ Este documento proporciona una guía diapositiva por diapositiva para el profeso
 
 ---
 
+### Diapositiva 4b: Posicionamiento de Métodos: Compensatorios vs. No Compensatorios
+* **Contenido:** Estructuración y clasificación de los métodos MCDM según su nivel de compensación (Compensatorios: AHP, BWM, TOPSIS, VIKOR, MAUT vs. No Compensatorios: ELECTRE, PROMETHEE).
+* **Guía de Explicación:**
+  * Explicar el concepto de **Compensación**: la posibilidad de balancear o comerciar un desempeño pobre en un criterio mediante un desempeño excelente en otro (trade-offs).
+  * Explicar los métodos **No Compensatorios**: donde existen vetos o dominancias estrictas que previenen la compensación (comunes en decisiones con restricciones regulatorias, de seguridad o ambientales en cadena de suministro).
+  * Enmarcar que AHP y BWM se posicionan en la familia de métodos para modelos **compensatorios**, pero son los encargados de elicitar los pesos subjetivos iniciales.
+
+---
+
 ### Diapositiva 5: Fundamentos del Proceso de Jerarquía Analítica (AHP)
 * **Contenido:** Origen de AHP (Thomas Saaty, 1970s), descomposición jerárquica y el paso fundamental de reemplazar estimaciones directas por comparaciones pareadas.
 * **Guía de Explicación:**
