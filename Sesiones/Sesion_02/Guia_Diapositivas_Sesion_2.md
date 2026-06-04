@@ -30,7 +30,7 @@ Este documento proporciona una guía diapositiva por diapositiva para el profeso
 ---
 
 ### Diapositiva 4: Introducción a la Ponderación Subjetiva
-* **Contenido:** Explicación del rol de los pesos $w_j$. Diferencia entre ponderación subjetiva (basada en opiniones de expertos) y objetiva (deducida analíticamente de la dispersión de datos).
+* **Contenido:** Explicación del rol de los pesos ($w_j$) de los criterios ($C_j$). Diferencia entre ponderación subjetiva (basada en opiniones de expertos) y objetiva (deducida analíticamente de la dispersión de datos).
 * **Guía de Explicación:**
   * Plantear el dilema: *¿Cómo sabemos si un peso asignado del 50% a la confiabilidad es matemáticamente representativo y no solo un sesgo momentáneo del decisor?*
   * Introducir el concepto de **fatiga cognitiva** cuando el número de criterios es elevado.
