@@ -1,0 +1,89 @@
+% beamerthemeFIME.sty — FIME UANL Beamer Theme
+%
+% Usage:  \usetheme{FIME}
+%
+% Options:
+%   showlogo      — show small FIME and UANL logos on every content slide
+%   nosectionpage — suppress automatic section divider slides
+%
+% Commands:
+%   \standoutframe{Text}             — green emphasis slide
+%   \thankframe{Title}{Contact}      — compact closing slide
+%   \closingframe                    — brand closing slide (logos + tagline)
+%   \closingframe[partner logos]     — brand closing slide with partner area
+%   \imageframe{path}                — full-bleed image slide
+%   \begin{blankframe}…\end{...}     — completely empty slide
+%   \venue{Conference, City}         — enable conference title layout
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemeFIME}[2026/05/22 v1.0.0 A Beamer Theme for FIME UANL]
+
+% -- Options -----------------------------------------------------------
+\newif\if@FIMEnosection\@FIMEnosectionfalse
+\newif\if@FIMEshowlogo\@FIMEshowlogofalse
+
+\DeclareOption{nosectionpage}{\@FIMEnosectiontrue}
+\DeclareOption{showlogo}{\@FIMEshowlogotrue}
+\ProcessOptions\relax
+
+% -- Sub-themes ----------------------------------------------------------
+\usecolortheme{FIME}
+\useinnertheme{FIME}
+\useoutertheme{FIME}
+
+% -- Code listings --------------------------------------------------------
+\RequirePackage{listings}
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\bfseries\color{UANLblue},
+  stringstyle=\color{FIMEgreen},
+  commentstyle=\itshape\color{FIMEdarkgray},
+  numberstyle=\tiny\color{FIMEdarkgray},
+  backgroundcolor=\color{FIMElightgray},
+  frame=none,
+  numbers=left,
+  numbersep=8pt,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=2,
+  xleftmargin=1.5em,
+}
+
+% -- Font setup -----------------------------------------------------------
+\usepackage[T1]{fontenc}
+
+\IfFileExists{merriweather.sty}{%
+  \usepackage{merriweather}%
+}{%
+  \usepackage{palatino}%
+}
+\IfFileExists{opensans.sty}{%
+  \usepackage[default]{opensans}%
+}{}
+
+\usefonttheme{professionalfonts}
+\setbeamerfont{title}{family=\rmfamily, series=\bfseries, size=\LARGE}
+\setbeamerfont{subtitle}{family=\sffamily, size=\normalsize}
+\setbeamerfont{frametitle}{family=\rmfamily, series=\bfseries, size=\large}
+\setbeamerfont{author}{family=\sffamily, size=\normalsize}
+\setbeamerfont{institute}{family=\sffamily, size=\small}
+\setbeamerfont{date}{family=\sffamily, size=\small}
+\setbeamerfont{block title}{family=\sffamily, series=\bfseries, size=\normalsize}
+\setbeamerfont{caption}{size=\small}
+\setbeamerfont{footnote}{size=\footnotesize}
+
+% -- Numbered captions (Table 1, Figure 1, …) ---------------------------
+\setbeamertemplate{caption}[numbered]
+
+% -- Navigation symbols off ---------------------------------------------
+\setbeamertemplate{navigation symbols}{}
+
+% -- Hyperref colors ----------------------------------------------------
+\hypersetup{
+  colorlinks=true,
+  linkcolor=FIMEgreen,
+  urlcolor=UANLblue,
+  citecolor=FIMEgreen,
+}
+
+\endinput

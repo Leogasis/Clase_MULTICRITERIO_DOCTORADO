@@ -11,6 +11,29 @@
 \geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
 \usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage{listings}
+
+% --- CONFIGURACIÓN DE LISTINGS PARA CÓDIGO PYTHON ---
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    backgroundcolor=\color{FIMElightgray},
+    commentstyle=\color{FIMEgreen}\itshape,
+    keywordstyle=\color{UANLblue}\bfseries,
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color{purple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4
+}
+\lstset{style=pythonstyle}
 
 % --- COLORES INSTITUCIONALES (FIME - UANL) ---
 \definecolor{UANLblue}{HTML}{003A70}
@@ -93,6 +116,32 @@ Para calcular el vector de prioridades aproximado, realizamos el método de norm
     La suma de los pesos es $0.2672 + 0.4958 + 0.1544 + 0.0826 = 1.0000$ (perfectamente normalizada).
 \end{enumerate}
 
+\subsubsection{Implementación en Python: Cálculo de Pesos en AHP}
+El cálculo anterior se automatiza en Python normalizando por columnas y promediando por filas de la siguiente manera:
+\begin{lstlisting}[language=Python]
+import numpy as np
+
+# 1. Definir la matriz de comparaciones pareadas AHP
+A = np.array([
+    [1.0,   1/2, 2.0, 3.0],
+    [2.0,   1.0, 3.0, 6.0],
+    [1/2,   1/3, 1.0, 2.0],
+    [1/3,   1/6, 1/2, 1.0]
+])
+
+# 2. Obtener la suma de cada columna
+sum_cols = np.sum(A, axis=0)
+
+# 3. Normalizar la matriz por columnas
+norm_A = A / sum_cols
+
+# 4. Promediar por filas para obtener los pesos finales
+w_ahp = np.mean(norm_A, axis=1)
+
+print("Pesos calculados (AHP):", w_ahp)
+# Output aproximado: [0.2672, 0.4958, 0.1544, 0.0826]
+\end{lstlisting}
+
 \subsection{Paso 1.2: Análisis de Consistencia}
 Para validar los resultados, debemos comprobar si el decisor ha sido razonablemente consistente.
 \begin{enumerate}
@@ -128,6 +177,29 @@ Para validar los resultados, debemos comprobar si el decisor ha sido razonableme
     \end{equation}
     Dado que $CR = 0.39\% < 10\%$, se concluye que los juicios de comparación pareada de AHP son extremadamente consistentes y los pesos son válidos.
 \end{enumerate}
+
+\subsubsection{Implementación en Python: Análisis de Consistencia en AHP}
+Podemos verificar matemáticamente la consistencia en Python comparando el vector de pesos resultante con la matriz original utilizando el método del autovalor principal:
+\begin{lstlisting}[language=Python]
+# 1. Multiplicacion de la matriz por el vector de pesos (A * w)
+Aw = np.dot(A, w_ahp)
+
+# 2. Dividir cada elemento por el peso correspondiente
+lambdas = Aw / w_ahp
+
+# 3. Calcular el autovalor maximo (lambda_max)
+lambda_max = np.mean(lambdas)
+
+# 4. Calcular el Indice (CI) y Razon de Consistencia (CR)
+n = A.shape[0]
+CI = (lambda_max - n) / (n - 1)
+RI = 0.90  # Para n = 4
+CR = CI / RI
+
+print(f"lambda_max: {lambda_max:.4f}")
+print(f"Indice de Consistencia (CI): {CI:.4f}")
+print(f"Razon de Consistencia (CR): {CR*100:.2f}%")
+\end{lstlisting}
 
 ---
 
@@ -206,6 +278,60 @@ De lo cual deducimos los pesos óptimos:
 \end{equation}
 Con una inconsistencia óptima de $\xi^{L*} = 0$ (Razón de Consistencia $CR = 0.0\%$).
 
+\subsubsection{Implementación en Python: Resolución y Consistencia del BWM}
+El modelo lineal minimax de BWM se plantea y resuelve de forma declarativa y clara en Python utilizando la biblioteca de optimización PuLP:
+\begin{lstlisting}[language=Python]
+import pulp
+
+# 1. Indices (0-indexed): Confiabilidad (C2) = 1, Sustentabilidad (C4) = 3
+best_idx = 1
+worst_idx = 3
+
+# Vectores Best-to-Others y Others-to-Worst
+a_B = [2.0, 1.0, 3.0, 6.0]
+a_W = [3.0, 6.0, 2.0, 1.0]
+
+# 2. Crear el problema de optimizacion lineal (Minimizar)
+prob = pulp.LpProblem("BWM_Lineal", pulp.LpMinimize)
+
+# 3. Definir variables de decision (pesos w_j e inconsistencia xi_L)
+w = [pulp.LpVariable(f"w_{i}", lowBound=0.0, upBound=1.0) for i in range(4)]
+xi = pulp.LpVariable("xi_L", lowBound=0.0)
+
+# 4. Funcion objetivo: Minimizar xi_L
+prob += xi
+
+# 5. Restriccion de suma: w1 + w2 + w3 + w4 = 1
+prob += pulp.lpSum(w) == 1.0
+
+# 6. Restricciones de desviacion absoluta (|w_B - a_Bj * w_j| <= xi_L y |w_j - a_jW * w_W| <= xi_L)
+for j in range(4):
+    # Restricciones de desviacion Best-to-Others
+    prob += w[best_idx] - a_B[j] * w[j] <= xi
+    prob += -(w[best_idx] - a_B[j] * w[j]) <= xi
+    
+    # Restricciones de desviacion Others-to-Worst
+    prob += w[j] - a_W[j] * w[worst_idx] <= xi
+    prob += -(w[j] - a_W[j] * w[worst_idx]) <= xi
+
+# 7. Resolver el modelo de optimizacion
+prob.solve(pulp.PULP_CBC_CMD(msg=False))
+
+# Extraer resultados
+w_bwm = [pulp.value(w_var) for w_var in w]
+xi_L = pulp.value(xi)
+
+# Calcular Razon de Consistencia (CR) de BWM
+tabla_CI = {1: 0.0, 2: 0.44, 3: 1.0, 4: 1.63, 5: 2.30, 6: 3.0, 7: 3.73, 8: 4.47, 9: 5.23}
+a_BW = a_B[worst_idx]
+CI_bwm = tabla_CI[a_BW]
+CR_bwm = xi_L / CI_bwm if CI_bwm > 0.0 else 0.0
+
+print("Pesos optimos BWM:", w_bwm)
+print(f"xi_L (desviacion): {xi_L:.4f}")
+print(f"CR BWM: {CR_bwm*100:.2f}%")
+\end{lstlisting}
+
 ---
 
 \section{Comparación de Resultados y Discusión Académica}
@@ -237,5 +363,60 @@ Con una inconsistencia óptima de $\xi^{L*} = 0$ (Razón de Consistencia $CR = 0
           \end{itemize}
     \item \textbf{Consistencia Matemática:} En BWM la formulación de optimización linealizada evita inconsistencias severas al forzar un minimax\footnote{\textbf{Minimax:} Criterio de decisión u optimización matemática que busca minimizar la máxima desviación o peor error posible en un sistema de restricciones.} que ajusta globalmente las prioridades relativas, mientras que en AHP el decisor debe ajustar valores de forma iterativa y empírica si $CR \ge 10\%$.
 \end{itemize}
+
+\section{Caso de Reto para el Estudiante: Selección de Ubicación de un nuevo CEDIS}
+
+Con el fin de aplicar de forma autónoma los conceptos y códigos desarrollados en esta sesión, se presenta el siguiente problema de toma de decisiones estratégicas de localización.
+
+\subsection{El Escenario del Reto}
+Una empresa multinacional de retail desea abrir un nuevo Centro de Distribución (CEDIS) en la región norte de México para abastecer su canal de comercio electrónico. El comité de planificación estratégica ha seleccionado 4 criterios de localización críticos:
+\begin{enumerate}
+    \item \textbf{Conectividad de Infraestructura ($C_1$):} Acceso a autopistas federales, puertos secos y cercanía a vías ferroviarias.
+    \item \textbf{Costos de Operación ($C_2$):} Costos de arrendamiento de la nave industrial, impuestos estatales y tarifas de servicios públicos.
+    \item \textbf{Cercanía a Clientes Metropolitanos ($C_3$):} Proximidad geográfica a las principales zonas urbanas con alta densidad de demanda.
+    \item \textbf{Disponibilidad de Mano de Obra ($C_4$):} Oferta y cualificación de personal técnico y operativo en logística en la zona.
+\end{enumerate}
+
+\subsection{Juicios del Decisor}
+El director global de logística ha establecido las siguientes preferencias subjetivas:
+\begin{itemize}
+    \item \textbf{El mejor criterio (Best):} Cercanía a Clientes Metropolitanos ($C_3$).
+    \item \textbf{El peor criterio (Worst):} Costos de Operación ($C_2$).
+    \item \textbf{Juicios Best-to-Others ($A_B$):} El mejor criterio ($C_3$) es 2 veces más importante que Infraestructura ($C_1$), 4 veces más importante que Costos ($C_2$), y 3 veces más importante que Mano de Obra ($C_4$).
+    \item \textbf{Juicios Others-to-Worst ($A_W$):} Infraestructura ($C_1$) es 3 veces más importante que Costos ($C_2$), Cercanía a Clientes ($C_3$) es 4 veces más importante que Costos ($C_2$), y Mano de Obra ($C_4$) es 2 veces más importante que Costos ($C_2$).
+\end{itemize}
+
+A partir de estas relaciones, se ha estructurado la siguiente matriz de comparación pareada de AHP:
+\begin{equation}
+    \mathbf{A}_{reto} = \begin{pmatrix}
+        1 & 3 & 1/2 & 2 \\
+        1/3 & 1 & 1/4 & 1/2 \\
+        2 & 4 & 1 & 3 \\
+        1/2 & 2 & 1/3 & 1
+    \end{pmatrix}
+\end{equation}
+
+\subsection{Pauta de Actividades para el Estudiante}
+Apoyándote en el notebook desarrollado y las explicaciones de la clase, resuelve los siguientes puntos y reporta los resultados en tu reporte de la sesión:
+\begin{enumerate}
+    \item \textbf{Resolución Analítica y en Python de AHP:}
+          \begin{itemize}
+              \item Calcula el vector de pesos aproximado de AHP normalizando la matriz $\mathbf{A}_{reto}$ por columnas.
+              \item Determina el autovalor principal estimado $\lambda_{\max}$.
+              \item Calcula el Índice de Consistencia ($CI$) y la Razón de Consistencia ($CR$). ¿Se cumple el umbral de aceptación del $10\%$?
+          \end{itemize}
+    \item \textbf{Formulación y Solución del BWM:}
+          \begin{itemize}
+              \item Escribe matemáticamente el modelo linealizado de optimización para este reto.
+              \item Implementa y resuelve el modelo utilizando la biblioteca \texttt{PuLP} en Python.
+              \item Reporta los pesos óptimos $\mathbf{w}^*$ y la desviación óptima $\xi^{L*}$.
+              \item Calcula la Razón de Consistencia del BWM.
+          \end{itemize}
+    \item \textbf{Análisis Comparativo y Discusión:}
+          \begin{itemize}
+              \item Elabora una tabla que compare los pesos obtenidos por AHP y BWM.
+              \item Compara el esfuerzo cognitivo (número de preguntas) que el decisor habría realizado si tuviera 8 opciones de ubicación bajo estos 4 criterios usando ambos métodos.
+          \end{itemize}
+\end{enumerate}
 
 \end{document}

@@ -1,0 +1,359 @@
+\documentclass[aspectratio=169, 10pt]{beamer}
+
+% --- PAQUETES BÁSICOS ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+% --- TEMA FIME UANL ---
+\usetheme[showlogo, nosectionpage]{FIME}
+
+% Estilos TikZ adaptados para visualizaciones metodológicas
+\tikzset{
+    block/.style={rectangle, draw=FIMEgreen, fill=FIMElightgray, text width=2.4cm, text centered, rounded corners, minimum height=1.2cm, font=\scriptsize\bfseries, line width=1pt},
+    arrow/.style={thick,->,>=stealth,draw=UANLblue,line width=1.2pt},
+    actor/.style={rectangle, draw=UANLblue, fill=FIMElightgray, text width=2.8cm, text centered, rounded corners, minimum height=1cm, font=\small\bfseries, line width=1pt}
+}
+
+% --- METADATOS ---
+\title[Herramientas Multicriterio - Sesión 3]{Herramientas Multicriterio para Toma de Decisiones}
+\subtitle{Sesión 3: Ponderación Objetiva: Entropía de Shannon y Método CRITIC}
+\author[Leonardo G. Hernández]{Dr. Leonardo Gabriel Hernández Landa}
+\institute[FIME - UANL]{
+    Doctorado en Logística y Cadena de Suministro\\
+    Facultad de Ingeniería Mecánica y Eléctrica (FIME)\\
+    Universidad Autónoma de Nuevo León (UANL)
+}
+\date{Tetramestre de Otoño}
+
+% --- INICIO DEL DOCUMENTO ---
+\begin{document}
+
+% Slide 1: Portada
+\begin{frame}[plain]
+    \titlepage
+\end{frame}
+
+% Slide 2: Objetivos de la Sesión
+\begin{frame}{Objetivos de la Sesión}
+    \begin{block}{Al finalizar esta tercera sesión, el estudiante de doctorado será capaz de:}
+        \begin{itemize}
+            \item \textbf{Analizar la filosofía matemática} de la ponderación objetiva basada en la variabilidad e interacción de los datos en lugar de la opinión de expertos.
+            \item \textbf{Formular e implementar} el cálculo de pesos a través de la Entropía de Shannon para medir el contenido de información de cada criterio.
+            \item \textbf{Calcular pesos óptimos} utilizando el método CRITIC, incorporando tanto la desviación estándar como la correlación lineal (Pearson) entre criterios.
+            \item \textbf{Contrastar críticamente} los resultados de pesos subjetivos (Sesión 2) y objetivos (Sesión 3) aplicados a un mismo conjunto de datos operativos de almacenes.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% Slide 3: Agenda de la Sesión
+\begin{frame}{Agenda de la Sesión (3 Horas)}
+    \begin{columns}[T]
+        \begin{column}{0.31\textwidth}
+            \begin{block}{Bloque 1 (90 min)}
+                \textbf{Exposición Teórica}
+                \begin{itemize}
+                    \scriptsize
+                    \item Filosofía de la ponderación objetiva
+                    \item Entropía de Shannon
+                    \item Formulación de la Entropía ($e_j, d_j, w_j$)
+                    \item Método CRITIC (Diakoulaki et al., 1995)
+                    \item Contraste y correlación de criterios
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.31\textwidth}
+            \begin{exampleblock}{Bloque 2 (45 min)}
+                \textbf{Debate de Literatura}
+                \begin{itemize}
+                    \scriptsize
+                    \item Diakoulaki et al. (1995)
+                    \item Keshavarz-Ghorabaee (2021)
+                    \item Paradoja de la variabilidad vs. importancia subjetiva
+                    \item Enfoque MEREC (efecto de remoción)
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+        
+        \begin{column}{0.31\textwidth}
+            \begin{alertblock}{Bloque 3 (45 min)}
+                \textbf{Taller Práctico}
+                \begin{itemize}
+                    \scriptsize
+                    \item Cálculo de CRITIC en Excel (3 CEDIS)
+                    \item Taller autónomo en Python (10 transportistas)
+                    \item Análisis gráfico perfiles de peso
+                    \item Avance sobre Entregable E1
+                \end{itemize}
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 4: Introducción a la Ponderación Objetiva
+\begin{frame}{Ponderación Objetiva de Criterios}
+    \begin{itemize}
+        \item En la práctica, obtener pesos subjetivos robustos es complejo (requiere acceso a tomadores de decisiones de alto nivel, encuestas largas y control de consistencia).
+        \item \textbf{Ponderación Objetiva:} Los pesos de los criterios ($w_j$) se derivan directamente de la \textbf{estructura e información contenida} en la matriz de decisión $\mathbf{X}$.
+        \item \textbf{Premisa:} Si un criterio tiene valores muy similares para todas las alternativas, aporta poca información para discriminar entre ellas y debe recibir un peso bajo.
+    \end{itemize}
+    \begin{exampleblock}{Ventajas Metodológicas}
+        \scriptsize
+        \begin{itemize}
+            \item Útil en ausencia de un experto o tomador de decisiones unificado.
+            \item Elimina el sesgo cognitivo humano y los conflictos de interés.
+            \item Es ideal para procesos automatizados de toma de decisiones en tiempo real (ej. sistemas dinámicos logísticos).
+        \end{itemize}
+    \end{exampleblock}
+\end{frame}
+
+% Slide 5: Filosofía de la Entropía de Shannon
+\begin{frame}{Entropía de Shannon en la Toma de Decisiones}
+    \begin{columns}[T]
+        \begin{column}{0.6\textwidth}
+            \begin{itemize}
+                \item Concepto originado en la \textbf{Teoría de la Información} (Claude Shannon, 1948) para medir el desorden o incertidumbre.
+                \item Adaptado a MCDM para cuantificar la \textbf{cantidad de información útil} provista por cada criterio.
+                \item Si la variabilidad de las evaluaciones es alta, la entropía es baja, lo que indica que el criterio es discriminativo y debe tener un \textbf{grado de divergencia alto} (mayor peso).
+                \item Si todas las alternativas tienen el mismo valor en un criterio, la entropía es máxima ($e_j = 1$), su divergencia es nula ($d_j = 0$) y su peso final es 0.
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.38\textwidth}
+            \begin{block}{Intuición Matemática}
+                \scriptsize
+                \begin{center}
+                    \textbf{Varianza de Datos vs. Peso}
+                \end{center}
+                \begin{itemize}
+                    \item Datos Homogéneos $\rightarrow$ Entropía Alta $\rightarrow$ Divergencia Baja $\rightarrow$ \textbf{Menor Peso}
+                    \item Datos Heterogéneos $\rightarrow$ Entropía Baja $\rightarrow$ Divergencia Alta $\rightarrow$ \textbf{Mayor Peso}
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 6: Algoritmo de la Entropía: Normalización
+\begin{frame}{Algoritmo de la Entropía: Paso 1 - Normalización Sumatoria}
+    Para evitar problemas con diferentes unidades e inconmensurabilidad, se realiza una normalización sumatoria para obtener probabilidades proyectadas $p_{ij}$:
+    
+    \[ p_{ij} = \frac{x_{ij}}{\sum_{k=1}^{m} x_{kj}}, \quad \forall i=1,\dots,m, \quad j=1,\dots,n \]
+    
+    \begin{alertblock}{Restricción Crítica}
+        \scriptsize
+        \begin{itemize}
+            \item Todos los datos de la matriz de decisión $\mathbf{X}$ deben ser estrictamente positivos ($x_{ij} > 0$).
+            \item Si existen criterios de costo (minimizar), se debe realizar un paso de inversión previa ($x'_{ij} = 1/x_{ij}$ o aplicar normalización de costo) antes de calcular la entropía.
+        \end{itemize}
+    \end{alertblock}
+\end{frame}
+
+% Slide 7: Algoritmo de la Entropía: Cálculo de Entropía
+\begin{frame}{Algoritmo de la Entropía: Paso 2 - Medida de la Entropía}
+    La entropía $e_j$ de cada criterio $C_j$ se calcula mediante:
+    
+    \[ e_j = -k \sum_{i=1}^{m} p_{ij} \ln(p_{ij}) \]
+    
+    Donde:
+    \begin{itemize}
+        \item $k$ es una constante de escala que garantiza que $0 \le e_j \le 1$:
+        \[ k = \frac{1}{\ln(m)} \]
+        \item $m$ es el número de alternativas bajo evaluación.
+    \end{itemize}
+    
+    \begin{exampleblock}{Caso Especial: $p_{ij} = 0$}
+        \scriptsize
+        Si $p_{ij} = 0$, se define analíticamente $\lim_{p \to 0^+} p \ln(p) = 0$. En Python o Excel se debe programar un condicional para evitar el error de logaritmo de cero.
+    \end{exampleblock}
+\end{frame}
+
+% Slide 8: Algoritmo de la Entropía: Pesos Finales
+\begin{frame}{Algoritmo de la Entropía: Pasos 3 y 4 - Grado de Divergencia y Pesos}
+    Una vez calculadas las entropías $e_j$, se procede de la siguiente manera:
+    
+    \begin{block}{Paso 3: Cálculo del Grado de Divergencia ($d_j$)}
+        Representa la medida de información útil inherente al criterio $C_j$:
+        \[ d_j = 1 - e_j \]
+    \end{block}
+    
+    \begin{block}{Paso 4: Obtención de Pesos Normalizados ($w_j$)}
+        Se normaliza el grado de divergencia respecto a la suma de divergencias de todos los criterios:
+        \[ w_j = \frac{d_j}{\sum_{k=1}^{n} d_k} \]
+    \end{block}
+\end{frame}
+
+% Slide 9: Método CRITIC (Diakoulaki et al., 1995)
+\begin{frame}{El Método CRITIC}
+    \begin{itemize}
+        \item Diseñado por \textbf{Diakoulaki, Mavrotas y Papayannakis (1995)}: \textit{Criteria Importance Through Intercriteria Correlation}.
+        \item Crítica a la Entropía: La Entropía evalúa cada criterio de forma aislada, ignorando la correlación (redundancia) entre ellos.
+        \item \textbf{Filosofía de CRITIC:} Incorpora dos dimensiones clave del contenido de información de los datos:
+        \begin{enumerate}
+            \item **Contraste de Criterio:** Medido a través de la \textbf{desviación estándar} ($\sigma_j$).
+            \item **Conflicto Inter-criterio:** Medido mediante la \textbf{correlación lineal de Pearson} ($r_{jk}$) entre perfiles de criterios.
+        \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+% Slide 10: Algoritmo CRITIC: Normalización y Desviación
+\begin{frame}{Algoritmo CRITIC: Pasos 1 y 2 - Normalización y Variabilidad}
+    \begin{block}{Paso 1: Normalización Max-Min}
+        Se proyectan los valores originales al intervalo $[0, 1]$ utilizando las fórmulas:
+        \[ \text{Beneficio (Max): } r_{ij} = \frac{x_{ij} - x_j^{\min}}{x_j^{\max} - x_j^{\min}} \]
+        \[ \text{Costo (Min): } r_{ij} = \frac{x_j^{\max} - x_{ij}}{x_j^{\max} - x_j^{\min}} \]
+    \end{block}
+    
+    \begin{block}{Paso 2: Variabilidad del Criterio}
+        Se calcula la desviación estándar $\sigma_j$ de cada criterio (columna de la matriz normalizada $\mathbf{R}$). Representa la fuerza de contraste de cada dimensión.
+    \end{block}
+\end{frame}
+
+% Slide 11: Algoritmo CRITIC: Matriz de Correlación y Conflicto
+\begin{frame}{Algoritmo CRITIC: Paso 3 - Conflicto Inter-criterio}
+    Se calcula la matriz de correlación lineal de Pearson $[r_{jk}]$ entre los criterios.
+    \begin{itemize}
+        \item La suma $\sum_{k=1}^{n} (1 - r_{jk})$ representa la medida del conflicto generado por el criterio $C_j$ respecto a los demás.
+        \item Si $r_{jk} \approx 1$ (alta correlación positiva), el término $(1 - r_{jk}) \approx 0$, lo que significa que el criterio $C_k$ es redundante y se le "penaliza" reduciendo su influencia.
+    \end{itemize}
+    
+    \begin{block}{Cantidad de Información ($C_j$)}
+        La cantidad de información total contenida en el criterio $C_j$ se obtiene multiplicando su contraste por su conflicto acumulado:
+        \[ C_j = \sigma_j \sum_{k=1}^{n} (1 - r_{jk}) \]
+    \end{block}
+\end{frame}
+
+% Slide 12: Algoritmo CRITIC: Pesos Finales
+\begin{frame}{Algoritmo CRITIC: Paso 4 - Obtención de Pesos}
+    Los pesos objetivos se obtienen normalizando la cantidad de información $C_j$:
+    
+    \[ w_j = \frac{C_j}{\sum_{k=1}^{n} C_k} \]
+    
+    \begin{exampleblock}{Interpretación Teórica de CRITIC}
+        \scriptsize
+        Un criterio recibirá un peso alto si:
+        \begin{itemize}
+            \item Sus valores tienen alta dispersión (alta desviación estándar $\sigma_j$).
+            \item Presenta baja correlación (o correlación negativa) con los demás criterios, aportando información única y no redundante al modelo.
+        \end{itemize}
+    \end{exampleblock}
+\end{frame}
+
+% Slide 13: Comparación Epistemológica: Subjetivo vs. Objetivo
+\begin{frame}{Comparativa: Ponderación Subjetiva vs. Objetiva}
+    \begin{center}
+        \scriptsize
+        \begin{tabular}{p{3.2cm}p{5cm}p{5cm}}
+            \toprule
+            \textbf{Dimensión} & \textbf{Ponderación Subjetiva (AHP/BWM)} & \textbf{Ponderación Objetiva (Entropía/CRITIC)} \\
+            \midrule
+            \textbf{Fuente de Información} & Juicio de expertos, tomadores de decisiones. & Matriz de datos empíricos de desempeño $\mathbf{X}$. \\
+            \textbf{Carga Cognitiva} & Alta ($n(n-1)/2$ o $2n-3$ comparaciones). & Nula. Cálculo matemático inmediato. \\
+            \textbf{Sensibilidad a Datos} & Indiferente a cambios numéricos si la jerarquía se mantiene. & Altamente sensible a la variabilidad interna de los datos. \\
+            \textbf{Redundancia} & No la penaliza analíticamente. & CRITIC la penaliza explícitamente usando correlación. \\
+            \textbf{Uso sugerido en Tesis} & Decisiones estratégicas con gran componente cualitativo. & Evaluaciones operativas con bases de datos consolidadas. \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+% Slide 14: Discusión de Literatura (Debate Socrático)
+\begin{frame}{Debate de Literatura Científica}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Paradoja de la Licitación}
+                El costo suele considerarse el criterio más "importante" subjetivamente en logística. Sin embargo, en una licitación donde todos los transportistas cotizan tarifas casi idénticas, el método de Entropía le dará un peso cercano a cero. 
+                \begin{itemize}
+                    \scriptsize
+                    \item ¿Tiene esto sentido metodológico?
+                    \item ¿Cómo afecta al tomador de decisiones real?
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Remoción de Criterios (MEREC)}
+                Keshavarz-Ghorabaee (2021) propone calcular pesos basándose en el efecto de remover un criterio.
+                \begin{itemize}
+                    \scriptsize
+                    \item Si al remover un criterio, la puntuación general cambia drásticamente, el criterio tiene un gran efecto y recibe un peso alto.
+                    \item ¿Qué ventajas tiene esto sobre la Entropía en la cadena de suministro?
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 15: Taller Aplicado: Ejercicio Guiado en Excel
+\begin{frame}{Taller Aplicado: Cálculo de CRITIC}
+    Evaluación del desempeño de 3 almacenes (CEDIS) bajo 3 criterios cuantitativos:
+    \begin{enumerate}
+        \item Exactitud de Inventario (OTIF, \%).
+        \item Costo operativo por caja procesada (USD).
+        \item Tiempo de ciclo de orden (horas).
+    \end{enumerate}
+    
+    \begin{block}{Matriz de Decisión Original}
+        \scriptsize
+        \begin{center}
+            \begin{tabular}{lccc}
+                \toprule
+                \textbf{Almacén} & \textbf{OTIF (Max, \%)} & \textbf{Costo (Min, USD)} & \textbf{Ciclo (Min, h)} \\
+                \midrule
+                CEDIS A & 98 & 1.20 & 4 \\
+                CEDIS B & 92 & 1.50 & 6 \\
+                CEDIS C & 95 & 1.10 & 5 \\
+                \bottomrule
+            \end{tabular}
+        \end{center}
+    \end{block}
+    \smallskip
+    *El profesor guiará el cálculo paso a paso en Excel (normalización max-min, desviaciones estándar, correlación de Pearson, $C_j$ y pesos finales).*
+\end{frame}
+
+% Slide 16: Caso Práctico Autónomo en Python
+\begin{frame}{Trabajo Autónomo en Python: Evaluación de Transportistas}
+    El estudiante recibirá un dataset real de 10 transportistas terrestres evaluados bajo 4 KPIs operativos:
+    \begin{itemize}
+        \item Costo por envío (MXN) [Min]
+        \item OTIF (\%) [Max]
+        \item Tiempo de entrega promedio (horas) [Min]
+        \item Índice de siniestralidad o daños (\%) [Min]
+    \end{itemize}
+    \begin{block}{Tareas a Resolver en Jupyter Notebook}
+        \begin{enumerate}
+            \item Importar los datos y realizar la normalización correspondiente para Entropía y CRITIC.
+            \item Programar los algoritmos matemáticos desde cero (utilizando \texttt{numpy} y \texttt{pandas}) sin depender de librerías MCDM de caja negra.
+            \item Graficar un mapa de calor de correlaciones y perfiles comparativos de pesos resultantes.
+            \item Contrastar perfiles de ponderación subjetiva (AHP/BWM - Sesión 2) frente a los objetivos (Entropía/CRITIC - Sesión 3).
+        \end{enumerate}
+    \end{block}
+\end{frame}
+
+% Slide 17: Conclusiones
+\begin{frame}{Conclusiones Clave de la Ponderación Objetiva}
+    \begin{itemize}
+        \item Los métodos de ponderación objetiva capturan la señal numérica de los datos operativos reales, eliminando sesgos personales.
+        \item La Entropía de Shannon mide el contenido de información individual, pero es vulnerable a redundancias y correlaciones ocultas.
+        \item El método CRITIC es una aproximación robusta al evaluar simultáneamente el contraste de datos (desviación) y los conflictos entre criterios (correlación).
+        \item Para tesis de doctorado, la hibridación de pesos subjetivos y objetivos (pesos combinados) ofrece el mayor nivel de rigor científico.
+    \end{itemize}
+\end{frame}
+
+% Slide 18: Referencias Obligatorias
+\begin{frame}{Referencias Bibliográficas Obligatorias}
+    \begin{itemize}
+        \scriptsize
+        \item \textbf{Diakoulaki, D., Mavrotas, G., \& Papayannakis, L. (1995).} Determining objective weights in multiple criteria problems: the CRITIC method. \textit{Computers \& Operations Research}, 22(7), 763--770.
+        \item \textbf{Keshavarz-Ghorabaee, M., Amiri, M., Zavadskas, E. K., Turskis, Z., \& Antucheviciene, J. (2021).} Determination of objective weights using a new method based on the removal effects of criteria (MEREC). \textit{Symmetry}, 13(4), 525.
+        \item \textbf{Shannon, C. E. (1948).} A mathematical theory of communication. \textit{The Bell System Technical Journal}, 27(3), 379--423.
+    \end{itemize}
+\end{frame}
+
+\end{document}

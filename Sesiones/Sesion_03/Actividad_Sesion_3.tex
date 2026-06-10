@@ -1,0 +1,176 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- PAQUETES BÁSICOS ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=2.2cm, right=2.2cm, headheight=24pt}
+\addtolength{\topmargin}{-12pt}
+
+% --- COLORES INSTITUCIONALES (FIME/UANL) ---
+\usepackage{xcolor}
+\definecolor{FIMEgreen}{HTML}{005C42}
+\definecolor{UANLblue}{HTML}{002F6C}
+\definecolor{UANLgold}{HTML}{FFC72C}
+\definecolor{FIMEblack}{HTML}{0F172A}
+\definecolor{FIMElightgray}{HTML}{F8FAFC}
+\definecolor{FIMEdarkgray}{HTML}{475569}
+
+% --- TIPOGRAFÍA (Palatino / Open Sans) ---
+\usepackage{palatino}
+\usepackage[default]{opensans}
+
+% --- DISEÑO DE CAJAS Y ELEMENTOS ---
+\usepackage[most]{tcolorbox}
+\newtcolorbox{brandbox}[1]{%
+  colback=FIMElightgray,
+  colframe=FIMEgreen,
+  coltitle=white,
+  fonttitle=\bfseries\sffamily,
+  title=#1,
+  boxrule=1.5pt,
+  arc=4pt,
+  top=8pt,
+  bottom=8pt,
+  left=10pt,
+  right=10pt
+}
+
+\newtcolorbox{alertbox}[1]{%
+  colback=FIMElightgray,
+  colframe=UANLblue,
+  coltitle=white,
+  fonttitle=\bfseries\sffamily,
+  title=#1,
+  boxrule=1.5pt,
+  arc=4pt,
+  top=8pt,
+  bottom=8pt,
+  left=10pt,
+  right=10pt
+}
+
+% --- ENCABEZADOS Y PIE DE PÁGINA ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{FIMEgreen}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\sffamily\bfseries\color{FIMEgreen}FIME -- UANL}
+\fancyhead[R]{\sffamily\color{UANLblue}Doctorado en Logística y Cadena de Suministro}
+\fancyfoot[C]{\sffamily\color{FIMEdarkgray}\thepage}
+
+% --- SECCIONES Y ENLACES ---
+\usepackage{titlesec}
+\titleformat{\section}{\color{UANLblue}\normalfont\Large\bfseries\sffamily}{\thesection}{1em}{}
+\titleformat{\subsection}{\color{FIMEgreen}\normalfont\large\bfseries\sffamily}{\thesubsection}{1em}{}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=FIMEgreen,
+    urlcolor=UANLblue
+}
+
+% --- DATOS DEL DOCUMENTO ---
+\title{%
+  \sffamily\bfseries\color{UANLblue}%
+  Actividad Práctica 3: Ponderación Objetiva de Criterios\\
+  \large Algoritmos de Entropía de Shannon y Método CRITIC en Python
+}
+\author{%
+  \sffamily\bfseries\color{FIMEdarkgray}%
+  Dr. Leonardo Gabriel Hernández Landa\\
+  \small MCDM -- Herramientas Multicriterio para Toma de Decisiones\\
+  \small\color{FIMEgreen}Facultad de Ingeniería Mecánica y Eléctrica (FIME)
+}
+\date{\sffamily Tetramestre de Otoño}
+
+% --- INICIO DEL DOCUMENTO ---
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{brandbox}{Contexto de la Actividad}
+  A diferencia de la ponderación subjetiva, donde las prioridades de los criterios son elicitadas por juicios personales de expertos, la \textbf{ponderación objetiva} extrae la importancia de los criterios analizando directamente la dispersión y la interrelación de los datos empíricos de desempeño.
+  
+  En esta actividad, desarrollarás desde cero en Python los algoritmos de la \textbf{Entropía de Shannon} y el \textbf{Método CRITIC (Criteria Importance Through Intercriteria Correlation)} para ponderar objetivamente un conjunto de KPIs de transportistas terrestres, contrastando el impacto matemático de ambos métodos.
+\end{brandbox}
+
+\section{Caso de Estudio: Selección y Evaluación de Transportistas LTL}
+El Centro de Distribución (CEDIS) de e-commerce en Apodaca de una cadena de retail regional requiere evaluar de manera objetiva el desempeño histórico de 10 transportistas terrestres consolidados (LTL) que operan la ruta estratégica Monterrey - Nuevo Laredo. Se ha recopilado información de desempeño de los proveedores bajo 4 criterios clave:
+\begin{enumerate}
+    \item \textbf{Costo por viaje ($C_1$):} Tarifa media en pesos mexicanos (MXN) cobrada por envío consolidado. [Dirección: \textbf{Minimizar}]
+    \item \textbf{On-Time In-Full ($C_2$):} Nivel de entregas a tiempo y completas expresado en porcentaje (\%). [Dirección: \textbf{Maximizar}]
+    \item \textbf{Lead Time de Entrega ($C_3$):} Tiempo promedio desde la recolección en CEDIS hasta la entrega física al cliente en horas. [Dirección: \textbf{Minimizar}]
+    \item \textbf{Índice de Siniestralidad ($C_4$):} Porcentaje de órdenes con reportes de daños o mermas de carga (\%). [Dirección: \textbf{Minimizar}]
+\end{enumerate}
+
+\begin{table}[h!]
+  \centering
+  \small
+  \begin{tabular}{ccccc}
+    \toprule
+    \textbf{Transportista} & \textbf{Costo ($C_1$ - Min)} & \textbf{OTIF ($C_2$ - Max)} & \textbf{Lead Time ($C_3$ - Min)} & \textbf{Siniestralidad ($C_4$ - Min)} \\
+    \midrule
+    $A_1$ & \$12,500 & 95\% & 24.0 h & 0.5\% \\
+    $A_2$ & \$10,200 & 88\% & 28.0 h & 1.2\% \\
+    $A_3$ & \$14,000 & 98\% & 20.0 h & 0.2\% \\
+    $A_4$ & \$11,000 & 91\% & 26.0 h & 0.8\% \\
+    $A_5$ & \$13,200 & 96\% & 22.0 h & 0.4\% \\
+    $A_6$ & \$9,800  & 85\% & 30.0 h & 1.5\% \\
+    $A_7$ & \$15,500 & 99\% & 18.0 h & 0.1\% \\
+    $A_8$ & \$12,000 & 94\% & 24.0 h & 0.6\% \\
+    $A_9$ & \$11,500 & 92\% & 25.0 h & 0.7\% \\
+    $A_{10}$ & \$10,800 & 89\% & 27.0 h & 1.0\% \\
+    \bottomrule
+  \end{tabular}
+  \caption{Matriz de Decisión Original $X_{10 \times 4}$ para evaluación de transportistas.}
+\end{table}
+
+\section{Guía de Desarrollo y Tareas a Realizar}
+
+Los alumnos deberán programar los cálculos en un Jupyter Notebook utilizando únicamente librerías científicas estándar de Python (\texttt{numpy}, \texttt{pandas}, \texttt{matplotlib} o \texttt{seaborn}) sin hacer uso de librerías prediseñadas de MCDM.
+
+\subsection{Parte 1: Algoritmo de la Entropía de Shannon}
+\begin{enumerate}
+    \item \textbf{Alineación de Criterios:} Debido a que la entropía mide dispersión sobre valores directos, los criterios de costo ($C_1, C_3, C_4$) deben invertirse mediante transformación recíproca ($x'_{ij} = 1/x_{ij}$) antes de normalizar.
+    \item \textbf{Normalización Sumatoria:} Calcula la matriz de probabilidad $p_{ij} = x'_{ij}/\sum_{k=1}^{10} x'_{kj}$.
+    \item \textbf{Cálculo de Entropía ($e_j$):} Aplica la ecuación $e_j = -k \sum_{i=1}^{10} p_{ij} \ln(p_{ij})$ con la constante de escala $k = 1/\ln(10)$. Asegúrate de manejar correctamente si existen valores de $p_{ij} = 0$.
+    \item \textbf{Grado de Divergencia ($d_j$):} Calcula $d_j = 1 - e_j$.
+    \item \textbf{Pesos Finales ($w_j$):} Normaliza los grados de divergencia de forma que sumen 1.
+\end{enumerate}
+
+\subsection{Parte 2: Algoritmo de CRITIC}
+\begin{enumerate}
+    \item \textbf{Normalización Max-Min:} Transforma la matriz original $X$ a la matriz normalizada $R_{10 \times 4}$ mapeando todos los criterios a $[0, 1]$ (la dirección del mejor desempeño debe ser siempre 1 y el peor debe ser 0).
+    \item \textbf{Desviación Estándar ($\sigma_j$):} Calcula la desviación estándar de cada criterio (columna) en la matriz $R$.
+    \item \textbf{Matriz de Correlación ($r_{jk}$):} Obtén la matriz de correlación de Pearson de tamaño $4 \times 4$ de los criterios en la matriz $R$.
+    \item \textbf{Cantidad de Información ($C_j$):} Evalúa la cantidad de información útil mediante la expresión $C_j = \sigma_j \sum_{k=1}^4 (1 - r_{jk})$.
+    \item \textbf{Pesos Finales ($w_j$):} Calcula $w_j = C_j / \sum_{k=1}^4 C_k$.
+\end{enumerate}
+
+\subsection{Parte 3: Visualización y Contraste}
+Grafica un diagrama de barras comparativo mostrando el perfil de pesos que cada criterio recibe por ambos métodos y reporta una matriz de correlación de calor de Pearson entre los KPIs.
+
+\section{Preguntas de Reflexión Académica (Nivel Doctoral)}
+Responde detalladamente las siguientes preguntas de análisis epistemológico:
+\begin{enumerate}
+    \item \textbf{La paradoja de la variabilidad:} Si el CEDIS lograra estandarizar tarifas de forma que todos los transportistas cobraran exactamente \$12,000 por viaje, ¿cuál sería el peso asignado al costo ($C_1$) mediante la Entropía de Shannon? Explica conceptualmente la diferencia entre la "importancia operativa de un criterio" y su "capacidad de discriminación matemática".
+    \item \textbf{El impacto de la redundancia inter-criterio:} En logística, el Lead Time ($C_3$) y el OTIF ($C_2$) suelen estar altamente correlacionados (un menor lead time facilita el OTIF). Explica matemáticamente cómo penaliza el método CRITIC esta correlación de variables redundantes a diferencia de la Entropía, y cómo afecta esto a la robustez del modelo.
+    \item \textbf{Idoneidad metodológica en proyectos de tesis:} Compara el uso de pesos subjetivos (ej. AHP o BWM de la Sesión 2) frente a pesos objetivos (ej. Entropía o CRITIC). ¿En qué escenarios de investigación logística de tesis doctoral es más adecuado usar un enfoque objetivo sobre uno subjetivo, o viceversa? Justifica con base en la teoría de la racionalidad de Herbert Simon.
+\end{enumerate}
+
+\begin{alertbox}{Formato de Entrega}
+  La entrega consistirá en:
+  \begin{itemize}
+      \item El archivo de Jupyter Notebook (\texttt{.ipynb}) con el código limpio, comentado y ejecutado.
+      \item Un reporte académico en formato PDF (máximo 5 páginas) que resuma los pasos de cálculo, tablas de pesos intermedios y finales, gráficas de perfiles y la discusión formal de las 3 preguntas de reflexión.
+  \end{itemize}
+\end{alertbox}
+
+\end{document}

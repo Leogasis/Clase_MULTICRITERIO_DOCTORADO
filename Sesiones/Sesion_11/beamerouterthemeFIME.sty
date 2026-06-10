@@ -1,0 +1,74 @@
+% beamerouterthemeFIME.sty - frame title, footline, optional slide logos
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerouterthemeFIME}[2026/05/22 v1.0.0 FIME Beamer Outer Theme]
+
+\RequirePackage{tikz}
+
+% -- Frame Title -----------------------------------------------------------
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip%
+  \begin{beamercolorbox}[wd=\paperwidth, ht=3.2ex, dp=1.2ex, leftskip=0.6cm, rightskip=0.6cm]{frametitle}%
+    \usebeamerfont{frametitle}\insertframetitle%
+    \ifx\insertframesubtitle\@empty\else
+      \quad{\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}%
+    \fi
+  \end{beamercolorbox}%
+  \nointerlineskip%
+  \begin{tikzpicture}[overlay]
+    \draw[FIMEgreen, line width=1.5pt] (-0.4cm,0) -- (\paperwidth,0);
+  \end{tikzpicture}%
+  \vskip 4pt%
+}
+
+% -- Footline -----------------------------------------------------------
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.8ex,dp=1.2ex,left,leftskip=.6cm]{footline}%
+       \insertshortauthor
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.34\paperwidth,ht=2.8ex,dp=1.2ex,center]{footline}%
+       \insertshorttitle
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.8ex,dp=1.2ex,right,rightskip=.6cm]{footline}%
+       \insertframenumber\,/\,\inserttotalframenumber
+    \end{beamercolorbox}%
+  }%
+  % -- Optional logos on content slides (showlogo option) --
+  \if@FIMEshowlogo
+    \begin{tikzpicture}[overlay, remember picture]
+      % FIME Logo on the right
+      \node[anchor=north east, inner sep=0pt]
+        at ([xshift=-0.4cm, yshift=-0.15cm]current page.north east)
+        {\includegraphics[height=0.7cm]{img/logo-fime.jpeg}};
+      % UANL Logo to the left of FIME logo
+      \node[anchor=north east, inner sep=0pt]
+        at ([xshift=-1.3cm, yshift=-0.15cm]current page.north east)
+        {\includegraphics[height=0.7cm]{img/icono_uanl.png}};
+    \end{tikzpicture}%
+  \fi
+}
+
+% -- Thank-you / closing frame --------------------------------
+\newcommand{\thankframe}[2]{%
+  \begingroup
+  \setbeamercolor{background canvas}{bg=FIMEgreen}
+  \begin{frame}[plain]
+    \vfill
+    \begin{center}
+      \vspace{1cm}
+      {\color{FIMEwhite}\LARGE\rmfamily\bfseries #1}%
+      \ifstrempty{#2}{}{%
+        \\[12pt]%
+        {\color{UANLgold!40}\rule{2.2cm}{0.7pt}}\\[14pt]%
+        {\color{FIMEwhite!80}\small\sffamily #2}%
+      }%
+      \vskip 30pt%
+      \includegraphics[height=1.8cm]{img/logo-fime.jpeg}\hskip 20pt \includegraphics[height=1.8cm]{img/icono_uanl.png}%
+    \end{center}
+    \vfill
+  \end{frame}
+  \endgroup
+}
+
+\endinput

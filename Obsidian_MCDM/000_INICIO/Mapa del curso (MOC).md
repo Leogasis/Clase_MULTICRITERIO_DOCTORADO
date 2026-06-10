@@ -12,25 +12,26 @@ Bienvenido al índice central del curso **Herramientas Multicriterio para Toma d
 Accede a las notas detalladas de cada una de las 15 sesiones presenciales:
 
 - [[Sesion_01_Fundamentos_epistemologicos|Sesión 01: Fundamentos Epistemológicos]]
-- [[Sesion_02_MAUT|Sesión 02: Teoría de la Utilidad Multi-Atributo (MAUT)]]
-- [[Sesion_03_Metodos_Aditivos_Simples|Sesión 03: Métodos Aditivos y Normalización]]
-- [[Sesion_04_AHP|Sesión 04: Proceso de Jerarquía Analítica (AHP)]]
-- [[Sesion_05_ANP|Sesión 05: Proceso de Red Analítica (ANP)]]
-- [[Sesion_06_BWM_y_FUCOM|Sesión 06: Métodos de Ponderación (BWM y FUCOM)]]
-- [[Sesion_07_TOPSIS_y_VIKOR|Sesión 07: Distancia a la Solución Ideal (TOPSIS y VIKOR)]]
-- [[Sesion_08_ELECTRE|Sesión 08: Relaciones de Superación (ELECTRE)]]
-- [[Sesion_09_PROMETHEE|Sesión 09: Relaciones de Superación (PROMETHEE)]]
-- [[Sesion_10_MARCOS_y_EDAS|Sesión 10: Métodos Recientes (MARCOS y EDAS)]]
-- [[Sesion_11_CODAS_y_CoCoSo|Sesión 11: Métodos CODAS y CoCoSo]]
-- [[Sesion_12_Fuzzy_MCDM|Sesión 12: Métodos Híbridos y MCDM Difuso]]
-- [[Sesion_13_Analisis_de_Sensibilidad|Sesión 13: Análisis de Sensibilidad y Robustez]]
-- [[Sesion_14_Rough_Sets_y_GRA|Sesión 14: Teoría de Rough Sets y GRA]]
-- [[Sesion_15_Presentacion_y_Plan_de_Sometimiento|Sesión 15: Presentación de Proyectos y Cierre]]
+- [[Sesion_02_Ponderacion_Subjetiva_AHP_BWM|Sesión 02: Ponderación Subjetiva: AHP y BWM]]
+- [[Sesion_03_Ponderacion_Objetiva_Entropia_CRITIC_MEREC|Sesión 03: Ponderación Objetiva: Entropía, CRITIC y MEREC]]
+- [[Sesion_04_Distancia_Geometrica_TOPSIS_VIKOR|Sesión 04: Paradigma de Distancia Geométrica: TOPSIS y VIKOR]]
+- [[Sesion_05_Superacion_Outranking_ELECTRE_PROMETHEE|Sesión 05: Paradigma de Superación (Outranking): ELECTRE y PROMETHEE]]
+- [[Sesion_06_Teoria_Utilidad_MAUT|Sesión 06: Teoría de la Utilidad Multi-Atributo (MAUT) y Decisiones bajo Riesgo]]
+- [[Sesion_07_Logica_Difusa_Fuzzy_AHP_TOPSIS|Sesión 07: Lógica Difusa: Fuzzy AHP y Fuzzy TOPSIS]]
+- [[Sesion_08_MCDM_Incertidumbre_GRA_Rough_Sets|Sesión 08: MCDM bajo Incertidumbre: GRA y Rough Sets]]
+- [[Sesion_09_Nueva_Generacion_MARCOS_EDAS_CODAS_CoCoSo|Sesión 09: Métodos de Nueva Generación: MARCOS, EDAS, CODAS y CoCoSo]]
+- [[Sesion_10_Decision_Grupal_Consenso|Sesión 10: Decisión Multicriterio Grupal y Consenso]]
+- [[Sesion_11_Integracion_Optimizacion_NSGA_II|Sesión 11: Integración con Optimización y NSGA-II]]
+- [[Sesion_12_MCDM_Big_Data_ML_XAI|Sesión 12: MCDM con Datos Masivos, ML e Inteligencia Artificial (XAI)]]
+- [[Sesion_13_Analisis_Sensibilidad_Robustez|Sesión 13: Análisis de Sensibilidad y Robustez]]
+- [[Sesion_14_Metodologias_Hibridas_Extensiones|Sesión 14: Metodologías Híbridas y Extensiones de Frontera]]
+- [[Sesion_15_Presentacion_Proyectos_Cierre|Sesión 15: Presentación de Proyectos y Cierre]]
 
 ---
 
 ## 🔧 Métodos Multicriterio (MCDM/MADM)
-*   **Ponderación y Relaciones Jerárquicas**: [[AHP]] | [[ANP]] | [[BWM]] | [[FUCOM]]
+*   **Ponderación Subjetiva y Jerárquica**: [[AHP]] | [[ANP]] | [[BWM]] | [[FUCOM]]
+*   **Ponderación Objetiva**: [[Entropia]] | [[CRITIC]] | [[MEREC]]
 *   **Basados en Distancia**: [[TOPSIS]] | [[VIKOR]] | [[MARCOS]] | [[EDAS]] | [[CODAS]] | [[CoCoSo]]
 *   **Basados en Superación (Outranking)**: [[ELECTRE]] | [[PROMETHEE]]
 *   **Incertidumbre e Información Incompleta**: [[Fuzzy_TOPSIS]] | [[GRA]] | [[Rough_Sets]]
@@ -38,7 +39,7 @@ Accede a las notas detalladas de cada una de las 15 sesiones presenciales:
 ---
 
 ## 📄 Literatura y Lecturas Científicas
-*   **Seminales**: [[Rezaei_2015_BWM]] | [[Opricovic_Tzeng_2004_VIKOR_vs_TOPSIS]]
+*   **Seminales**: [[Rezaei_2015_BWM]] | [[Diakoulaki_1995_CRITIC]] | [[Keshavarz_2021_MEREC]] | [[Opricovic_Tzeng_2004_VIKOR_vs_TOPSIS]]
 *   **Revisiones del Estado del Arte**: [[Mardani_2015_Survey]]
 *   **Herramienta**: [[Template_Lectura_Paper|Plantilla para Resumen de Lecturas]]
 
@@ -47,7 +48,7 @@ Accede a las notas detalladas de cada una de las 15 sesiones presenciales:
 ## 🔧 Casos Prácticos de Evaluación (Evidencias)
 Accede a las especificaciones de los trabajos prácticos de evaluación del curso:
 
-*   [[CP1_Ponderacion|Caso Práctico 1: Ponderación de Criterios (AHP vs. BWM)]] (15%)
+*   [[CP1_Ponderacion|Caso Práctico 1: Ponderación de Criterios (AHP, BWM y Entropía)]] (15%)
 *   [[CP2_Metodos_Distancia|Caso Práctico 2: Jerarquización por Distancia (TOPSIS, VIKOR, EDAS)]] (20%)
 *   [[CP3_Superacion|Caso Práctico 3: Relaciones de Superación (ELECTRE, PROMETHEE)]] (20%)
 *   [[CP4_Incertidumbre|Caso Práctico 4: Modelación difusa frente a incertidumbre (Fuzzy/GRA)]] (15%)

@@ -25,10 +25,14 @@
             "id": "c92566cca9aa4d52",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Vista gráfica"
+              "type": "markdown",
+              "state": {
+                "file": "000_INICIO/Mapa del curso (MOC).md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Mapa del curso (MOC)"
             }
           }
         ],
@@ -105,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "500_Articulo/E3_Caso_de_estudio.md",
+                "file": "Sin título.base",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +119,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Enlaces entrantes de E3_Caso_de_estudio"
+              "title": "Enlaces entrantes de Sin título"
             }
           },
           {
@@ -179,6 +183,19 @@
   },
   "active": "c92566cca9aa4d52",
   "lastOpenFiles": [
+    "200_Metodos/AHP.md",
+    "200_Metodos/ANP.md",
+    "200_Metodos/BWM.md",
+    "Sin título.base",
+    "300_Papers/Rezaei_2015_BWM.md",
+    "000_INICIO/Mapa del curso (MOC).md",
+    "000_INICIO/Flujo de casos prácticos.md",
+    "000_INICIO/Bienvenida y guía de uso.md",
+    "100_Sesiones/Sesion_03_Ponderacion_Objetiva_Entropia_CRITIC_MEREC.md",
+    "Sin título.canvas",
+    "100_Sesiones/Sesion_02_Ponderacion_Subjetiva_AHP_BWM.md",
+    "Sin título 2.canvas",
+    "Sin título 1.canvas",
     "100_Sesiones/Sesion_02_MAUT.md",
     "600_Ideas/Banco_de_Ideas.md",
     "500_Casos_Practicos/CP2_Metodos_Distancia.md",
@@ -187,12 +204,7 @@
     "400_Casos/Caso_Alumno_C_Ruteo_Multiobjetivo.md",
     "400_Casos/Caso_Alumno_B_Sourcing_Sostenible.md",
     "400_Casos/Caso_Alumno_A_Localizacion_CEDIS.md",
-    "Sin título 2.canvas",
-    "Sin título 1.canvas",
-    "Sin título.canvas",
     "000_INICIO/Pipeline del artículo.md",
-    "000_INICIO/Mapa del curso (MOC).md",
-    "100_Sesiones/Sesion_01_Fundamentos_epistemologicos.md",
-    "000_INICIO/Bienvenida y guía de uso.md"
+    "100_Sesiones/Sesion_01_Fundamentos_epistemologicos.md"
   ]
 }

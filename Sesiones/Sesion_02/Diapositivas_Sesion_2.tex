@@ -180,79 +180,113 @@
 
 % Slide 7: La Escala de Saaty (1 a 9)
 \begin{frame}{La Escala Fundamental de Comparación}
-    Saaty propuso una escala de medición discreta basada en estudios de psicología cognitiva (Ley de Miller de la capacidad humana de procesamiento de información, $7 \pm 2$):
-    \begin{table}
+    Saaty propuso una escala de medición discreta basada en estudios de psicología cognitiva (Ley de Miller, $7 \pm 2$):
+    \begin{center}
         \scriptsize
-        \begin{tabular}{cll}
+        \begin{tabular}{clp{7.5cm}}
             \toprule
             \textbf{Intensidad} & \textbf{Definición Verbal} & \textbf{Explicación Lógica} \\
             \midrule
             1 & Igual importancia & Dos actividades contribuyen igual a la meta. \\
             3 & Importancia moderada & La experiencia/juicio favorece ligeramente a una sobre otra. \\
             5 & Importancia fuerte & La experiencia/juicio favorece fuertemente a una sobre otra. \\
-            7 & Importancia muy fuerte o demostrada & Una actividad es favorecida muy fuertemente y es dominante. \\
-            9 & Importancia extrema & La evidencia que favorece a una actividad es del orden más alto. \\
+            7 & Importancia muy fuerte & Una actividad es favorecida muy fuertemente y es dominante. \\
+            9 & Importancia extrema & La evidencia que favorece a una es del orden más alto. \\
             2, 4, 6, 8 & Valores intermedios & Utilizados cuando se busca un compromiso entre juicios. \\
             \bottomrule
         \end{tabular}
-    \end{table}
+    \end{center}
     \begin{alertblock}{Crítica Axiomática}
-        ¿Es la escala lineal de 1-9 la mejor representación del juicio humano? Escalas geométricas, exponenciales o logarítmicas son frecuentemente utilizadas en investigación avanzada.
+        \scriptsize
+        ¿Es la escala lineal 1-9 la mejor representación del juicio humano? Escalas geométricas o logarítmicas son comunes en investigación avanzada.
     \end{alertblock}
 \end{frame}
 
 % Slide 8: Construcción de la Matriz AHP
 \begin{frame}{Construcción de la Matriz de Comparaciones Pareadas}
     Sea un conjunto de criterios $\{C_1, C_2, \dots, C_n\}$, la matriz de comparación $\mathbf{A} \in \mathbb{R}^{n \times n}$ se define como:
-    $$\mathbf{A} = \begin{pmatrix}
+    \[\mathbf{A} = \begin{pmatrix}
         1 & a_{12} & \dots & a_{1n} \\
         1/a_{12} & 1 & \dots & a_{2n} \\
         \vdots & \vdots & \ddots & \vdots \\
         1/a_{1n} & 1/a_{2n} & \dots & 1
-    \end{pmatrix}$$
+    \end{pmatrix}\]
     \begin{itemize}
         \item Donde $a_{ij} > 0$ representa la preferencia del criterio $C_i$ sobre $C_j$.
-        \item El número total de comparaciones requeridas para $n$ criterios es:
-              $$N = \frac{n(n-1)}{2}$$
-        \item Para $n=10$ criterios, ¡se requieren 45 comparaciones! Riesgo de fatiga e inconsistencia en comités logísticos.
+        \item El número de comparaciones pareadas requeridas para $n$ criterios es:
+              $N = \frac{n(n-1)}{2}$
+        \item Para $n=10$, ¡se requieren 45 comparaciones! Alto riesgo de fatiga en el decisor.
+    \end{itemize}
+\end{frame}
+
+% Slide 8b: Ejemplo de Matriz AHP
+\begin{frame}{Ejemplo: Matriz de Comparaciones Pareadas AHP}
+    Para la selección de un transportista LTL con 4 criterios: Costo ($C_1$), Confiabilidad ($C_2$), Visibilidad ($C_3$) y Sustentabilidad ($C_4$).
+    El decisor genera la siguiente matriz recíproca positiva $\mathbf{A} \in \mathbb{R}^{4 \times 4}$:
+    \[\mathbf{A} = \begin{pmatrix}
+        1 & 1/2 & 2 & 3 \\
+        2 & 1 & 3 & 6 \\
+        1/2 & 1/3 & 1 & 2 \\
+        1/3 & 1/6 & 1/2 & 1
+    \end{pmatrix}\]
+    \begin{itemize}
+        \item El número de comparaciones realizadas es $N = \frac{4(3)}{2} = 6$.
+        \item Nota que se cumple la reciprocidad: $a_{21} = 2 \implies a_{12} = 1/2$.
     \end{itemize}
 \end{frame}
 
 % Slide 9: Vector de Prioridades y el Autovector Principal
-\begin{frame}{Elicitación\footnote{\textbf{Elicitación (de prioridades):} Proceso sistemático para extraer y formalizar conocimientos o juicios subjetivos de un experto.} del Vector de Prioridades}
-    Si el decisor fuera perfectamente consistente, se cumpliría que $a_{ij} = w_i / w_j$, lo que implica que:
-    $$a_{ij} \frac{w_j}{w_i} = 1 \implies \sum_{j=1}^n a_{ij} w_j = n w_i \implies \mathbf{A}\mathbf{w} = n\mathbf{w}$$
-    Dado que el ser humano comete imprecisiones, los juicios tienen ruido. Saaty demostró que para una matriz recíproca positiva general:
-    $$\mathbf{A}\mathbf{w} = \lambda_{\max}\mathbf{w}$$
-    \begin{block}{Método del Autovector\footnote{\textbf{Autovector (Eigenvector):} Vector especial que no cambia de dirección bajo una transformación. En AHP, representa el peso relativo estable de los criterios.} Principal (Principal Eigenvector Method)}
+\begin{frame}{Elicitación del Vector de Prioridades}
+    \small
+    Si el decisor fuera perfectamente consistente, se cumpliría que $a_{ij} = w_i / w_j$, lo que implica:
+    \[ a_{ij} \frac{w_j}{w_i} = 1 \implies \sum_{j=1}^n a_{ij} w_j = n w_i \implies \mathbf{A}\mathbf{w} = n\mathbf{w} \]
+    Dado que los juicios reales tienen imprecisiones, Saaty demostró que:
+    \[ \mathbf{A}\mathbf{w} = \lambda_{\max}\mathbf{w} \]
+    \begin{block}{Método del Autovector Principal (Principal Eigenvector Method)}
+        \scriptsize
         \begin{itemize}
-            \item Se calcula el vector propio $\mathbf{w}$ correspondiente al autovalor máximo $\lambda_{\max}$ de la matriz $\mathbf{A}$.
-            \item Teorema de Perron-Frobenius garantiza que existe un único autovector positivo para una matriz positiva irreductible.
-            \item Siempre se cumple que $\lambda_{\max} \ge n$, alcanzando la igualdad sólo si la matriz es perfectamente consistente.
+            \item Se calcula el vector propio $\mathbf{w}$ correspondiente a $\lambda_{\max}$ de $\mathbf{A}$.
+            \item El Teorema de Perron-Frobenius garantiza un único autovector positivo para una matriz positiva.
+            \item Se cumple que $\lambda_{\max} \ge n$ (igualdad si y solo si los juicios son perfectamente consistentes).
         \end{itemize}
+    \end{block}
+\end{frame}
+
+% Slide 9b: Ejemplo de Cálculo del Vector de Prioridades
+\begin{frame}{Ejemplo: Elicitación del Vector de Prioridades}
+    Utilizando la matriz $\mathbf{A}$ del ejemplo de transportista LTL:
+    \begin{enumerate}
+        \item \textbf{Suma de columnas de $\mathbf{A}$:}
+              $S_{col} = (3.8333, \ 2.0000, \ 6.5000, \ 12.0000)$
+        \item \textbf{Normalización por columnas y promedio por fila:}
+              \scriptsize
+              \[ w_i \approx \frac{1}{n} \sum_{j=1}^n \frac{a_{ij}}{S_{col, j}} \]
+              \[ w_1 \text{ (Costo)} \approx \frac{1}{4} \left( \frac{1}{3.833} + \frac{0.5}{2.0} + \frac{2}{6.5} + \frac{3}{12.0} \right) \approx 0.2672 \]
+    \end{enumerate}
+    \begin{block}{Vector de Pesos Resultante}
+        \[ \mathbf{w} \approx \begin{pmatrix} w_1 \text{ (Costo)} \\ w_2 \text{ (Confiabilidad)} \\ w_3 \text{ (Visibilidad)} \\ w_4 \text{ (Sustentabilidad)} \end{pmatrix} = \begin{pmatrix} 0.2672 \\ 0.4958 \\ 0.1544 \\ 0.0826 \end{pmatrix} \]
     \end{block}
 \end{frame}
 
 % Slide 10: Medición de la Consistencia en AHP
 \begin{frame}{El Índice y la Razón de Consistencia}
+    \small
     Para cuantificar la desviación de la consistencia perfecta, Saaty formuló:
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{block}{Índice de Consistencia (CI)}
-                $$CI = \frac{\lambda_{\max} - n}{n-1}$$
+                \[ CI = \frac{\lambda_{\max} - n}{n-1} \]
             \end{block}
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{block}{Razón de Consistencia (CR)}
-                $$CR = \frac{CI}{RI}$$
+                \[ CR = \frac{CI}{RI} \]
             \end{block}
         \end{column}
     \end{columns}
-    \vspace{0.2cm}
-    \begin{itemize}
-        \item Donde $RI$ es el \textbf{Índice Aleatorio} (consistencia promedio de matrices generadas al azar de tamaño $n$):
-    \end{itemize}
-    \begin{table}
+    \smallskip
+    Donde $RI$ es el \textbf{Índice Aleatorio}:
+    \begin{center}
         \scriptsize
         \begin{tabular}{cccccccccc}
             \toprule
@@ -261,11 +295,30 @@
             $RI$ & 0.00 & 0.00 & 0.58 & 0.90 & 1.12 & 1.24 & 1.32 & 1.41 & 1.45 \\
             \bottomrule
         \end{tabular}
-    \end{table}
+    \end{center}
     \begin{alertblock}{Regla de Decisión}
-        Si $CR < 0.10$ (10\%), los juicios son lo suficientemente consistentes para ser aceptados. De lo contrario, el decisor debe revisar y reformular la matriz.
+        \scriptsize
+        Si $CR < 0.10$ (10\%), los juicios son consistentes. De lo contrario, se deben revisar.
     \end{alertblock}
 \end{frame}
+
+% Slide 10b: Ejemplo de Razón de Consistencia en AHP
+\begin{frame}{Ejemplo: Cálculo de Consistencia en AHP}
+    Para validar los pesos obtenidos $\mathbf{w} \approx (0.2672, \ 0.4958, \ 0.1544, \ 0.0826)^T$:
+    \begin{enumerate}
+        \item \textbf{Cálculo del vector propio estimado:} $\mathbf{A}\mathbf{w} \approx (1.0717, \ 1.9890, \ 0.6185, \ 0.3315)^T$
+        \item \textbf{Estimación del autovalor máximo $\lambda_{\max}$:}
+              \[ \lambda_i = \frac{(\mathbf{A}\mathbf{w})_i}{w_i} \implies \lambda_1 \approx 4.0109, \ \lambda_2 \approx 4.0117, \ \lambda_3 \approx 4.0058, \ \lambda_4 \approx 4.0133 \]
+              \[ \lambda_{\max} = \text{promedio}(\lambda_i) \approx \mathbf{4.0104} \]
+        \item \textbf{Índice de Consistencia ($CI$):} $CI = \frac{4.0104 - 4}{4 - 1} \approx \mathbf{0.0035}$
+        \item \textbf{Razón de Consistencia ($CR$):} Con $n=4 \implies RI = 0.90$:
+              \[ CR = \frac{0.0035}{0.90} \approx 0.0039 \implies \mathbf{0.39\%} \]
+    \end{enumerate}
+    \begin{alertblock}{Conclusión de Consistencia}
+        Como $CR = 0.39\% < 10\%$, los juicios del decisor son altamente consistentes.
+    \end{alertblock}
+\end{frame}
+
 
 % Slide 11: El Gran Debate: Rank Reversal (Inversión de Rangos)
 \begin{frame}{La Polémica de Dyer vs. Saaty}
@@ -317,9 +370,7 @@
                           \item El mejor criterio respecto a todos los demás (\textbf{Best-to-Others}).
                           \item Todos los criterios respecto al peor (\textbf{Others-to-Worst}).
                       \end{enumerate}
-                \item Requiere únicamente:
-                      $$N_{BWM} = 2n - 3$$
-                      comparaciones pareadas.
+                \item Requiere únicamente: $N_{BWM} = 2n - 3$ comparaciones.
             \end{itemize}
         \end{column}
         \begin{column}{0.38\textwidth}
@@ -328,7 +379,7 @@
                 \begin{itemize}
                     \item Menor carga cognitiva.
                     \item Juicios significativamente más consistentes.
-                    \item Formulación matemática lineal y convexa\footnote{\textbf{Convexidad:} Propiedad matemática que asegura que cualquier óptimo local es el óptimo global (el mejor absoluto), facilitando su resolución.} que garantiza una solución única global.
+                    \item Formulación matemática lineal y convexa que garantiza una solución única global.
                 \end{itemize}
             \end{exampleblock}
         \end{column}
@@ -341,32 +392,64 @@
         \item \textbf{Paso 1:} Definir el conjunto de criterios logísticos $\{C_1, C_2, \dots, C_n\}$.
         \item \textbf{Paso 2:} Identificar el mejor criterio ($C_B$) y el peor criterio ($C_W$).
         \item \textbf{Paso 3:} Elicitar el vector de comparación del mejor criterio respecto a los demás (\textbf{Best-to-Others}, escala 1-9):
-              $$A_B = (a_{B1}, a_{B2}, \dots, a_{Bn})$$
-              *(Donde $a_{BB} = 1$)*
+              $A_B = (a_{B1}, a_{B2}, \dots, a_{Bn})$ *(Donde $a_{BB} = 1$)*
         \item \textbf{Paso 4:} Elicitar el vector de comparación de todos los criterios respecto al peor (\textbf{Others-to-Worst}, escala 1-9):
-              $$A_W = (a_{1W}, a_{2W}, \dots, a_{nW})^T$$
-              *(Donde $a_{WW} = 1$)*
+              $A_W = (a_{1W}, a_{2W}, \dots, a_{nW})^T$ *(Donde $a_{WW} = 1$)*
     \end{enumerate}
 \end{frame}
 
 % Slide 15: Formulación Matemática Minimax de BWM
-\begin{frame}{Formulación del Modelo Minimax\footnote{\textbf{Minimax:} Enfoque de optimización que busca minimizar la máxima desviación o peor error en un sistema de ecuaciones.} No Lineal}
-    El objetivo es determinar los pesos óptimos $(w_1^*, w_2^*, \dots, w_n^*)$ que minimicen la desviación absoluta máxima de las razones de pesos respecto a las comparaciones del decisor:
+\begin{frame}{Formulación del Modelo Minimax No Lineal}
+    \small
+    El objetivo es determinar los pesos óptimos $\mathbf{w}^*$ que minimicen la desviación absoluta máxima:
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            $$\min \xi$$
-            $$\text{s.t.}$$
-            $$\left| \frac{w_B}{w_j} - a_{Bj} \right| \le \xi, \quad \forall j$$
-            $$\left| \frac{w_j}{w_W} - a_{jW} \right| \le \xi, \quad \forall j$$
-            $$\sum_{j=1}^n w_j = 1, \quad w_j \ge 0, \quad \forall j$$
+            \[
+            \begin{aligned}
+                & \min \quad \xi \\
+                & \text{s.t.} \\
+                & \left| \frac{w_B}{w_j} - a_{Bj} \right| \le \xi, \quad \forall j \\
+                & \left| \frac{w_j}{w_W} - a_{jW} \right| \le \xi, \quad \forall j \\
+                & \sum w_j = 1, \quad w_j \ge 0
+            \end{aligned}
+            \]
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{alertblock}{Propiedades del Modelo}
                 \scriptsize
                 \begin{itemize}
-                    \item Este problema no es lineal y puede poseer múltiples soluciones locales u óptimas no convexas.
-                    \item Para mitigar esto, Rezaei (2016) reformuló el problema de manera lineal para evitar denominadores variables.
+                    \item Este problema no es lineal y no es convexo.
+                    \item Rezaei (2016) reformuló el problema de manera lineal para garantizar una solución única global.
                 \end{itemize}
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 15b: Ejemplo de Modelo Minimax No Lineal BWM
+\begin{frame}{Ejemplo: Modelo Minimax No Lineal BWM}
+    Usando los criterios logísticos con Confiabilidad ($C_2$) como el mejor (Best) y Sustentabilidad ($C_4$) como el peor (Worst):
+    \begin{columns}[T]
+        \begin{column}{0.58\textwidth}
+            \scriptsize
+            \begin{itemize}
+                \item \textbf{Best-to-Others ($A_B$):} $a_{21}=2$, $a_{22}=1$, $a_{23}=3$, $a_{24}=6$
+                \item \textbf{Others-to-Worst ($A_W$):} $a_{14}=3$, $a_{24}=6$, $a_{34}=2$, $a_{44}=1$
+            \end{itemize}
+            El problema de optimización se plantea como:
+            \[
+            \begin{aligned}
+                \min \quad & \xi \\
+                \text{s.t.} \quad & \left| \frac{w_2}{w_1} - 2 \right| \le \xi, \quad \left| \frac{w_2}{w_3} - 3 \right| \le \xi, \quad \left| \frac{w_2}{w_4} - 6 \right| \le \xi \\
+                & \left| \frac{w_1}{w_4} - 3 \right| \le \xi, \quad \left| \frac{w_3}{w_4} - 2 \right| \le \xi \\
+                & w_1 + w_2 + w_3 + w_4 = 1, \quad w_j \ge 0
+            \end{aligned}
+            \]
+        \end{column}
+        \begin{column}{0.38\textwidth}
+            \begin{alertblock}{Complejidad}
+                \scriptsize
+                Debido a los términos fraccionarios ($w_B/w_j$), el espacio de búsqueda no es convexo, lo que dificulta encontrar la solución óptima global.
             \end{alertblock}
         \end{column}
     \end{columns}
@@ -374,85 +457,144 @@
 
 % Slide 16: Modelo BWM Lineal de Rezaei (2016)
 \begin{frame}{Formulación Matemática del BWM Linealizado}
-    Multiplicando las restricciones por sus denominadores, Rezaei transformó el modelo minimax en un \textbf{Problema de Programación Lineal (PPL)} convexo con solución única y global:
+    \small
+    Rezaei transformó el modelo minimax en un \textbf{Problema de Programación Lineal (PPL)} convexo:
     \begin{block}{Modelo BWM Lineal}
-        $$\min \xi^L$$
-        $$\text{s.t.}$$
-        $$\left| w_B - a_{Bj} w_j \right| \le \xi^L, \quad \forall j$$
-        $$\left| w_j - a_{jW} w_W \right| \le \xi^L, \quad \forall j$$
-        $$\sum_{j=1}^n w_j = 1, \quad w_j \ge 0, \quad \forall j$$
+        \scriptsize
+        \[
+        \begin{aligned}
+            & \min \quad \xi^L \\
+            & \text{s.t.} \\
+            & \left| w_B - a_{Bj} w_j \right| \le \xi^L, \quad \forall j \\
+            & \left| w_j - a_{jW} w_W \right| \le \xi^L, \quad \forall j \\
+            & \sum_{j=1}^n w_j = 1, \quad w_j \ge 0
+        \end{aligned}
+        \]
     \end{block}
     \begin{exampleblock}{Resolución en Python}
         \scriptsize
-        Se puede programar en un bloque simple utilizando la librería `scipy.optimize.linprog` o a través de `PuLP`.
+        Se programa utilizando `scipy.optimize.linprog` o `PuLP`.
     \end{exampleblock}
+\end{frame}
+
+% Slide 16b: Ejemplo de Modelo BWM Linealizado
+\begin{frame}{Ejemplo: Modelo BWM Linealizado y Pesos Óptimos}
+    Al linealizar las restricciones del caso anterior con $C_2$ (Best) y $C_4$ (Worst):
+    \begin{columns}[T]
+        \begin{column}{0.52\textwidth}
+            \scriptsize
+            \[
+            \begin{aligned}
+                & \min \quad \xi^L \\
+                & \text{s.t.} \\
+                & |w_2 - 2w_1| \le \xi^L, \quad |w_2 - 3w_3| \le \xi^L, \quad |w_2 - 6w_4| \le \xi^L \\
+                & |w_1 - 3w_4| \le \xi^L, \quad |w_3 - 2w_4| \le \xi^L \\
+                & w_1 + w_2 + w_3 + w_4 = 1, \quad w_j \ge 0
+            \end{aligned}
+            \]
+        \end{column}
+        \begin{column}{0.44\textwidth}
+            \begin{block}{Solución Óptima}
+                \scriptsize
+                Al resolver el modelo lineal, obtenemos:
+                \begin{itemize}
+                    \item $w_1^* \text{ (Costo)} = \mathbf{0.2500}$
+                    \item $w_2^* \text{ (Confiabilidad)} = \mathbf{0.5000}$
+                    \item $w_3^* \text{ (Visibilidad)} = \mathbf{0.1667}$
+                    \item $w_4^* \text{ (Sustentabilidad)} = \mathbf{0.0833}$
+                    \item Desviación óptima: $\xi^{L*} = \mathbf{0.0000}$
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 % Slide 17: Consistencia en el Método BWM
 \begin{frame}{Medición del Grado de Consistencia en BWM}
-    El valor óptimo resultante del modelo $\xi^*$ (o $\xi^L$ en el modelo lineal) indica el nivel de inconsistencia de los juicios pareados. La \textbf{Razón de Consistencia (CR)} se calcula como:
-    $$CR = \frac{\xi^*}{\text{Consistencia Mínima (CI)}}$$
-    \begin{table}
+    \small
+    El valor óptimo $\xi^*$ (o $\xi^L$) indica el nivel de inconsistencia de los juicios. La \textbf{Razón de Consistencia (CR)} es:
+    \[ CR = \frac{\xi^*}{CI} \]
+    Donde $CI$ es la Consistencia Mínima (Rezaei, 2015):
+    \begin{center}
         \scriptsize
         \begin{tabular}{cccccccccc}
             \toprule
             $a_{BW}$ (Escala) & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
             \midrule
-            $CI$ (Max No-lineal) & 0.00 & 0.44 & 1.00 & 1.63 & 2.30 & 3.00 & 3.73 & 4.47 & 5.23 \\
+            $CI$ & 0.00 & 0.44 & 1.00 & 1.63 & 2.30 & 3.00 & 3.73 & 4.47 & 5.23 \\
             \bottomrule
         \end{tabular}
-    \end{table}
+    \end{center}
     \begin{itemize}
-        \item A mayor valor de $a_{BW}$ (diferencia extrema entre el mejor y peor criterio), mayor es el error admisible $\xi^*$ en la escala de Saaty.
-        \item Valores de $CR$ cercanos a 0 indican alta consistencia; valores superiores a 0.10 requieren revisión de los vectores de entrada.
+        \item A mayor valor de $a_{BW}$ (brecha entre mejor y peor), mayor es el error admisible $\xi^*$.
+        \item Si $CR$ es cercano a 0 indica alta consistencia; si $CR > 0.10$ requiere revisión.
     \end{itemize}
+\end{frame}
+
+% Slide 17b: Ejemplo de Razón de Consistencia en BWM
+\begin{frame}{Ejemplo: Cálculo de Consistencia en BWM}
+    Evaluemos la consistencia del decisor en nuestro ejemplo de transportista LTL:
+    \begin{itemize}
+        \item El valor óptimo de desviación obtenido al resolver el modelo lineal es $\xi^{L*} = \mathbf{0.0000}$.
+        \item La preferencia del mejor criterio ($C_2$) frente al peor ($C_4$) es $a_{BW} = a_{24} = \mathbf{6}$.
+        \item De la tabla de Consistencia Mínima, para $a_{BW} = 6$, el valor del índice es $CI = \mathbf{3.00}$.
+    \end{itemize}
+    \begin{block}{Cálculo de la Razón de Consistencia (CR)}
+        \[ CR = \frac{\xi^*}{CI} = \frac{0.0000}{3.00} = \mathbf{0.0000} \implies \mathbf{0.0\%} \]
+    \end{block}
+    \begin{alertblock}{Conclusión de Consistencia en BWM}
+        Dado que $CR = 0\% < 10\%$, el decisor es perfectamente consistente en sus juicios estructurados.
+    \end{alertblock}
 \end{frame}
 
 % Slide 18: Comparación Directa: AHP vs. BWM
 \begin{frame}{Comparativa Metodológica para Proyectos Doctorales}
-    \begin{table}
+    \begin{center}
         \scriptsize
-        \begin{tabular}{lll}
+        \begin{tabular}{p{2.4cm}p{4.6cm}p{4.6cm}}
             \toprule
             \textbf{Dimensión} & \textbf{Analytic Hierarchy Process (AHP)} & \textbf{Best-Worst Method (BWM)} \\
             \midrule
             \textbf{Complejidad} & Alta: $n(n-1)/2$ comparaciones & Baja: $2n-3$ comparaciones \\
-            \textbf{Consistencia} & Propensa a errores de transitividad\footnote{\textbf{Transitividad:} Principio de consistencia lógica: si se prefiere A a B y B a C, lógicamente se debe preferir A a C. Los decisores humanos suelen violarlo por fatiga o confusión.} & Robusta debido a consistencia lógica \\
+            \textbf{Consistencia} & Propensa a errores de transitividad & Robusta debido a consistencia lógica \\
             \textbf{Optimización} & No requiere (Autovectores) & Requiere resolver un PPL minimax \\
-            \textbf{Juicios de Entrada} & Matriz completa $n \times n$ & Dos vectores estructurados (1 $\times n$ y $n \times 1$) \\
+            \textbf{Juicios de Entrada} & Matriz completa $n \times n$ & Dos vectores estructurados ($1 \times n$ y $n \times 1$) \\
             \textbf{Carga Cognitiva} & Exponencial con el tamaño del problema & Lineal con el tamaño del problema \\
-            \textbf{Escala de Comparación} & Recíproca lineal (1-9) & Recíproca lineal (1-9) \\
+            \textbf{Escala} & Recíproca lineal (1-9) & Recíproca lineal (1-9) \\
             \bottomrule
         \end{tabular}
-    \end{table}
+    \end{center}
     \begin{block}{Criterio de Selección para el Investigador}
-        Para problemas logísticos con más de 5 criterios o con comités directivos de agenda limitada, BWM ofrece resultados equivalentes con un 60\% menos de esfuerzo computacional y cognitivo.
+        \scriptsize
+        Para problemas logísticos con más de 5 criterios, BWM ofrece resultados equivalentes con un 60\% menos de esfuerzo cognitivo y comparaciones.
     \end{block}
 \end{frame}
 
 % Slide 19: Caso de Estudio: Selección de Transportista LTL
 \begin{frame}{Selección de Transportista Terrestre Consolidado (LTL)}
     \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
+        \begin{column}{0.52\textwidth}
+            \small
             Un CEDIS de distribución de e-commerce en Monterrey debe ponderar 4 criterios operativos clave para subcontratar transportistas LTL:
             \begin{itemize}
+                \footnotesize
                 \item \textbf{Costo ($C_1$):} Costo de flete por kilómetro.
-                \item \textbf{Confiabilidad ($C_2$):} Exactitud de entrega (On-Time In-Full).
-                \item \textbf{Visibilidad ($C_3$):} Capacidad de rastreo GPS en tiempo real.
-                \item \textbf{Sustentabilidad ($C_4$):} Emisiones promedio y flota ecológica.
+                \item \textbf{Confiabilidad ($C_2$):} Exactitud de entrega (OTIF).
+                \item \textbf{Visibilidad ($C_3$):} Rastreo GPS en tiempo real.
+                \item \textbf{Sustentabilidad ($C_4$):} Emisiones y flota ecológica.
             \end{itemize}
         \end{column}
         
-        \begin{column}{0.48\textwidth}
+        \begin{column}{0.44\textwidth}
             \begin{exampleblock}{Parámetros de Entrada de BWM}
                 \scriptsize
                 \begin{itemize}
                     \item \textbf{Criterio Best elegido:} Confiabilidad ($C_2$).
                     \item \textbf{Criterio Worst elegido:} Sustentabilidad ($C_4$).
                     \item \textbf{Vector Best-to-Others ($A_B$):}
-                          $$a_{21}=2, \quad a_{22}=1, \quad a_{23}=3, \quad a_{24}=6$$
+                          $a_{21}=2, a_{22}=1, a_{23}=3, a_{24}=6$
                     \item \textbf{Vector Others-to-Worst ($A_W$):}
-                          $$a_{14}=3, \dots, a_{24}=6, \dots, a_{34}=2, \dots, a_{44}=1$$
+                          $a_{14}=3, a_{24}=6, a_{34}=2, a_{44}=1$
                 \end{itemize}
             \end{exampleblock}
         \end{column}

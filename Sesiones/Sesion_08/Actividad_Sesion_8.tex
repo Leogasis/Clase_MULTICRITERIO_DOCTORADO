@@ -1,0 +1,83 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- PAQUETES BÁSICOS ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=2.2cm, right=2.2cm, headheight=24pt}
+\addtolength{\topmargin}{-12pt}
+
+% --- COLORES INSTITUCIONALES (FIME/UANL) ---
+\usepackage{xcolor}
+\definecolor{FIMEgreen}{HTML}{005C42}
+\definecolor{UANLblue}{HTML}{002F6C}
+\definecolor{UANLgold}{HTML}{FFC72C}
+\definecolor{FIMEblack}{HTML}{0F172A}
+\definecolor{FIMElightgray}{HTML}{F8FAFC}
+\definecolor{FIMEdarkgray}{HTML}{475569}
+
+% --- TIPOGRAFÍA (Palatino / Open Sans) ---
+\usepackage{palatino}
+\usepackage[default]{opensans}
+
+% --- DISEÑO DE CAJAS Y ELEMENTOS ---
+\usepackage[most]{tcolorbox}
+\newtcolorbox{brandbox}[1]{%
+  colback=FIMElightgray,
+  colframe=FIMEgreen,
+  coltitle=white,
+  fonttitle=\bfseries\sffamily,
+  title=#1,
+  boxrule=1.5pt,
+  arc=4pt,
+  top=8pt,
+  bottom=8pt,
+  left=10pt,
+  right=10pt
+}
+
+% --- ENCABEZADOS Y PIE DE PÁGINA ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{FIMEgreen}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\sffamily\bfseries\color{FIMEgreen}FIME -- UANL}
+\fancyhead[R]{\sffamily\color{UANLblue}Doctorado en Logística y Cadena de Suministro}
+\fancyfoot[C]{\sffamily\color{FIMEdarkgray}\thepage}
+
+% --- DATOS DEL DOCUMENTO ---
+\title{%
+  \sffamily\bfseries\color{UANLblue}%
+  Actividad Práctica 8: MCDM bajo Incertidumbre: Teoría de Sistemas Grises (GRA) y Conjuntos Aproximados (Rough Sets)\\
+  \large Planteamiento y Modelación en Python
+}
+\author{%
+  \sffamily\bfseries\color{FIMEdarkgray}%
+  Dr. Leonardo Gabriel Hernández Landa\\
+  \small MCDM -- Herramientas Multicriterio para Toma de Decisiones\\
+  \small\color{FIMEgreen}Facultad de Ingeniería Mecánica y Eléctrica (FIME)
+}
+\date{\sffamily Tetramestre de Otoño}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{brandbox}{Contexto de la Actividad}
+  Espacio reservado para describir la actividad práctica de la Sesión 8. El alumno deberá aplicar los modelos matemáticos revisados en clase a un problema de logística y cadena de suministro.
+\end{brandbox}
+
+\section{Instrucciones}
+\begin{enumerate}
+    \item Estructurar el problema detallado en esta sesión.
+    \item Implementar el algoritmo en Python y analizar los perfiles resultantes.
+    \item Responder a las preguntas de reflexión de la sesión.
+\end{enumerate}
+
+\end{document}
